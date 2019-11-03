@@ -50,10 +50,10 @@ public class GUI {
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
 		
-		JMenu mnExcel = new JMenu("Excel");
+		JMenu mnExcel = new JMenu("File");
 		menuBar.add(mnExcel);
 		
-		JMenuItem mntmOpen = new JMenuItem("Open ");
+		JMenuItem mntmOpen = new JMenuItem("Open Excel");
 		mntmOpen.addActionListener(new ActionListener() {
 			
 			//defining what happens when we click Open under menu Excel
@@ -90,6 +90,20 @@ public class GUI {
 		
 		JMenuItem mntmCreateRules = new JMenuItem("Create Rules");
 		mnRules.add(mntmCreateRules);
+		
+		JMenu mnAbout = new JMenu("Help");
+		
+		menuBar.add(mnAbout);
+		
+		JMenuItem mntmAbout = new JMenuItem("About");
+		mntmAbout.addActionListener(new ActionListener() {
+			//opens frame About
+			public void actionPerformed(ActionEvent e) {
+				About about=new About();
+				about.setVisible(true);
+			}
+		});
+		mnAbout.add(mntmAbout);
 		frame.getContentPane().setLayout(null);
 	}
 }
