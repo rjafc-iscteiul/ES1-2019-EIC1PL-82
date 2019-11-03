@@ -11,6 +11,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import java.awt.Color;
 
 public class GUI {
 
@@ -43,9 +45,17 @@ public class GUI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(0, 0, 622, 412);
+		
+		
 		frame = new JFrame("Defects Detection v1.0");
 		frame.setBounds(100, 100, 622, 456);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		frame.getContentPane().add(panel);
+		
 		
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
@@ -88,8 +98,25 @@ public class GUI {
 		});
 		mnRules.add(mntmDefaultRules);
 		
-		JMenuItem mntmCreateRules = new JMenuItem("Create Rules");
-		mnRules.add(mntmCreateRules);
+		JMenu mnEditRules = new JMenu("Edit Rules");
+		mnRules.add(mnEditRules);
+		
+		JMenuItem mntmChangeThresholds = new JMenuItem("Change thresholds");
+		mntmChangeThresholds.addActionListener(event -> {
+			frame.setContentPane(new ChangeThresholds(frame));
+			frame.revalidate();
+		});
+		mnEditRules.add(mntmChangeThresholds);
+		
+		
+		JMenuItem mntmCreateNewRules = new JMenuItem("Create new rules");
+		mntmCreateNewRules.addActionListener(event -> {
+			frame.setContentPane(new CreateRules(frame));
+			frame.revalidate();
+		});
+		
+		
+		mnEditRules.add(mntmCreateNewRules);
 		
 		JMenu mnAbout = new JMenu("Help");
 		
@@ -105,5 +132,7 @@ public class GUI {
 		});
 		mnAbout.add(mntmAbout);
 		frame.getContentPane().setLayout(null);
+		
+		
 	}
 }

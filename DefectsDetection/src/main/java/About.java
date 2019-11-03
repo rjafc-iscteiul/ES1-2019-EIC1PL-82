@@ -58,8 +58,8 @@ public class About extends JFrame {
 		lblSomeRandomPeople.setBounds(100, 41, 139, 16);
 		contentPane.add(lblSomeRandomPeople);
 		
-		JLabel lblTbd = new JLabel("TBD");
-		lblTbd.setBounds(124, 86, 61, 16);
+		JLabel lblTbd = new JLabel("13 December 2019");
+		lblTbd.setBounds(124, 86, 127, 16);
 		contentPane.add(lblTbd);
 		
 		JLabel label = new JLabel("1.0");
