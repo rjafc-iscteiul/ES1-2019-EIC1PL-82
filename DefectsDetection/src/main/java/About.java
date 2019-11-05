@@ -54,7 +54,7 @@ public class About extends JFrame {
 		btnOk.setBounds(327, 243, 117, 29);
 		contentPane.add(btnOk);
 		
-		JLabel lblSomeRandomPeople = new JLabel("Some random people.");
+		JLabel lblSomeRandomPeople = new JLabel("Some random people");
 		lblSomeRandomPeople.setBounds(100, 41, 139, 16);
 		contentPane.add(lblSomeRandomPeople);
 		
