@@ -1,5 +1,3 @@
-import java.awt.Color;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -12,6 +10,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class CreateRules extends JPanel {
+
+	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -22,11 +22,8 @@ public class CreateRules extends JPanel {
 	 */
 	public CreateRules(JFrame jframe) {
 		
-		
 		setLayout(null);
 		this.setBounds(0, 0, 622, 412);
-
-		
 		
 		JLabel lblLongmethod = new JLabel("long_method");
 		lblLongmethod.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
@@ -52,6 +49,7 @@ public class CreateRules extends JPanel {
 		textField_1.setBounds(217, 44, 44, 26);
 		add(textField_1);
 		textField_1.setColumns(10);
+		//.getText()
 		
 		JLabel lblCyclo = new JLabel("CYCLO");
 		lblCyclo.setBounds(273, 49, 61, 16);
@@ -91,6 +89,10 @@ public class CreateRules extends JPanel {
 		JButton btnApplyChanges = new JButton("Apply changes");
 		btnApplyChanges.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.out.println("LOC = " + textField.getText());
+				System.out.println("CYCLO = " + textField_1.getText());
+				System.out.println("ATFD = " + textField_2.getText());
+				System.out.println("LAA = " + textField_3.getText());
 			}
 		});
 		btnApplyChanges.setBounds(482, 357, 117, 29);

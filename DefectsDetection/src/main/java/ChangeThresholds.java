@@ -77,6 +77,10 @@ public class ChangeThresholds extends JPanel {
 		JButton btnApplyChanges = new JButton("Apply changes");
 		btnApplyChanges.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.out.println("LOC = " + textField.getText());
+				System.out.println("CYCLO = " + textField_1.getText());
+				System.out.println("ATFD = " + textField_2.getText());
+				System.out.println("LAA = " + textField_3.getText());
 			}
 		});
 		btnApplyChanges.setBounds(482, 357, 117, 29);
