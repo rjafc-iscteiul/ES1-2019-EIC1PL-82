@@ -30,7 +30,6 @@ public class About extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
 		JLabel lblNewLabel = new JLabel("Authors:");
 		lblNewLabel.setBounds(32, 41, 61, 16);
 		contentPane.add(lblNewLabel);
