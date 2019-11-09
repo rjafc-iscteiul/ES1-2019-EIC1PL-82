@@ -34,7 +34,7 @@ public class ResetValuesRules extends JFrame {
 	 */
 	public ResetValuesRules() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(0,0, 450, 95);
+		setBounds(100,100, 450, 95);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
