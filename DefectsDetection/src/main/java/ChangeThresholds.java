@@ -79,7 +79,7 @@ public class ChangeThresholds extends JPanel {
 		JButton btnApplyChanges = new JButton("Apply changes");
 		btnApplyChanges.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ThreshholdsPopup TP = new ThreshholdsPopup(Integer.parseInt(textField.getText()),Integer.parseInt(textField_1.getText()),Integer.parseInt(textField_2.getText()),Integer.parseInt(textField_3.getText()));
+				ThreshholdsPopup TP = new ThreshholdsPopup(Integer.parseInt(textField.getText()),Integer.parseInt(textField_1.getText()),Integer.parseInt(textField_2.getText()),Double.parseDouble(textField_3.getText()));
 				TP.setVisible(true);
 			}
 		});
