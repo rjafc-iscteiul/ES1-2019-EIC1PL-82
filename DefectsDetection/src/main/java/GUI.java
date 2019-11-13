@@ -16,6 +16,7 @@ import java.awt.Color;
 
 public class GUI {
 
+		
 	private JFrame frame;
 
 	/**
@@ -88,15 +89,22 @@ public class GUI {
 		JMenu mnRules = new JMenu("Rules");
 		menuBar.add(mnRules);
 		
-		JMenuItem mntmDefaultRules = new JMenuItem("Default Rules");
-		mntmDefaultRules.addActionListener(new ActionListener() {
+		JMenu mnDefaultRules = new JMenu("Default Rules");
+		mnRules.add(mnDefaultRules);
+		
+		JMenuItem mntmResetValues = new JMenuItem("Reset values and rules");
+		mntmResetValues.addActionListener(new ActionListener() {
 			
-			//comparing default values based on Excel default values
+			//create a pop-up to indicate the reset has been done successfully 
 			public void actionPerformed(ActionEvent e) {
-				
+				ResetValuesRules rvr = new ResetValuesRules();
+				rvr.setVisible(true);
 			}
 		});
-		mnRules.add(mntmDefaultRules);
+		mnDefaultRules.add(mntmResetValues);
+		
+		JMenuItem mntmCompareUsindDefault = new JMenuItem("Compare using default");
+		mnDefaultRules.add(mntmCompareUsindDefault);
 		
 		JMenu mnEditRules = new JMenu("Edit Rules");
 		mnRules.add(mnEditRules);

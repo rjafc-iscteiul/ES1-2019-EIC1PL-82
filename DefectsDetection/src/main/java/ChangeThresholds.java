@@ -7,13 +7,21 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.SwingConstants;
 
 public class ChangeThresholds extends JPanel {
+<<<<<<< HEAD
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
+=======
+	private JTextField locTextField;
+	private JTextField cycloTextField;
+	private JTextField atfdTextField;
+	private JTextField laaTextField;
+>>>>>>> branch 'master' of https://github.com/rjafc-iscteiul/ES1-2019-EIC1PL-82
 
 	/**
 	 * Create the panel.
@@ -31,19 +39,21 @@ public class ChangeThresholds extends JPanel {
 		lblLoc.setBounds(50, 56, 61, 16);
 		add(lblLoc);
 		
-		textField = new JTextField();
-		textField.setBounds(93, 51, 39, 26);
-		add(textField);
-		textField.setColumns(10);
+		locTextField = new JTextField();
+		locTextField.setBounds(93, 51, 39, 26);
+		add(locTextField);
+		locTextField.setColumns(10);
+		locTextField.setToolTipText("Default value for this field is 80.");
 		
 		JLabel lblAnd = new JLabel("and");
 		lblAnd.setBounds(144, 56, 30, 16);
 		add(lblAnd);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(249, 51, 39, 26);
-		add(textField_1);
-		textField_1.setColumns(10);
+		cycloTextField = new JTextField();
+		cycloTextField.setBounds(249, 51, 39, 26);
+		add(cycloTextField);
+		cycloTextField.setColumns(10);
+		cycloTextField.setToolTipText("Default value for this field is 10.");
 		
 		JLabel lblCyclo = new JLabel("CYCLO >");
 		lblCyclo.setBounds(186, 56, 61, 16);
@@ -58,10 +68,12 @@ public class ChangeThresholds extends JPanel {
 		lblNewLabel.setBounds(50, 161, 61, 16);
 		add(lblNewLabel);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(110, 156, 39, 26);
-		add(textField_2);
-		textField_2.setColumns(10);
+		atfdTextField = new JTextField();
+		atfdTextField.setBounds(110, 156, 39, 26);
+		add(atfdTextField);
+		atfdTextField.setColumns(10);
+		atfdTextField.setToolTipText("Default value for this field is 4.");
+
 		
 		JLabel lblAnd_1 = new JLabel("and");
 		lblAnd_1.setBounds(161, 161, 39, 16);
@@ -71,10 +83,12 @@ public class ChangeThresholds extends JPanel {
 		lblLaa.setBounds(203, 161, 61, 16);
 		add(lblLaa);
 		
-		textField_3 = new JTextField();
-		textField_3.setBounds(249, 156, 41, 26);
-		add(textField_3);
-		textField_3.setColumns(10);
+		laaTextField = new JTextField();
+		laaTextField.setBounds(249, 156, 41, 26);
+		add(laaTextField);
+		laaTextField.setColumns(10);
+		laaTextField.setToolTipText("Default value for this field is 0,42.");
+
 		
 		JButton btnApplyChanges = new JButton("Apply changes");
 		btnApplyChanges.addActionListener(new ActionListener() {
@@ -83,12 +97,16 @@ public class ChangeThresholds extends JPanel {
 				TP.setVisible(true);
 			}
 		});
-		btnApplyChanges.setBounds(482, 357, 117, 29);
+		btnApplyChanges.setBounds(382, 360, 117, 29);
 		add(btnApplyChanges);
 		
 		
-		this.setVisible(true);
+		JButton btnNewButton = new JButton("Compare");
+		btnNewButton.setBounds(499, 360, 117, 29);
+		add(btnNewButton);
+		
 		jframe.setContentPane(this);
+		this.setVisible(true);
 		
 	}
 }
