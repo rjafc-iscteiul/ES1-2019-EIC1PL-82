@@ -10,18 +10,17 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
 public class ChangeThresholds extends JPanel {
-<<<<<<< HEAD
+
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
-=======
+
 	private JTextField locTextField;
 	private JTextField cycloTextField;
 	private JTextField atfdTextField;
 	private JTextField laaTextField;
->>>>>>> branch 'master' of https://github.com/rjafc-iscteiul/ES1-2019-EIC1PL-82
 
 	/**
 	 * Create the panel.
