@@ -4,24 +4,29 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.filechooser.FileSystemView;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import java.awt.Color;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.filechooser.FileSystemView;
+import javax.swing.table.DefaultTableModel;
 
 public class GUI {
 
 	private JFrame frame;
+	private JTable table;
 
 	/**
 	 * Launch the application.
+	 * @param <E>
 	 */
 	public static void main(String[] args) {
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -46,15 +51,25 @@ public class GUI {
 	 */
 	private void initialize() {
 		
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 622, 412);
-		
-		
+				
 		frame = new JFrame("Defects Detection v1.0");
-		frame.setBounds(100, 100, 622, 456);
+		//frame.setBounds(100, 100, 622, 456);
+		//frame.setBounds(100, 100, 1200	, 1500);
+		frame.setSize(1500, 1000);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		frame.getContentPane().add(panel);
+		JPanel panel = new JPanel();
+		//panel.setBounds(0, 0, 622, 412);
+		panel.setBounds(0, 0, 1200	, 1500);
+		
+		
+		frame.getContentPane().add(panel, BorderLayout.CENTER);
+		
+		table = new JTable();
+		
+		JScrollPane scroll= new JScrollPane(table);
+		
+		panel.add(scroll);
 		
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -78,6 +93,10 @@ public class GUI {
 					
 					File selectedFile = jfc.getSelectedFile();
 					System.out.println(selectedFile.getAbsolutePath()); //prints file path
+					ExcelReader reader = new ExcelReader();
+					DefaultTableModel tableData = reader.readFile(selectedFile.getAbsolutePath());
+					table.setModel(tableData);
+					//table.add((Component) table.getModel());
 				}
 				
 			}
@@ -132,7 +151,5 @@ public class GUI {
 		});
 		mnAbout.add(mntmAbout);
 		frame.getContentPane().setLayout(null);
-		
-		
 	}
 }
