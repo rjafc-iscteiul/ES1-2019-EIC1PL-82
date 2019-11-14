@@ -1,10 +1,7 @@
-<<<<<<< HEAD
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
-=======
->>>>>>> branch 'master' of https://github.com/rjafc-iscteiul/ES1-2019-EIC1PL-82
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
