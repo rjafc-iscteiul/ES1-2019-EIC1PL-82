@@ -1,4 +1,3 @@
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,15 +8,16 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.filechooser.FileSystemView;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import java.awt.Color;
+import javax.swing.JTable;
+import javax.swing.filechooser.FileSystemView;
+import javax.swing.table.DefaultTableModel;
 
 public class GUI {
 
 		
 	private JFrame frame;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -78,7 +78,11 @@ public class GUI {
 				if (returnValue == JFileChooser.APPROVE_OPTION) {   //file choosen correctly
 					
 					File selectedFile = jfc.getSelectedFile();
-					System.out.println(selectedFile.getAbsolutePath()); //prints file path
+					//System.out.println(selectedFile.getAbsolutePath()); //prints file path
+					ExcelReader reader = new ExcelReader();
+					DefaultTableModel tableData = reader.readFile(selectedFile.getAbsolutePath());
+					table.setModel(tableData);
+					//table.add((Component) table.getModel());
 				}
 				
 			}

@@ -14,14 +14,28 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+//imoorts for expression evaluation purposes
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+
+
+
+
 public class CreateRules extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-
+	
+	/**
+	 *Get the below values from the existing thresholds 
+	 */
+	private int LOC=18;
+	private int CYCLO=14;
+	private int ATFD=7;
+	private double LAA=0.5;
+	
 	/**
 	 * Create the panel.
 	 */
@@ -35,69 +49,70 @@ public class CreateRules extends JPanel {
 		lblLongmethod.setBounds(24, 16, 104, 16);
 		add(lblLongmethod);
 		
-		JLabel lblLoc = new JLabel("LOC");
-		lblLoc.setBounds(48, 49, 34, 16);
-		add(lblLoc);
-		
-		textField = new JTextField();
-		textField.setBounds(155, 44, 44, 26);
-		add(textField);
-		textField.setColumns(10);
-		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setEditable(true);
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"and ", "or"}));
-		comboBox.setBounds(223, 44, 65, 27);
-		add(comboBox);
-		
-		textField_1 = new JTextField();
-		textField_1.setBounds(416, 44, 44, 26);
-		add(textField_1);
-		textField_1.setColumns(10);
-		//.getText()
-		
-		JLabel lblCyclo = new JLabel("CYCLO");
-		lblCyclo.setBounds(300, 49, 44, 16);
-		add(lblCyclo);
-		
 		
 		JLabel lblFeatureenvy = new JLabel("feature_envy");
 		lblFeatureenvy.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		lblFeatureenvy.setBounds(24, 189, 104, 16);
 		add(lblFeatureenvy);
 		
-		JLabel lblAtfd = new JLabel("ATFD");
-		lblAtfd.setBounds(48, 220, 34, 16);
-		add(lblAtfd);
-		
-		textField_2 = new JTextField();
-		textField_2.setBounds(155, 215, 44, 26);
-		add(textField_2);
-		textField_2.setColumns(10);
-		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"and", "or"}));
-		comboBox_1.setEditable(true);
-		comboBox_1.setBounds(223, 215, 65, 27);
-		add(comboBox_1);
-		
-		JLabel lblLaa = new JLabel("LAA");
-		lblLaa.setBounds(300, 220, 34, 16);
-		add(lblLaa);
-		
-		textField_3 = new JTextField();
-		textField_3.setBounds(404, 215, 44, 26);
-		add(textField_3);
-		textField_3.setColumns(10);
-		
 		
 		JButton btnApplyChanges = new JButton("Apply changes");
 		btnApplyChanges.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("LOC = " + textField.getText());
-				System.out.println("CYCLO = " + textField_1.getText());
-				System.out.println("ATFD = " + textField_2.getText());
-				System.out.println("LAA = " + textField_3.getText());
+				
+				//get jtextfield rules created
+				String rule=textField.getText();
+				String finalRule=rule;
+				
+				//check which parameters exist in the rule
+				if(rule.contains("LOC")) {
+					System.out.println("There is LOC parameter.");
+					
+					//replace LOC value in rule for threshold value
+					finalRule=finalRule.replace("LOC", String.valueOf(LOC));
+				}
+				
+				if(rule.contains("CYCLO")) {
+					System.out.println("There is CYCLO parameter.");
+					
+					//replace CYCLO value in rule for threshold value
+					finalRule=finalRule.replace("CYCLO", String.valueOf(CYCLO));
+				}
+				
+				if(rule.contains("ATFD")) {
+					System.out.println("There is ATFD parameter.");
+					
+					//replace ATFD value in rule for threshold value
+					finalRule=finalRule.replace("ATFD", String.valueOf(ATFD));
+				}
+				
+				if(rule.contains("LAA")) {
+					System.out.println("There is LAA parameter.");
+					
+					//replace LOC value in rule for threshold value
+					finalRule=finalRule.replace("LAA", String.valueOf(LAA));
+				}
+				
+				
+			
+				
+				//comparing (code font: https://stackoverflow.com/questions/19383953/is-it-possible-to-evaluate-a-boolean-expression-for-string-comparions)
+				try {
+
+		            ScriptEngineManager sem = new ScriptEngineManager();
+		            ScriptEngine se = sem.getEngineByName("JavaScript");
+		            String myExpression = finalRule;
+		            System.out.println(se.eval(myExpression));
+
+		        } catch (ScriptException error) {
+
+		            System.out.println("Invalid Expression");
+		            error.printStackTrace();
+
+		        }
+				
+				
+				
 			}
 		});
 		btnApplyChanges.setBounds(482, 357, 117, 29);
@@ -106,85 +121,26 @@ public class CreateRules extends JPanel {
 		this.setVisible(true);
 		jframe.setContentPane(this);
 		
-		JButton addLongMethodParameter = new JButton("+");
-		addLongMethodParameter.setToolTipText("Adds a new parameter to the long_method rule.");
-		addLongMethodParameter.addActionListener(new ActionListener() {
-			
-			// adds new rule to long_method
-			public void actionPerformed(ActionEvent e) {
-				
-				//add logic operator
-				JComboBox comboBox_21 = new JComboBox();
-				comboBox_21.setModel(new DefaultComboBoxModel(new String[] {"and","or"}));
-				comboBox_21.setBounds(79, 85, 71, 27);
-				add(comboBox_21);
-				
-				
-				//add parameter
-				JLabel lblLoc = new JLabel("LOC");
-				lblLoc.setBounds(120, 85, 34, 16);
-				add(lblLoc);
-				
-				
-				
-				//add logic operator
-				JComboBox comboBox_22 = new JComboBox();
-				comboBox_22.setModel(new DefaultComboBoxModel(new String[] {">", ">=", "<", "<=", "="}));
-				comboBox_22.setBounds(175, 85, 71, 27);
-				add(comboBox_22);
-				
-				revalidate();
-				
-				//add parameter value
-				
-				
-				
-			}
-		});
-		addLongMethodParameter.setBounds(533, 45, 27, 26);
-		add(addLongMethodParameter);
+		textField = new JTextField();
+		textField.setToolTipText("Insert the new rule here.\n\nPlease use only one time the available parameters: LOC, CYCLO, LAA or ATFD.");
+		textField.setBounds(34, 55, 298, 38);
+		add(textField);
+		textField.setColumns(10);
 		
-		JButton removeLongMethodParameter = new JButton("-");
-		removeLongMethodParameter.setToolTipText("Removes selected parameters  from the long_method rule.");
-		removeLongMethodParameter.setBounds(572, 45, 27, 26);
-		add(removeLongMethodParameter);
+		textField_1 = new JTextField();
+		textField_1.setToolTipText("Insert the new rule here.\n\nPlease use only one time the available parameters: LOC, CYCLO, LAA or ATFD.");
+		textField_1.setColumns(10);
+		textField_1.setBounds(34, 231, 298, 38);
+		add(textField_1);
 		
-		JButton addFeatureEnvyParameter = new JButton("+");
-		addFeatureEnvyParameter.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		addFeatureEnvyParameter.setToolTipText("Adds a new parameter  to the feature_envy rule.");
-		addFeatureEnvyParameter.setBounds(533, 216, 27, 26);
-		add(addFeatureEnvyParameter);
+		JLabel lblExampleOfRule = new JLabel("Example of rule: LOC > 80 && CYCLO > 10");
+		lblExampleOfRule.setFont(new Font("Lucida Grande", Font.PLAIN, 9));
+		lblExampleOfRule.setBounds(44, 97, 288, 16);
+		add(lblExampleOfRule);
 		
-		JButton removeFeatureEnvyParameter = new JButton("-");
-		removeFeatureEnvyParameter.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		removeFeatureEnvyParameter.setToolTipText("Removes selected parameters  from the feature_envy rule.");
-		removeFeatureEnvyParameter.setBounds(572, 216, 27, 26);
-		add(removeFeatureEnvyParameter);
-		
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {">", ">=", "<", "<=", "="}));
-		comboBox_2.setBounds(79, 45, 71, 27);
-		add(comboBox_2);
-		
-		JComboBox comboBox_3 = new JComboBox();
-		comboBox_3.setModel(new DefaultComboBoxModel(new String[] {">", ">=", "<", "<=", "="}));
-		comboBox_3.setBounds(346, 45, 70, 27);
-		add(comboBox_3);
-		
-		JComboBox comboBox_4 = new JComboBox();
-		comboBox_4.setModel(new DefaultComboBoxModel(new String[] {">", ">=", "<", "<=", "="}));
-		comboBox_4.setBounds(85, 217, 70, 27);
-		add(comboBox_4);
-		
-		JComboBox comboBox_5 = new JComboBox();
-		comboBox_5.setModel(new DefaultComboBoxModel(new String[] {"<", "<=", ">", ">=", "="}));
-		comboBox_5.setBounds(328, 216, 76, 27);
-		add(comboBox_5);
+		JLabel lblExampleOfRule_1 = new JLabel("Example of rule: ATFD > 4 && LAA < 0.42");
+		lblExampleOfRule_1.setFont(new Font("Lucida Grande", Font.PLAIN, 9));
+		lblExampleOfRule_1.setBounds(44, 281, 288, 16);
+		add(lblExampleOfRule_1);
 	}
 }
