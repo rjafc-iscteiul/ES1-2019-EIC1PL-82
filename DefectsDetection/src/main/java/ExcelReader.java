@@ -3,6 +3,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.Optional;
 import java.util.Vector;
 
 import javax.swing.table.DefaultTableModel;
@@ -14,11 +15,13 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ExcelReader {
 
-	public DefaultTableModel readFile(String filename){
+	public DefaultTableModel readFile(String filename) {
 
 		File file = new File(filename);
-		FileInputStream f = null;
+
 		DefaultTableModel data = new DefaultTableModel();
+
+		FileInputStream f = null;
 
 		try {
 			f = new FileInputStream(file);
@@ -27,7 +30,7 @@ public class ExcelReader {
 			e.printStackTrace();
 		}
 
-		//creates the object for the XLSX excel file
+		// creates the object for the XLSX excel file
 		XSSFWorkbook wbk = null;
 		try {
 			wbk = new XSSFWorkbook(f);
@@ -36,37 +39,36 @@ public class ExcelReader {
 			e.printStackTrace();
 		}
 
-		//gets the sheet
+		// gets the sheet
 		XSSFSheet s = wbk.getSheetAt(0);
 
-		//iterate rows
+		// iterate rows
 		Iterator<Row> rIterator = s.iterator();
 
 		Vector<Object> v = new Vector<Object>();
 
-		int iteratorOfColumns=0;
-		
-		while(rIterator.hasNext()) {
+		int iteratorOfColumns = 0;
+
+		while (rIterator.hasNext()) {
 			Row r = rIterator.next();
 
 			Iterator<Cell> cIterator = r.cellIterator();
 
-
-			while(cIterator.hasNext()) {
+			while (cIterator.hasNext()) {
 				Cell c = cIterator.next();
-				if(iteratorOfColumns==0	) {
-					System.out.print("COLCOLCOLCOLCOLCOL------>"+ c.toString());
+				if (iteratorOfColumns == 0) {
+					System.out.print("COLCOLCOLCOLCOLCOL------>" + c.toString());
 					data.addColumn(c.toString());
-				}else {
+				} else {
 					v.add(c.toString());
 				}
 			}
-			if(iteratorOfColumns!=0) {
+			if (iteratorOfColumns != 0) {
 				data.addRow(v);
-				System.out.println("rowrowrowroworoworow--------->"+v.toString());
+				System.out.println("rowrowrowroworoworow--------->" + v.toString());
 				v = new Vector<Object>();
 			}
-			
+
 			iteratorOfColumns++;
 
 		}
