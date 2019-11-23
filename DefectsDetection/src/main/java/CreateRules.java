@@ -35,13 +35,6 @@ public class CreateRules extends JPanel {
 	private LinkedList<Integer> errorADII=new LinkedList<Integer>();
 
 	
-	/**
-	 *Get the below values from the existing thresholds 
-	 */
-	private int LOC=18;
-	private int CYCLO=14;
-	private int ATFD=7;
-	private double LAA=0.5;
 	
 	/**
 	 * Create the panel.
@@ -73,7 +66,6 @@ public class CreateRules extends JPanel {
 				String rule=textField.getText();
 				String finalRule=rule;
 				JTable table=gui.getCurrentExcelFileData();
-	            String myExpression = finalRule;
 
 				
 				//comparing (code font: https://stackoverflow.com/questions/19383953/is-it-possible-to-evaluate-a-boolean-expression-for-string-comparions)
@@ -84,29 +76,30 @@ public class CreateRules extends JPanel {
 		            
 					//looping over rows
 					for(int numRow=0;numRow!=table.getModel().getRowCount();numRow++) {
-						if(rule.contains("LOC")) {
-							//System.out.println("There is LOC parameter.");
+						finalRule=rule;
+						if(finalRule.contains("LOC")) {
+//							System.out.println("There is LOC parameter.");
 							
 							//replace LOC value in rule for threshold value
 							finalRule=finalRule.replace("LOC", String.valueOf(table.getModel().getValueAt(numRow,4)));
 						}
 						
 						
-						if(rule.contains("CYCLO")) {
+						if(finalRule.contains("CYCLO")) {
 //							System.out.println("There is CYCLO parameter.");
 							
 							//replace CYCLO value in rule for threshold value
 							finalRule=finalRule.replace("CYCLO", String.valueOf(table.getModel().getValueAt(numRow,5)));
 						}
 					
-						if(rule.contains("ATFD")) {
+						if(finalRule.contains("ATFD")) {
 //							System.out.println("There is ATFD parameter.");
 							
 							//replace ATFD value in rule for threshold value
 							finalRule=finalRule.replace("ATFD", String.valueOf(table.getModel().getValueAt(numRow,6)));
 						}
 						
-						if(rule.contains("LAA")) {
+						if(finalRule.contains("LAA")) {
 //							System.out.println("There is LAA parameter.");
 							
 							//replace LOC value in rule for threshold value
@@ -115,41 +108,56 @@ public class CreateRules extends JPanel {
 						
 						
 						//comparing long_method
-						boolean getExcelLM=(boolean) table.getModel().getValueAt(numRow, 8);
+						String getExcelLM=table.getModel().getValueAt(numRow, 8).toString().toLowerCase();
+//						System.out.println(getExcelLM);
+						
+						String myResult=se.eval(finalRule).toString();
+//						System.out.println(myResult);
 						
 						
-						boolean myResult=(boolean) se.eval(myExpression);
-						
-						int methodID=(int) table.getModel().getValueAt(numRow, 0);
+						int methodID=(int)Double.parseDouble(table.getModel().getValueAt(numRow, 0).toString());
 						
 						
 						//DCI error
-						if(myResult==true && getExcelLM==true) {
+						if(myResult.equals("true") && getExcelLM.equals("true")) {
 							numberDCI+=1;
+							
 							errorDCI.add(methodID);
 						}
 						
 						//DII error
-						if(myResult==true && getExcelLM==false) {
+						if(myResult.equals("true") && getExcelLM.equals("false")) {
 							numberDII+=1;
 							errorDII.add(methodID);
 						}
 						
 						//ADCI error
-						if(myResult==false && getExcelLM==false) {
+						if(myResult.equals("false") && getExcelLM.equals("false")) {
 							numberADCI+=1;
 							errorADCI.add(methodID);
 						}
 						
 						//ADII error
-						if(myResult==false && getExcelLM==true) {
+						if(myResult.equals("false") && getExcelLM.equals("true")) {
 							numberADII+=1;
 							errorADII.add(methodID);
 						}
 						
 					}	       
+					
+					paintWithErrors(jframe);
 		            
-		            
+		            System.out.println("Number errors DCI: "+numberDCI);
+					System.out.println("Number errors DII: "+numberDII);
+					System.out.println("Number errors ADCI: "+numberADCI);
+					System.out.println("Number errors ADII: "+numberADII);
+					
+					
+					System.out.println("Size DCI list: "+errorDCI.size());
+					System.out.println("Size DII list: "+errorDII.size());
+					System.out.println("Size ADCI list: "+errorADCI.size());
+					System.out.println("Size ADII: "+errorADII.size());
+					
 //		            System.out.println(se.eval(myExpression));
 
 		        } catch (ScriptException error) {
@@ -163,10 +171,7 @@ public class CreateRules extends JPanel {
 
 		        }
 				
-				System.out.println("Number errors DCI: "+numberDCI);
-				System.out.println("Number errors DII: "+numberDII);
-				System.out.println("Number errors ADCI: "+numberADCI);
-				System.out.println("Number errors ADII: "+numberADII);
+				
 
 				
 			}
@@ -199,4 +204,24 @@ public class CreateRules extends JPanel {
 		lblExampleOfRule_1.setBounds(44, 281, 288, 16);
 		add(lblExampleOfRule_1);
 	}
+	
+	
+	
+	public void paintWithErrors(JFrame frame) {
+		ComparisonError dci=new ComparisonError("DCI",numberDCI,errorDCI);
+		ComparisonError dii=new ComparisonError("DII",numberDII,errorDII);
+		ComparisonError adci=new ComparisonError("ADCI",numberADCI,errorADCI);
+		ComparisonError adii=new ComparisonError("ADII",numberADII,errorADII);
+
+		LinkedList<ComparisonError> errors=new LinkedList<ComparisonError>();
+		errors.add(dci);
+		errors.add(dii);
+		errors.add(adci);
+		errors.add(adii);
+		
+		frame.setContentPane(new paintError(errors));
+	}
+	
+	
+	
 }
