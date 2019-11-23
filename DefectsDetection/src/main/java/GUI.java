@@ -1,4 +1,3 @@
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,14 +9,15 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.filechooser.FileSystemView;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import java.awt.Color;
 
 public class GUI {
 
-		
 	private JFrame frame;
+	private int LOC;
+	private int CYCLO;
+	private int ATFD;
+	private double LAA;
 
 	/**
 	 * Launch the application.
@@ -111,7 +111,7 @@ public class GUI {
 		
 		JMenuItem mntmChangeThresholds = new JMenuItem("Change thresholds");
 		mntmChangeThresholds.addActionListener(event -> {
-			frame.setContentPane(new ChangeThresholds(frame));
+			frame.setContentPane(new ChangeThresholds(frame,this));
 			frame.revalidate();
 		});
 		mnEditRules.add(mntmChangeThresholds);
@@ -140,7 +140,12 @@ public class GUI {
 		});
 		mnAbout.add(mntmAbout);
 		frame.getContentPane().setLayout(null);
-		
-		
+	}
+	
+	public void assignThreshholds(int LOC, int CYCLO, int ATFD, double LAA) {
+		this.LOC = LOC;
+		this.CYCLO = CYCLO;
+		this.ATFD = ATFD;
+		this.LAA = LAA;
 	}
 }

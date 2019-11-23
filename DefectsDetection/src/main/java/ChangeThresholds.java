@@ -7,25 +7,26 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.SwingConstants;
 
 public class ChangeThresholds extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
 	private JTextField locTextField;
 	private JTextField cycloTextField;
 	private JTextField atfdTextField;
 	private JTextField laaTextField;
+	private GUI guii;
+	private int LOC;
+	private int CYCLO;
+	private int ATFD;
+	private double LAA;
 
 	/**
 	 * Create the panel.
 	 */
-	public ChangeThresholds(JFrame jframe) {
+	public ChangeThresholds(JFrame jframe, GUI gui) {
 		setLayout(null);
 		this.setBounds(0, 0, 622, 412);
+		this.guii = gui;
 		
 		JLabel lblLongmethod = new JLabel("long_method");
 		lblLongmethod.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
@@ -70,7 +71,6 @@ public class ChangeThresholds extends JPanel {
 		add(atfdTextField);
 		atfdTextField.setColumns(10);
 		atfdTextField.setToolTipText("Default value for this field is 4.");
-
 		
 		JLabel lblAnd_1 = new JLabel("and");
 		lblAnd_1.setBounds(161, 161, 39, 16);
@@ -86,23 +86,23 @@ public class ChangeThresholds extends JPanel {
 		laaTextField.setColumns(10);
 		laaTextField.setToolTipText("Default value for this field is 0,42.");
 
-		
 		JButton btnApplyChanges = new JButton("Apply changes");
 		btnApplyChanges.setBounds(382, 360, 117, 29);
 		add(btnApplyChanges);
 		btnApplyChanges.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ThreshholdsPopup TP = new ThreshholdsPopup(Integer.parseInt(locTextField.getText()),Integer.parseInt(cycloTextField.getText()),Integer.parseInt(atfdTextField.getText()),laaTextField.getText(), true);
+				gui.assignThreshholds(LOC, CYCLO, ATFD, LAA);
+				ThreshholdsPopup TP = new ThreshholdsPopup(LOC,CYCLO,ATFD,LAA,true);
 				TP.setVisible(true);
 			}
 		});
 		
-		
-		
 		JButton btnNewButton = new JButton("Compare");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ThreshholdsPopup TP = new ThreshholdsPopup(Integer.parseInt(locTextField.getText()),Integer.parseInt(cycloTextField.getText()),Integer.parseInt(atfdTextField.getText()),laaTextField.getText(), false);
+				checkTextBoxes();
+				guii.assignThreshholds(LOC, CYCLO, ATFD, LAA);
+				ThreshholdsPopup TP = new ThreshholdsPopup(LOC,CYCLO,ATFD,LAA,false);
 				TP.setVisible(true);
 			}
 		});
@@ -113,4 +113,12 @@ public class ChangeThresholds extends JPanel {
 		this.setVisible(true);
 		
 	}
+	
+	private void checkTextBoxes() {
+		try { LOC = Integer.parseInt(locTextField.getText()); }	catch (NumberFormatException e) { LOC = 0; }
+		try { CYCLO = Integer.parseInt(cycloTextField.getText()); }	catch (NumberFormatException e) { CYCLO = 0; }
+		try { ATFD = Integer.parseInt(atfdTextField.getText()); }	catch (NumberFormatException e) { ATFD = 0; }
+		try { LAA = Double.parseDouble(laaTextField.getText()); }	catch (NumberFormatException e) { LAA = 0; }
+	}
+	
 }

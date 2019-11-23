@@ -17,9 +17,8 @@ public class ThreshholdsPopup extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ThreshholdsPopup(int LOC, int CYCLO, int ATFD, String LA, boolean mode) {
+	public ThreshholdsPopup(int LOC, int CYCLO, int ATFD, double LAA, boolean mode) {
 		setBounds(100, 100, 550, 175);
-		double LAA = Double.parseDouble(LA);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPanel);
