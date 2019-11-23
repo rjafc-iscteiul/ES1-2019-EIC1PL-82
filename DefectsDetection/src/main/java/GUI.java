@@ -9,6 +9,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
@@ -18,7 +19,8 @@ public class GUI {
 		
 	private JFrame frame;
 	private JTable table;
-
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -56,6 +58,11 @@ public class GUI {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		frame.getContentPane().add(panel);
+		
+		table = new JTable();
+		
+		JScrollPane scroll = new JScrollPane(table);
+		panel.add(scroll);
 		
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -123,7 +130,7 @@ public class GUI {
 		
 		JMenuItem mntmCreateNewRules = new JMenuItem("Create new rules");
 		mntmCreateNewRules.addActionListener(event -> {
-			frame.setContentPane(new CreateRules(frame));
+			frame.setContentPane(new CreateRules(frame,this));
 			frame.revalidate();
 		});
 		
@@ -147,4 +154,10 @@ public class GUI {
 		
 		
 	}
+	
+	public JTable getCurrentExcelFileData() {
+		return this.table;
+	}
+	
+	
 }
