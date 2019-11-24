@@ -147,16 +147,16 @@ public class CreateRules extends JPanel {
 					
 					paintWithErrors(jframe);
 		            
-		            System.out.println("Number errors DCI: "+numberDCI);
-					System.out.println("Number errors DII: "+numberDII);
-					System.out.println("Number errors ADCI: "+numberADCI);
-					System.out.println("Number errors ADII: "+numberADII);
-					
-					
-					System.out.println("Size DCI list: "+errorDCI.size());
-					System.out.println("Size DII list: "+errorDII.size());
-					System.out.println("Size ADCI list: "+errorADCI.size());
-					System.out.println("Size ADII: "+errorADII.size());
+//		            System.out.println("Number errors DCI: "+numberDCI);
+//					System.out.println("Number errors DII: "+numberDII);
+//					System.out.println("Number errors ADCI: "+numberADCI);
+//					System.out.println("Number errors ADII: "+numberADII);
+//					
+//					
+//					System.out.println("Size DCI list: "+errorDCI.size());
+//					System.out.println("Size DII list: "+errorDII.size());
+//					System.out.println("Size ADCI list: "+errorADCI.size());
+//					System.out.println("Size ADII: "+errorADII.size());
 					
 //		            System.out.println(se.eval(myExpression));
 
@@ -170,10 +170,7 @@ public class CreateRules extends JPanel {
 		            //error.printStackTrace();
 
 		        }
-				
-				
 
-				
 			}
 		});
 		btnApplyChanges.setBounds(482, 357, 117, 29);
