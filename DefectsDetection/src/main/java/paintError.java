@@ -1,7 +1,11 @@
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -26,7 +30,7 @@ public class paintError extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public paintError(LinkedList<ComparisonError> errors) {
+	public paintError(LinkedList<ComparisonError> errors, JFrame jframe, GUI gui) {
 		
 		this.setBounds(0, 0, 622, 412);
 		setLayout(null);
@@ -139,6 +143,15 @@ public class paintError extends JPanel {
 				}
 				
 				tableADII.setModel(modelADII);
+				
+				JButton btnCloseResults = new JButton("Close Results");
+				btnCloseResults.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						new CreateRules(jframe,gui).setBounds(8,18, 630, 400);
+					}
+				});
+				btnCloseResults.setBounds(486, 365, 117, 29);
+				add(btnCloseResults);
 		
 		
 		createHistogram(errors);

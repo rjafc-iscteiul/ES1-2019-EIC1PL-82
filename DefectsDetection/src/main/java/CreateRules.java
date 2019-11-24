@@ -23,6 +23,7 @@ public class CreateRules extends JPanel {
 	private JTextField textField;
 	private JTextField textField_1;
 	private GUI gui;
+	private JFrame jframe;
 	
 	private int numberDCI=0;
 	private int numberDII=0;
@@ -42,6 +43,7 @@ public class CreateRules extends JPanel {
 	public CreateRules(JFrame jframe, GUI gui) {
 		
 		this.gui=gui;
+		this.jframe=jframe;
 		
 		setLayout(null);
 		this.setBounds(0, 0, 622, 412);
@@ -62,11 +64,18 @@ public class CreateRules extends JPanel {
 		btnApplyChanges.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				//get jtextfield rules created
-				String rule=textField.getText();
-				String finalRule=rule;
+				
 				JTable table=gui.getCurrentExcelFileData();
 
+				
+				//get jtextfield rules (for long_method)
+				String rule=textField.getText();
+				String finalRule=rule;
+
+				
+				//get jtextfield rules (for feature_envy)
+				String ruleFE=textField_1.getText();
+				String finalRuleFE=ruleFE;
 				
 				//comparing (code font: https://stackoverflow.com/questions/19383953/is-it-possible-to-evaluate-a-boolean-expression-for-string-comparions)
 				try {
@@ -166,6 +175,7 @@ public class CreateRules extends JPanel {
 		            
 		            //lauch a error message on gui 
 		            
+		            new InvalidExpression().setVisible(true);
 		            
 		            //error.printStackTrace();
 
@@ -216,7 +226,7 @@ public class CreateRules extends JPanel {
 		errors.add(adci);
 		errors.add(adii);
 		
-		frame.setContentPane(new paintError(errors));
+		frame.setContentPane(new paintError(errors,jframe, gui));
 	}
 	
 	
