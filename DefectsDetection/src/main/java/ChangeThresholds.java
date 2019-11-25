@@ -91,7 +91,10 @@ public class ChangeThresholds extends JPanel {
 		add(btnApplyChanges);
 		btnApplyChanges.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				gui.assignThreshholds(LOC, CYCLO, ATFD, LAA);
+				guii.setLOC(LOC);
+				guii.setCYCLO(CYCLO);
+				guii.setATFD(ATFD);
+				guii.setLAA(LAA);
 				ThreshholdsPopup TP = new ThreshholdsPopup(LOC,CYCLO,ATFD,LAA,true);
 				TP.setVisible(true);
 			}
@@ -101,7 +104,10 @@ public class ChangeThresholds extends JPanel {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				checkTextBoxes();
-				guii.assignThreshholds(LOC, CYCLO, ATFD, LAA);
+				guii.setLOC(LOC);
+				guii.setCYCLO(CYCLO);
+				guii.setATFD(ATFD);
+				guii.setLAA(LAA);
 				ThreshholdsPopup TP = new ThreshholdsPopup(LOC,CYCLO,ATFD,LAA,false);
 				TP.setVisible(true);
 			}

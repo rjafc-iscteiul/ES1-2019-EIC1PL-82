@@ -143,9 +143,18 @@ public class GUI {
 	}
 	
 	public void assignThreshholds(int LOC, int CYCLO, int ATFD, double LAA) {
-		this.LOC = LOC;
-		this.CYCLO = CYCLO;
-		this.ATFD = ATFD;
-		this.LAA = LAA;
+		setLOC(LOC);
+		setCYCLO(CYCLO);
+		setATFD(ATFD);
+		setLAA(LAA);
 	}
+
+	public int getLOC() { return LOC; }
+	public void setLOC(int LOC) { this.LOC = LOC; }
+	public int getCYCLO() {	return CYCLO; }
+	public void setCYCLO(int CYCLO) { this.CYCLO = CYCLO; }
+	public int getATFD() {	return ATFD; }
+	public void setATFD(int ATFD) { this.ATFD = ATFD; }
+	public double getLAA() { return LAA; }
+	public void setLAA(double LAA) { this.LAA = LAA; }
 }
