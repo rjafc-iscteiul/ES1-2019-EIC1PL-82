@@ -20,6 +20,11 @@ public class ChangeThresholds extends JPanel {
 	private JTextField atfdTextField;
 	private JTextField laaTextField;
 
+	private int LOC;
+	private int CIC;
+	private int ATFD;
+	private int LAA;
+	
 	/**
 	 * Create the panel.
 	 */
@@ -94,6 +99,10 @@ public class ChangeThresholds extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				ThreshholdsPopup TP = new ThreshholdsPopup(Integer.parseInt(locTextField.getText()),Integer.parseInt(cycloTextField.getText()),Integer.parseInt(atfdTextField.getText()),laaTextField.getText(), true);
 				TP.setVisible(true);
+				LOC=Integer.parseInt(locTextField.getText());
+				CIC=Integer.parseInt(cycloTextField.getText());
+				ATFD=Integer.parseInt(atfdTextField.getText());
+				LAA=Integer.parseInt(laaTextField.getText());
 			}
 		});
 		
