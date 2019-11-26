@@ -25,6 +25,8 @@ public class CreateRules extends JPanel {
 	private GUI gui;
 	private JFrame jframe;
 	
+	
+	//long_method attributes
 	private int numberDCI=0;
 	private int numberDII=0;
 	private int numberADCI=0;
@@ -35,7 +37,7 @@ public class CreateRules extends JPanel {
 	private LinkedList<Integer> errorADCI=new LinkedList<Integer>();
 	private LinkedList<Integer> errorADII=new LinkedList<Integer>();
 
-	
+
 	
 	/**
 	 * Create the panel.
@@ -77,110 +79,26 @@ public class CreateRules extends JPanel {
 				String ruleFE=textField_1.getText();
 				String finalRuleFE=ruleFE;
 				
-				//comparing (code font: https://stackoverflow.com/questions/19383953/is-it-possible-to-evaluate-a-boolean-expression-for-string-comparions)
-				try {
-
-		            ScriptEngineManager sem = new ScriptEngineManager();
-		            ScriptEngine se = sem.getEngineByName("JavaScript");
-		            
-					//looping over rows
-					for(int numRow=0;numRow!=table.getModel().getRowCount();numRow++) {
-						finalRule=rule;
-						if(finalRule.contains("LOC")) {
-//							System.out.println("There is LOC parameter.");
-							
-							//replace LOC value in rule for threshold value
-							finalRule=finalRule.replace("LOC", String.valueOf(table.getModel().getValueAt(numRow,4)));
-						}
-						
-						
-						if(finalRule.contains("CYCLO")) {
-//							System.out.println("There is CYCLO parameter.");
-							
-							//replace CYCLO value in rule for threshold value
-							finalRule=finalRule.replace("CYCLO", String.valueOf(table.getModel().getValueAt(numRow,5)));
-						}
-					
-						if(finalRule.contains("ATFD")) {
-//							System.out.println("There is ATFD parameter.");
-							
-							//replace ATFD value in rule for threshold value
-							finalRule=finalRule.replace("ATFD", String.valueOf(table.getModel().getValueAt(numRow,6)));
-						}
-						
-						if(finalRule.contains("LAA")) {
-//							System.out.println("There is LAA parameter.");
-							
-							//replace LOC value in rule for threshold value
-							finalRule=finalRule.replace("LAA", String.valueOf(table.getModel().getValueAt(numRow,7)));
-						}
-						
-						
-						//comparing long_method
-						String getExcelLM=table.getModel().getValueAt(numRow, 8).toString().toLowerCase();
-//						System.out.println(getExcelLM);
-						
-						String myResult=se.eval(finalRule).toString();
-//						System.out.println(myResult);
-						
-						
-						int methodID=(int)Double.parseDouble(table.getModel().getValueAt(numRow, 0).toString());
-						
-						
-						//DCI error
-						if(myResult.equals("true") && getExcelLM.equals("true")) {
-							numberDCI+=1;
-							
-							errorDCI.add(methodID);
-						}
-						
-						//DII error
-						if(myResult.equals("true") && getExcelLM.equals("false")) {
-							numberDII+=1;
-							errorDII.add(methodID);
-						}
-						
-						//ADCI error
-						if(myResult.equals("false") && getExcelLM.equals("false")) {
-							numberADCI+=1;
-							errorADCI.add(methodID);
-						}
-						
-						//ADII error
-						if(myResult.equals("false") && getExcelLM.equals("true")) {
-							numberADII+=1;
-							errorADII.add(methodID);
-						}
-						
-					}	       
-					
-					paintWithErrors(jframe);
-		            
-//		            System.out.println("Number errors DCI: "+numberDCI);
-//					System.out.println("Number errors DII: "+numberDII);
-//					System.out.println("Number errors ADCI: "+numberADCI);
-//					System.out.println("Number errors ADII: "+numberADII);
-//					
-//					
-//					System.out.println("Size DCI list: "+errorDCI.size());
-//					System.out.println("Size DII list: "+errorDII.size());
-//					System.out.println("Size ADCI list: "+errorADCI.size());
-//					System.out.println("Size ADII: "+errorADII.size());
-					
-//		            System.out.println(se.eval(myExpression));
-
-		        } catch (ScriptException error) {
-
-		            System.out.println("Invalid Expression");
-		            
-		            //lauch a error message on gui 
-		            
+				
+				//check if any is empty
+				if(ruleFE.trim().isEmpty() && rule.trim().isEmpty()) {
 		            new InvalidExpression().setVisible(true);
-		            
-		            //error.printStackTrace();
-
-		        }
-
+				}else {
+					if(ruleFE.trim().isEmpty()) {
+						System.out.println("Feature envy rule is Empty.");
+						paintAuxOneError(finalRule,rule,table);
+					}else {
+						if(rule.trim().isEmpty()) {
+							System.out.println("Long method rule is Empty.");
+							paintAuxOneError(finalRuleFE,ruleFE,table);
+						}else {
+							//both fields are full
+							
+						}
+					}
+				
+				}
+				
 			}
 		});
 		btnApplyChanges.setBounds(482, 357, 117, 29);
@@ -212,6 +130,100 @@ public class CreateRules extends JPanel {
 		add(lblExampleOfRule_1);
 	}
 	
+	
+	public void paintAuxOneError(String finalRule, String rule, JTable table) {
+		//comparing (code font: https://stackoverflow.com/questions/19383953/is-it-possible-to-evaluate-a-boolean-expression-for-string-comparions)
+		try {
+
+            ScriptEngineManager sem = new ScriptEngineManager();
+            ScriptEngine se = sem.getEngineByName("JavaScript");
+            
+			//looping over rows
+			for(int numRow=0;numRow!=table.getModel().getRowCount();numRow++) {
+				finalRule=rule;
+				if(finalRule.contains("LOC")) {
+//					System.out.println("There is LOC parameter.");
+					
+					//replace LOC value in rule for threshold value
+					finalRule=finalRule.replace("LOC", String.valueOf(table.getModel().getValueAt(numRow,4)));
+				}
+				
+				
+				if(finalRule.contains("CYCLO")) {
+//					System.out.println("There is CYCLO parameter.");
+					
+					//replace CYCLO value in rule for threshold value
+					finalRule=finalRule.replace("CYCLO", String.valueOf(table.getModel().getValueAt(numRow,5)));
+				}
+			
+				if(finalRule.contains("ATFD")) {
+//					System.out.println("There is ATFD parameter.");
+					
+					//replace ATFD value in rule for threshold value
+					finalRule=finalRule.replace("ATFD", String.valueOf(table.getModel().getValueAt(numRow,6)));
+				}
+				
+				if(finalRule.contains("LAA")) {
+//					System.out.println("There is LAA parameter.");
+					
+					//replace LOC value in rule for threshold value
+					finalRule=finalRule.replace("LAA", String.valueOf(table.getModel().getValueAt(numRow,7)));
+				}
+				
+				
+				//comparing long_method
+				String getExcelLM=table.getModel().getValueAt(numRow, 8).toString().toLowerCase();
+//				System.out.println(getExcelLM);
+				
+				String myResult=se.eval(finalRule).toString();
+//				System.out.println(myResult);
+				
+				
+				int methodID=(int)Double.parseDouble(table.getModel().getValueAt(numRow, 0).toString());
+				
+				
+				//DCI error
+				if(myResult.equals("true") && getExcelLM.equals("true")) {
+					numberDCI+=1;
+					
+					errorDCI.add(methodID);
+				}
+				
+				//DII error
+				if(myResult.equals("true") && getExcelLM.equals("false")) {
+					numberDII+=1;
+					errorDII.add(methodID);
+				}
+				
+				//ADCI error
+				if(myResult.equals("false") && getExcelLM.equals("false")) {
+					numberADCI+=1;
+					errorADCI.add(methodID);
+				}
+				
+				//ADII error
+				if(myResult.equals("false") && getExcelLM.equals("true")) {
+					numberADII+=1;
+					errorADII.add(methodID);
+				}
+				
+			}	       
+			
+			paintWithErrors(jframe); 
+            
+
+        } catch (ScriptException error) {
+
+            System.out.println("Invalid Expression");
+            
+            //lauch a error message on gui 
+            
+            new InvalidExpression().setVisible(true);
+            
+            //error.printStackTrace();
+
+        }
+	}
 	
 	
 	public void paintWithErrors(JFrame frame) {
