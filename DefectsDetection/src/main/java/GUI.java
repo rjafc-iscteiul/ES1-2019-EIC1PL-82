@@ -122,7 +122,7 @@ public class GUI {
 		
 		JMenuItem mntmChangeThresholds = new JMenuItem("Change thresholds");
 		mntmChangeThresholds.addActionListener(event -> {
-			frame.setContentPane(new ChangeThresholds(frame));
+			frame.setContentPane(new ChangeThresholds(frame,this));
 			frame.revalidate();
 		});
 		mnEditRules.add(mntmChangeThresholds);
