@@ -14,10 +14,29 @@ public class ThreshholdsPopup extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 
+	
+	/*
+	 * attributes to keep thresholds from GUI
+	 * */
+	
+	
+	private int looc;
+	private int cyclo;
+	private int atfd;
+	private double laa;
+	
+	
 	/**
 	 * Create the dialog.
 	 */
-	public ThreshholdsPopup(int LOC, int CYCLO, int ATFD, double LAA, boolean mode) {
+	public ThreshholdsPopup(int LOC, int CYCLO, int ATFD, String LA, boolean mode) {
+		
+		this.looc=LOC;
+		this.cyclo=CYCLO;
+		this.atfd=ATFD;
+		this.laa=Double.parseDouble(LA);
+		
+		
 		setBounds(100, 100, 550, 175);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -33,7 +52,7 @@ public class ThreshholdsPopup extends JDialog {
 			JLabel ATFL = new JLabel("Valor do ATFD: " + ATFD);
 			ATFL.setBounds(32, 80, 121, 16);
 			contentPanel.add(ATFL);
-			JLabel LAAL = new JLabel("Valor do LAA: " + LAA);
+			JLabel LAAL = new JLabel("Valor do LAA: " + laa);
 			LAAL.setBounds(32, 100, 121, 16);
 			contentPanel.add(LAAL);
 		}
@@ -48,21 +67,21 @@ public class ThreshholdsPopup extends JDialog {
 				contentPanel.add(LML);
 			}
 			else {
-				LML = new JLabel("Os valores do LOC e CYCLO não correspondem aos standards do long method.");
-				ORB = new JLabel("Os valores originais são: LOC > 65, CYCLO > 10.");
+				LML = new JLabel("Os valores do LOC e CYCLO nao correspondem aos standards do long method.");
+				ORB = new JLabel("Os valores originais sao: LOC > 65, CYCLO > 10.");
 				LML.setBounds(32, 40, 481, 16);
 				ORB.setBounds(32, 80, 321, 16);
 				contentPanel.add(LML);
 				contentPanel.add(ORB);
 			}
-			if (ATFD == 5 && LAA == 0.33) {
+			if (ATFD == 5 && laa == 0.33) {
 				FEL = new JLabel("Os valores do ATFD e LAA correspondem aos standards do feature envy.");
 				FEL.setBounds(32, 60, 481, 16);
 				contentPanel.add(FEL);
 			}
 			else {
-				FEL = new JLabel("Os valores do ATFD e LAA não correspondem aos standards do feature envy.");
-				ORI = new JLabel("Os valores originais são: ATFD > 5, LAA < 0.33.");
+				FEL = new JLabel("Os valores do ATFD e LAA na o correspondem aos standards do feature envy.");
+				ORI = new JLabel("Os valores originais sao: ATFD > 5, LAA < 0.33.");
 				FEL.setBounds(32, 60, 481, 16);
 				ORI.setBounds(32, 100, 321, 16);
 				contentPanel.add(FEL);

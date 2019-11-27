@@ -10,6 +10,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.filechooser.FileSystemView;
+import javax.swing.table.DefaultTableModel;
 
 public class GUI {
 
@@ -19,6 +23,9 @@ public class GUI {
 	private int ATFD;
 	private double LAA;
 
+	private JTable table;
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -57,6 +64,11 @@ public class GUI {
 		
 		frame.getContentPane().add(panel);
 		
+		table = new JTable();
+		
+		JScrollPane scroll = new JScrollPane(table);
+		panel.add(scroll);
+		
 		
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
@@ -78,7 +90,11 @@ public class GUI {
 				if (returnValue == JFileChooser.APPROVE_OPTION) {   //file choosen correctly
 					
 					File selectedFile = jfc.getSelectedFile();
-					System.out.println(selectedFile.getAbsolutePath()); //prints file path
+					//System.out.println(selectedFile.getAbsolutePath()); //prints file path
+					ExcelReader reader = new ExcelReader();
+					DefaultTableModel tableData = reader.readFile(selectedFile.getAbsolutePath());
+					table.setModel(tableData);
+					//table.add((Component) table.getModel());
 				}
 				
 			}
@@ -119,7 +135,7 @@ public class GUI {
 		
 		JMenuItem mntmCreateNewRules = new JMenuItem("Create new rules");
 		mntmCreateNewRules.addActionListener(event -> {
-			frame.setContentPane(new CreateRules(frame));
+			frame.setContentPane(new CreateRules(frame,this));
 			frame.revalidate();
 		});
 		
@@ -148,4 +164,10 @@ public class GUI {
 		this.ATFD = ATFD;
 		this.LAA = LAA;
 	}
+	
+	public JTable getCurrentExcelFileData() {
+		return this.table;
+	}
+	
+	
 }
