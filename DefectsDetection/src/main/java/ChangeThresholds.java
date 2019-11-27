@@ -3,6 +3,8 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JLabel;
 
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -108,10 +110,12 @@ public class ChangeThresholds extends JPanel {
 		add(btnApplyChanges);
 		btnApplyChanges.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LOC=Integer.parseInt(locTextField.getText());
-				CIC=Integer.parseInt(cycloTextField.getText());
-//				ATFD=Integer.parseInt(atfdTextField.getText());
-//				LAA=Integer.parseInt(laaTextField.getText());
+				if(checkValues(locTextField.getText(),cycloTextField.getText())){
+					LOC=Integer.parseInt(locTextField.getText());
+					CIC=Integer.parseInt(cycloTextField.getText());
+					//				ATFD=Integer.parseInt(atfdTextField.getText());
+					//				LAA=Integer.parseInt(laaTextField.getText());
+				}
 			}
 		});
 
@@ -119,61 +123,64 @@ public class ChangeThresholds extends JPanel {
 		JButton btnNewButton = new JButton("Compare");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//				get Table
-				JTable table=gui.getCurrentExcelFileData();
+				if(checkValues(locTextField.getText(),cycloTextField.getText())){
+					//				get Table
+					JTable table=gui.getCurrentExcelFileData();
 
-				//				get variables
-				LOC=Integer.parseInt(locTextField.getText());
-				CIC=Integer.parseInt(cycloTextField.getText());
-//				ATFD=Integer.parseInt(atfdTextField.getText());
-//				LAA=Integer.parseInt(laaTextField.getText());
+					//				get variables LOC and CIC
+					LOC=Integer.parseInt(locTextField.getText());
+					CIC=Integer.parseInt(cycloTextField.getText());
+					//				ATFD=Integer.parseInt(atfdTextField.getText());
+					//				LAA=Integer.parseInt(laaTextField.getText());
 
-				//For to get the variables for each row and compare to determine if there's some error
-				for(int numRow=0;numRow!=table.getModel().getRowCount();numRow++) {
-					boolean is_long_method;
-					boolean table_is_long_method;
-					//					get variables from the table
-					int tableLOC=(int)Double.parseDouble(table.getModel().getValueAt(numRow,4).toString());
-					int tableCIC=(int)Double.parseDouble(table.getModel().getValueAt(numRow,5).toString());
-					int tableATFD=(int)Double.parseDouble(table.getModel().getValueAt(numRow,6).toString());
-					int tableLAA=(int)Double.parseDouble(table.getModel().getValueAt(numRow,7).toString());
+					//For to get the variables for each row and compare to determine if there's some error
+					for(int numRow=0;numRow!=table.getModel().getRowCount();numRow++) {
+						boolean is_long_method;
+						boolean table_is_long_method;
+						//					get variables from the table
+						int tableLOC=(int)Double.parseDouble(table.getModel().getValueAt(numRow,4).toString());
+						int tableCIC=(int)Double.parseDouble(table.getModel().getValueAt(numRow,5).toString());
+						int tableATFD=(int)Double.parseDouble(table.getModel().getValueAt(numRow,6).toString());
+						int tableLAA=(int)Double.parseDouble(table.getModel().getValueAt(numRow,7).toString());
 
-					String table_is_long_method_string=table.getModel().getValueAt(numRow,8).toString();
-					System.out.println(table_is_long_method_string);
-					if(table_is_long_method_string.equals("TRUE")){
-						table_is_long_method=true;
-					}
-					else{
-						table_is_long_method=false;
+						String table_is_long_method_string=table.getModel().getValueAt(numRow,8).toString();
+						System.out.println(table_is_long_method_string);
+						if(table_is_long_method_string.equals("TRUE")){
+							table_is_long_method=true;
+						}
+						else{
+							table_is_long_method=false;
+						}
+
+						//					Compare values
+						if(tableLOC>LOC && tableCIC>CIC){
+							is_long_method=true;
+						}
+						else{
+							is_long_method=false;
+						}
+						//					Errors
+						if(is_long_method && table_is_long_method){
+							int methodID=(int)Double.parseDouble(table.getModel().getValueAt(numRow,0).toString());
+							errorDCI.add(methodID);
+						}
+						if(is_long_method && !table_is_long_method){
+							int methodID=(int)Double.parseDouble(table.getModel().getValueAt(numRow,0).toString());
+							errorDII.add(methodID);
+						}
+						if(!is_long_method && !table_is_long_method){
+							int methodID=(int)Double.parseDouble(table.getModel().getValueAt(numRow,0).toString());
+							errorADCI.add(methodID);
+						}
+						if(!is_long_method && table_is_long_method){
+							int methodID=(int)Double.parseDouble(table.getModel().getValueAt(numRow,0).toString());
+							errorADII.add(methodID);
+						}
+
 					}
 
-					//					Compare values
-					if(tableLOC>LOC && tableCIC>CIC){
-						is_long_method=true;
-					}
-					else{
-						is_long_method=false;
-					}
-					//					Errors
-					if(is_long_method && table_is_long_method){
-						int methodID=(int)Double.parseDouble(table.getModel().getValueAt(numRow,0).toString());
-						errorDCI.add(methodID);
-					}
-					if(is_long_method && !table_is_long_method){
-						int methodID=(int)Double.parseDouble(table.getModel().getValueAt(numRow,0).toString());
-						errorDII.add(methodID);
-					}
-					if(!is_long_method && !table_is_long_method){
-						int methodID=(int)Double.parseDouble(table.getModel().getValueAt(numRow,0).toString());
-						errorADCI.add(methodID);
-					}
-					if(!is_long_method && table_is_long_method){
-						int methodID=(int)Double.parseDouble(table.getModel().getValueAt(numRow,0).toString());
-						errorADII.add(methodID);
-					}
-
+					paintWithErrors(jframe);
 				}
-				paintWithErrors(jframe);
 			}
 		});
 		btnNewButton.setBounds(499, 360, 117, 29);
@@ -181,7 +188,7 @@ public class ChangeThresholds extends JPanel {
 
 		jframe.setContentPane(this);
 		this.setVisible(true);
-		
+
 	}
 	public void paintWithErrors(JFrame frame) {
 		ComparisonError dci=new ComparisonError("DCI",errorDCI.size(),errorDCI);
@@ -194,7 +201,26 @@ public class ChangeThresholds extends JPanel {
 		errors.add(dii);
 		errors.add(adci);
 		errors.add(adii);
-		
+
 		frame.setContentPane(new paintError(errors));
+	}
+	public boolean checkValues(String loc, String cic){
+		final JPanel panel = new JPanel();
+		if(loc.equals("") && !cic.equals("")){
+			JOptionPane.showMessageDialog(panel, "Please Enter a maximum value for LOC (lines of code)", "Warning",
+					JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+		if(!loc.equals("") && cic.equals("")){
+			JOptionPane.showMessageDialog(panel, "Please Enter a maximum value for CYCLO", "Warning",
+					JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+		if(loc.equals("") && cic.equals("")){
+			JOptionPane.showMessageDialog(panel, "Please Enter a maximum value for LOC  and CYCLO", "Warning",
+					JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+		return true;
 	}
 }
