@@ -24,7 +24,6 @@ public class ChangeThresholds extends JPanel {
 	private JTextField cycloTextField;
 	private JTextField atfdTextField;
 	private JTextField laaTextField;
-	private GUI guii;
 	private int LOC;
 	private int CYCLO;
 	private int ATFD;
@@ -90,7 +89,7 @@ public class ChangeThresholds extends JPanel {
 		atfdTextField.setColumns(10);
 		atfdTextField.setToolTipText("Default value for this field is 4.");
 
-		
+
 		JLabel lblAnd_1 = new JLabel("and");
 		lblAnd_1.setBounds(161, 161, 39, 16);
 		add(lblAnd_1);
@@ -111,8 +110,8 @@ public class ChangeThresholds extends JPanel {
 		add(btnApplyChanges);
 		btnApplyChanges.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				if(checkValues(locTextField.getText(),cycloTextField.getText())){
+
+				if(checkValues(locTextField.getText(),cycloTextField.getText(),atfdTextField.getText(),laaTextField.getText())){
 					gui.assignThreshholds(LOC, CYCLO, ATFD, LAA);
 					LOC=Integer.parseInt(locTextField.getText());
 					CYCLO=Integer.parseInt(cycloTextField.getText());
@@ -121,27 +120,29 @@ public class ChangeThresholds extends JPanel {
 				}
 			}
 		});
-		
+
 
 		JButton btnNewButton = new JButton("Compare");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(checkValues(locTextField.getText(),cycloTextField.getText())){
-//					checkTextBoxes();
-//					guii.assignThreshholds(LOC, CYCLO, ATFD, LAA);
+				if(checkValues(locTextField.getText(),cycloTextField.getText(),atfdTextField.getText(),laaTextField.getText())){
+					checkTextBoxes();
+					gui.assignThreshholds(LOC, CYCLO, ATFD, LAA);
 					//				get Table
 					JTable table=gui.getCurrentExcelFileData();
 
 					//				get variables LOC and CIC
 					LOC=Integer.parseInt(locTextField.getText());
 					CYCLO=Integer.parseInt(cycloTextField.getText());
-					//				ATFD=Integer.parseInt(atfdTextField.getText());
-					//				LAA=Integer.parseInt(laaTextField.getText());
+					ATFD=Integer.parseInt(atfdTextField.getText());
+					LAA=Double.parseDouble(laaTextField.getText());
 
 					//For to get the variables for each row and compare to determine if there's some error
 					for(int numRow=0;numRow!=table.getModel().getRowCount();numRow++) {
 						boolean is_long_method;
 						boolean table_is_long_method;
+						boolean is_feature_envy;
+						boolean table_is_feature_envy;
 						//					get variables from the table
 						int tableLOC=(int)Double.parseDouble(table.getModel().getValueAt(numRow,4).toString());
 						int tableCIC=(int)Double.parseDouble(table.getModel().getValueAt(numRow,5).toString());
@@ -149,13 +150,23 @@ public class ChangeThresholds extends JPanel {
 						int tableLAA=(int)Double.parseDouble(table.getModel().getValueAt(numRow,7).toString());
 
 						String table_is_long_method_string=table.getModel().getValueAt(numRow,8).toString();
+						String table_is_feature_envy_string=table.getModel().getValueAt(numRow,11).toString();
+
+//						get is_long_method from excell
 						if(table_is_long_method_string.equals("TRUE")){
 							table_is_long_method=true;
 						}
 						else{
 							table_is_long_method=false;
 						}
-
+//						get is_feature_envy
+						if(table_is_feature_envy_string.equals("TRUE")){
+							table_is_feature_envy=true;
+						}
+						else{
+							table_is_feature_envy=false;
+						}
+						
 						//					Compare values
 						if(tableLOC>LOC && tableCIC>CYCLO){
 							is_long_method=true;
@@ -163,20 +174,27 @@ public class ChangeThresholds extends JPanel {
 						else{
 							is_long_method=false;
 						}
+						
+						if(tableATFD > ATFD && tableLAA < LAA){
+							is_feature_envy=true;
+						}
+						else{
+							is_feature_envy=false;
+						}
 						//					Errors
-						if(is_long_method && table_is_long_method){
+						if( (is_long_method && table_is_long_method) || (is_feature_envy && table_is_feature_envy) ){
 							int methodID=(int)Double.parseDouble(table.getModel().getValueAt(numRow,0).toString());
 							errorDCI.add(methodID);
 						}
-						if(is_long_method && !table_is_long_method){
+						if( (is_long_method && !table_is_long_method) || (is_feature_envy && !table_is_feature_envy)){
 							int methodID=(int)Double.parseDouble(table.getModel().getValueAt(numRow,0).toString());
 							errorDII.add(methodID);
 						}
-						if(!is_long_method && !table_is_long_method){
+						if( (!is_long_method && !table_is_long_method) || (!is_feature_envy && !table_is_feature_envy)){
 							int methodID=(int)Double.parseDouble(table.getModel().getValueAt(numRow,0).toString());
 							errorADCI.add(methodID);
 						}
-						if(!is_long_method && table_is_long_method){
+						if( (!is_long_method && table_is_long_method) || (!is_feature_envy && table_is_feature_envy)){
 							int methodID=(int)Double.parseDouble(table.getModel().getValueAt(numRow,0).toString());
 							errorADII.add(methodID);
 						}
@@ -208,31 +226,43 @@ public class ChangeThresholds extends JPanel {
 
 		frame.setContentPane(new paintError(errors));
 	}
-	public boolean checkValues(String loc, String cic){
+	public boolean checkValues(String loc, String cic,String atfd, String laa){
 		final JPanel panel = new JPanel();
 		if(loc.equals("") && !cic.equals("")){
-			JOptionPane.showMessageDialog(panel, "Please Enter a maximum value for LOC (lines of code)", "Warning",
+			JOptionPane.showMessageDialog(panel, "Please Enter a value for LOC (lines of code)", "Warning",
 					JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
 		if(!loc.equals("") && cic.equals("")){
-			JOptionPane.showMessageDialog(panel, "Please Enter a maximum value for CYCLO", "Warning",
+			JOptionPane.showMessageDialog(panel, "Please Enter a value for CYCLO", "Warning",
 					JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
-		if(loc.equals("") && cic.equals("")){
-			JOptionPane.showMessageDialog(panel, "Please Enter a maximum value for LOC  and CYCLO", "Warning",
+		if(atfd.equals("") && !laa.equals("")){
+			JOptionPane.showMessageDialog(panel, "Please Enter a value for ATFD", "Warning",
 					JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
+		if(!atfd.equals("") && laa.equals("")){
+			JOptionPane.showMessageDialog(panel, "Please Enter a value for LAA", "Warning",
+					JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+		if(atfd.equals("") || laa.equals("") || loc.equals("") || cic.equals("")){
+			JOptionPane.showMessageDialog(panel, "Please Enter all values", "Warning",
+					JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+		
+		
 		return true;
 	}
-	
+
 	private void checkTextBoxes() {
 		try { LOC = Integer.parseInt(locTextField.getText()); }	catch (NumberFormatException e) { LOC = 0; }
 		try { CYCLO = Integer.parseInt(cycloTextField.getText()); }	catch (NumberFormatException e) { CYCLO = 0; }
 		try { ATFD = Integer.parseInt(atfdTextField.getText()); }	catch (NumberFormatException e) { ATFD = 0; }
 		try { LAA = Double.parseDouble(laaTextField.getText()); }	catch (NumberFormatException e) { LAA = 0; }
 	}
-	
+
 }
