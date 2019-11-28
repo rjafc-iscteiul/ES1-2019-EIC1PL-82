@@ -38,7 +38,6 @@ public class ThreshholdsPopup extends JDialog {
 		
 		
 		setBounds(100, 100, 550, 175);
-		double LAA = Double.parseDouble(LA);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPanel);
@@ -53,7 +52,7 @@ public class ThreshholdsPopup extends JDialog {
 			JLabel ATFL = new JLabel("Valor do ATFD: " + ATFD);
 			ATFL.setBounds(32, 80, 121, 16);
 			contentPanel.add(ATFL);
-			JLabel LAAL = new JLabel("Valor do LAA: " + LAA);
+			JLabel LAAL = new JLabel("Valor do LAA: " + laa);
 			LAAL.setBounds(32, 100, 121, 16);
 			contentPanel.add(LAAL);
 		}
@@ -75,7 +74,7 @@ public class ThreshholdsPopup extends JDialog {
 				contentPanel.add(LML);
 				contentPanel.add(ORB);
 			}
-			if (ATFD == 5 && LAA == 0.33) {
+			if (ATFD == 5 && laa == 0.33) {
 				FEL = new JLabel("Os valores do ATFD e LAA correspondem aos standards do feature envy.");
 				FEL.setBounds(32, 60, 481, 16);
 				contentPanel.add(FEL);
