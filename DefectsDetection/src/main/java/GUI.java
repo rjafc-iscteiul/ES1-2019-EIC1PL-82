@@ -2,7 +2,11 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.LinkedList;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -19,6 +23,19 @@ public class GUI {
 		
 	private JFrame frame;
 	private JTable table;
+
+	
+	private final static int LOC=80;
+	private final static int CYCLO=80;
+	private final static int ATFD=4;
+	private final static double LAA=0.42;
+
+	
+	private int current_LOC;
+	private int current_CYCLO;
+	private int current_ATFD;
+	private double current_LAA;
+
 	
 	
 	/**
@@ -108,6 +125,14 @@ public class GUI {
 			
 			//create a pop-up to indicate the reset has been done successfully 
 			public void actionPerformed(ActionEvent e) {
+				
+				//make all values default
+				current_LOC=LOC;
+				current_CYCLO=CYCLO;
+				current_ATFD=ATFD;
+				current_LAA=LAA;
+				
+				
 				ResetValuesRules rvr = new ResetValuesRules();
 				rvr.setVisible(true);
 			}
@@ -115,6 +140,14 @@ public class GUI {
 		mnDefaultRules.add(mntmResetValues);
 		
 		JMenuItem mntmCompareUsindDefault = new JMenuItem("Compare using default");
+		mntmCompareUsindDefault.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//launch warning about values going to default	
+				frame.revalidate();
+				frame.repaint();
+				compareWithDefault();
+			}
+		});
 		mnDefaultRules.add(mntmCompareUsindDefault);
 		
 		JMenu mnEditRules = new JMenu("Edit Rules");
@@ -157,6 +190,233 @@ public class GUI {
 	
 	public JTable getCurrentExcelFileData() {
 		return this.table;
+	}
+	
+	
+	public void compareWithDefault(){
+		
+		//long_method errors
+		int numberDCI=0;
+		int numberDII=0;
+		int numberADCI=0;
+		int numberADII=0;
+
+		LinkedList<Integer> errorDCI=new LinkedList<Integer>();
+		LinkedList<Integer> errorDII=new LinkedList<Integer>();
+		LinkedList<Integer> errorADCI=new LinkedList<Integer>();
+		LinkedList<Integer> errorADII=new LinkedList<Integer>();
+
+		
+		//long_method errors
+		int numberDCIFE=0;
+		int numberDIIFE=0;
+		int numberADCIFE=0;
+		int numberADIIFE=0;
+
+		LinkedList<Integer> errorDCIFE=new LinkedList<Integer>();
+		LinkedList<Integer> errorDIIFE=new LinkedList<Integer>();
+		LinkedList<Integer> errorADCIFE=new LinkedList<Integer>();
+		LinkedList<Integer> errorADIIFE=new LinkedList<Integer>();
+		
+		String finalRuleLM;
+		String finalRuleFE;
+		String ruleLM="LOC>80 && CYCLO>10";
+		String ruleFE="ATFD>4 && LAA<0.42";
+
+		
+		//getting error info
+		//comparing (code font: https://stackoverflow.com/questions/19383953/is-it-possible-to-evaluate-a-boolean-expression-for-string-comparions)
+		try {
+
+            ScriptEngineManager sem = new ScriptEngineManager();
+            ScriptEngine se = sem.getEngineByName("JavaScript");
+            
+			//looping over rows
+			for(int numRow=0;numRow!=table.getModel().getRowCount();numRow++) {
+				finalRuleLM=ruleLM;
+				if(finalRuleLM.contains("LOC")) {
+//					System.out.println("There is LOC parameter.");
+					
+					//replace LOC value in rule for threshold value
+					finalRuleLM=finalRuleLM.replace("LOC", String.valueOf(table.getModel().getValueAt(numRow,4)));
+				}
+				
+				
+				if(finalRuleLM.contains("CYCLO")) {
+//					System.out.println("There is CYCLO parameter.");
+					
+					//replace CYCLO value in rule for threshold value
+					finalRuleLM=finalRuleLM.replace("CYCLO", String.valueOf(table.getModel().getValueAt(numRow,5)));
+				}
+			
+				if(finalRuleLM.contains("ATFD")) {
+//					System.out.println("There is ATFD parameter.");
+					
+					//replace ATFD value in rule for threshold value
+					finalRuleLM=finalRuleLM.replace("ATFD", String.valueOf(table.getModel().getValueAt(numRow,6)));
+				}
+				
+				if(finalRuleLM.contains("LAA")) {
+//					System.out.println("There is LAA parameter.");
+					
+					//replace LOC value in rule for threshold value
+					finalRuleLM=finalRuleLM.replace("LAA", String.valueOf(table.getModel().getValueAt(numRow,7)));
+				}
+				
+				
+				
+				//getting long_method from excel file
+				String getExcelLM=table.getModel().getValueAt(numRow, 8).toString().toLowerCase();
+				
+				//getting long_method with defined rule
+				String myResult=se.eval(finalRuleLM).toString();
+				
+				
+				int methodID=(int)Double.parseDouble(table.getModel().getValueAt(numRow, 0).toString());
+				
+				
+				//DCI error
+				if(myResult.equals("true") && getExcelLM.equals("true")) {
+					numberDCI+=1;
+					
+					errorDCI.add(methodID);
+				}
+				
+				//DII error
+				if(myResult.equals("true") && getExcelLM.equals("false")) {
+					numberDII+=1;
+					errorDII.add(methodID);
+				}
+				
+				//ADCI error
+				if(myResult.equals("false") && getExcelLM.equals("false")) {
+					numberADCI+=1;
+					errorADCI.add(methodID);
+				}
+				
+				//ADII error
+				if(myResult.equals("false") && getExcelLM.equals("true")) {
+					numberADII+=1;
+					errorADII.add(methodID);
+				}
+				
+			}	       
+			
+			
+			//looping over rows
+			for(int numRow=0;numRow!=table.getModel().getRowCount();numRow++) {
+				finalRuleFE=ruleFE;
+				if(finalRuleFE.contains("LOC")) {
+//					System.out.println("There is LOC parameter.");
+					
+					//replace LOC value in rule for threshold value
+					finalRuleFE=finalRuleFE.replace("LOC", String.valueOf(table.getModel().getValueAt(numRow,4)));
+				}
+				
+				
+				if(finalRuleFE.contains("CYCLO")) {
+//					System.out.println("There is CYCLO parameter.");
+					
+					//replace CYCLO value in rule for threshold value
+					finalRuleFE=finalRuleFE.replace("CYCLO", String.valueOf(table.getModel().getValueAt(numRow,5)));
+				}
+			
+				if(finalRuleFE.contains("ATFD")) {
+//					System.out.println("There is ATFD parameter.");
+					
+					//replace ATFD value in rule for threshold value
+					finalRuleFE=finalRuleFE.replace("ATFD", String.valueOf(table.getModel().getValueAt(numRow,6)));
+				}
+				
+				if(finalRuleFE.contains("LAA")) {
+//					System.out.println("There is LAA parameter.");
+					
+					//replace LOC value in rule for threshold value
+					finalRuleFE=finalRuleFE.replace("LAA", String.valueOf(table.getModel().getValueAt(numRow,7)));
+				}
+				
+				
+				
+				//getting long_method from excel file
+				String getExcelLM=table.getModel().getValueAt(numRow, 8).toString().toLowerCase();
+				
+				//getting long_method with defined rule
+				String myResult=se.eval(finalRuleFE).toString();
+				
+				
+				int methodID=(int)Double.parseDouble(table.getModel().getValueAt(numRow, 0).toString());
+				
+				
+				//DCI error
+				if(myResult.equals("true") && getExcelLM.equals("true")) {
+					numberDCIFE+=1;
+					
+					errorDCIFE.add(methodID);
+				}
+				
+				//DII error
+				if(myResult.equals("true") && getExcelLM.equals("false")) {
+					numberDIIFE+=1;
+					errorDIIFE.add(methodID);
+				}
+				
+				//ADCI error
+				if(myResult.equals("false") && getExcelLM.equals("false")) {
+					numberADCIFE+=1;
+					errorADCIFE.add(methodID);
+				}
+				
+				//ADII error
+				if(myResult.equals("false") && getExcelLM.equals("true")) {
+					numberADIIFE+=1;
+					errorADIIFE.add(methodID);
+				}
+				
+			}	       
+			
+			//paint comparison results in GUI
+			ComparisonError dci=new ComparisonError("DCI",numberDCI,errorDCI);
+			ComparisonError dii=new ComparisonError("DII",numberDII,errorDII);
+			ComparisonError adci=new ComparisonError("ADCI",numberADCI,errorADCI);
+			ComparisonError adii=new ComparisonError("ADII",numberADII,errorADII);
+
+			LinkedList<ComparisonError> errors=new LinkedList<ComparisonError>();
+			errors.add(dci);
+			errors.add(dii);
+			errors.add(adci);
+			errors.add(adii);
+			
+			
+			
+			ComparisonError dciFE=new ComparisonError("DCI",numberDCIFE,errorDCIFE);
+			ComparisonError diiFE=new ComparisonError("DII",numberDIIFE,errorDIIFE);
+			ComparisonError adciFE=new ComparisonError("ADCI",numberADCIFE,errorADCIFE);
+			ComparisonError adiiFE=new ComparisonError("ADII",numberADIIFE,errorADIIFE);
+
+			LinkedList<ComparisonError> errorsFE=new LinkedList<ComparisonError>();
+			errorsFE.add(dciFE);
+			errorsFE.add(diiFE);
+			errorsFE.add(adciFE);
+			errorsFE.add(adiiFE);
+			
+			
+			
+			frame.setContentPane(new PaintSeveralErrors(errors,errorsFE,frame,this));
+            
+
+        } catch (ScriptException error) {
+
+            System.out.println("Invalid Expression");
+            
+            //lauch a error message on gui 
+            
+            new InvalidExpression().setVisible(true);
+            
+            //error.printStackTrace();
+
+        }
+		
+		
 	}
 	
 	
