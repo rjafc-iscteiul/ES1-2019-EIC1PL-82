@@ -16,10 +16,7 @@ public class ChangeThresholds extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private GUI gui;
 
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
+
 	private JTextField locTextField;
 	private JTextField cycloTextField;
 	private JTextField atfdTextField;
@@ -201,7 +198,7 @@ public class ChangeThresholds extends JPanel {
 
 					}
 
-					paintWithErrors(jframe);
+					paintWithErrors(jframe,gui);
 				}
 			}
 		});
@@ -212,7 +209,7 @@ public class ChangeThresholds extends JPanel {
 		this.setVisible(true);
 
 	}
-	public void paintWithErrors(JFrame frame) {
+	public void paintWithErrors(JFrame frame,GUI gui) {
 		ComparisonError dci=new ComparisonError("DCI",errorDCI.size(),errorDCI);
 		ComparisonError dii=new ComparisonError("DII",errorDII.size(),errorDII);
 		ComparisonError adci=new ComparisonError("ADCI",errorADCI.size(),errorADCI);
@@ -224,7 +221,7 @@ public class ChangeThresholds extends JPanel {
 		errors.add(adci);
 		errors.add(adii);
 
-		frame.setContentPane(new paintError(errors));
+		frame.setContentPane(new paintError(errors,frame,gui));
 	}
 	public boolean checkValues(String loc, String cic,String atfd, String laa){
 		final JPanel panel = new JPanel();

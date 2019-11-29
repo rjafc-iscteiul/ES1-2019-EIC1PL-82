@@ -22,11 +22,6 @@ import javax.swing.table.DefaultTableModel;
 public class GUI {
 
 	private JFrame frame;
-	private int LOC;
-	private int CYCLO;
-	private int ATFD;
-	private double LAA;
-
 	private JTable table;
 
 	
@@ -192,10 +187,10 @@ public class GUI {
 	}
 	
 	public void assignThreshholds(int LOC, int CYCLO, int ATFD, double LAA) {
-		this.LOC = LOC;
-		this.CYCLO = CYCLO;
-		this.ATFD = ATFD;
-		this.LAA = LAA;
+		this.current_LOC = LOC;
+		this.current_CYCLO = CYCLO;
+		this.current_ATFD = ATFD;
+		this.current_LAA = LAA;
 	}
 	
 	public JTable getCurrentExcelFileData() {
