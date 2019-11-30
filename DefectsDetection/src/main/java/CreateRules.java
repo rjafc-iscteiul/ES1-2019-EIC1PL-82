@@ -20,8 +20,8 @@ import javax.swing.JTextField;
 public class CreateRules extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField longMethod_field;
+	private JTextField featureEnvy_field;
 	private GUI gui;
 	private JFrame jframe;
 	
@@ -40,15 +40,15 @@ public class CreateRules extends JPanel {
 
 	
 	//featura_envy attributes
-		private int numberDCIFE=0;
-		private int numberDIIFE=0;
-		private int numberADCIFE=0;
-		private int numberADIIFE=0;
+	private int numberDCIFE=0;
+	private int numberDIIFE=0;
+	private int numberADCIFE=0;
+	private int numberADIIFE=0;
 
-		private LinkedList<Integer> errorDCIFE=new LinkedList<Integer>();
-		private LinkedList<Integer> errorDIIFE=new LinkedList<Integer>();
-		private LinkedList<Integer> errorADCIFE=new LinkedList<Integer>();
-		private LinkedList<Integer> errorADIIFE=new LinkedList<Integer>();
+	private LinkedList<Integer> errorDCIFE=new LinkedList<Integer>();
+	private LinkedList<Integer> errorDIIFE=new LinkedList<Integer>();
+	private LinkedList<Integer> errorADCIFE=new LinkedList<Integer>();
+	private LinkedList<Integer> errorADIIFE=new LinkedList<Integer>();
 	
 	
 	
@@ -79,34 +79,30 @@ public class CreateRules extends JPanel {
 		btnApplyChanges.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				
+				//gets excel info table
 				JTable table=gui.getCurrentExcelFileData();
-
 				
-				//get jtextfield rules (for long_method)
-				String rule=textField.getText();
+				//gets jtextfield rules (for long_method)
+				String rule=longMethod_field.getText();
 				String finalRule=rule;
-
 				
 				//get jtextfield rules (for feature_envy)
-				String ruleFE=textField_1.getText();
+				String ruleFE=featureEnvy_field.getText();
 				String finalRuleFE=ruleFE;
-				
 				
 				//check if any is empty
 				if(ruleFE.trim().isEmpty() && rule.trim().isEmpty()) {
 		            new InvalidExpression().setVisible(true);
 				}else {
 					if(ruleFE.trim().isEmpty()) {
-						System.out.println("Feature envy rule is Empty.");
-						paintAuxOneError(finalRule,rule,table);
+						//feature_envy rule is empty
+						paintAuxOneError(finalRule,rule,table,"lm");
 					}else {
 						if(rule.trim().isEmpty()) {
-							System.out.println("Long method rule is Empty.");
-							paintAuxOneError(finalRuleFE,ruleFE,table);
+							//long_method rule is empty
+							paintAuxOneError(finalRuleFE,ruleFE,table,"fe");
 						}else {
-							//both fields are full
-							System.out.println("No rule is empty.");
+							//both fields are filled
 							paintAuxOneError(finalRule,rule,finalRuleFE,ruleFE,table);
 						}
 					}
@@ -121,85 +117,60 @@ public class CreateRules extends JPanel {
 		this.setVisible(true);
 		jframe.setContentPane(this);
 		
-		textField = new JTextField();
-		textField.setToolTipText("Insert the new rule here.\n\nPlease use only one time the available parameters: LOC, CYCLO, LAA or ATFD.");
-		textField.setBounds(34, 55, 298, 38);
-		add(textField);
-		textField.setColumns(10);
+		longMethod_field = new JTextField();
+		longMethod_field.setToolTipText("Insert the new rule here.\n\nPlease use only one time the available parameters: LOC, CYCLO, LAA or ATFD.");
+		longMethod_field.setBounds(34, 55, 298, 38);
+		add(longMethod_field);
+		longMethod_field.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setToolTipText("Insert the new rule here.\n\nPlease use only one time the available parameters: LOC, CYCLO, LAA or ATFD.");
-		textField_1.setColumns(10);
-		textField_1.setBounds(34, 231, 298, 38);
-		add(textField_1);
+		featureEnvy_field = new JTextField();
+		featureEnvy_field.setToolTipText("Insert the new rule here.\n\nPlease use only one time the available parameters: LOC, CYCLO, LAA or ATFD.");
+		featureEnvy_field.setColumns(10);
+		featureEnvy_field.setBounds(34, 231, 298, 38);
+		add(featureEnvy_field);
 		
-		JLabel lblExampleOfRule = new JLabel("Example of rule: LOC > 80 && CYCLO > 10");
-		lblExampleOfRule.setFont(new Font("Lucida Grande", Font.PLAIN, 9));
-		lblExampleOfRule.setBounds(44, 97, 288, 16);
-		add(lblExampleOfRule);
+		JLabel longMethodRuleExample = new JLabel("Example of rule: LOC > 80 && CYCLO > 10");
+		longMethodRuleExample.setFont(new Font("Lucida Grande", Font.PLAIN, 9));
+		longMethodRuleExample.setBounds(44, 97, 288, 16);
+		add(longMethodRuleExample);
 		
-		JLabel lblExampleOfRule_1 = new JLabel("Example of rule: ATFD > 4 && LAA < 0.42");
-		lblExampleOfRule_1.setFont(new Font("Lucida Grande", Font.PLAIN, 9));
-		lblExampleOfRule_1.setBounds(44, 281, 288, 16);
-		add(lblExampleOfRule_1);
+		JLabel featureEnvyRuleExample = new JLabel("Example of rule: ATFD > 4 && LAA < 0.42");
+		featureEnvyRuleExample.setFont(new Font("Lucida Grande", Font.PLAIN, 9));
+		featureEnvyRuleExample.setBounds(44, 281, 288, 16);
+		add(featureEnvyRuleExample);
 	}
 	
 	
-	public void paintAuxOneError(String finalRule, String rule, JTable table) {
+	private void paintAuxOneError(String finalRule, String rule, JTable table, String parameter) {
 		//comparing (code font: https://stackoverflow.com/questions/19383953/is-it-possible-to-evaluate-a-boolean-expression-for-string-comparions)
 		try {
 
             ScriptEngineManager sem = new ScriptEngineManager();
             ScriptEngine se = sem.getEngineByName("JavaScript");
             
-			//looping over rows
+			//looping over the table's rows
 			for(int numRow=0;numRow!=table.getModel().getRowCount();numRow++) {
-				finalRule=rule;
-				if(finalRule.contains("LOC")) {
-//					System.out.println("There is LOC parameter.");
-					
-					//replace LOC value in rule for threshold value
-					finalRule=finalRule.replace("LOC", String.valueOf(table.getModel().getValueAt(numRow,4)));
+				finalRule=replaceValues(rule,table,numRow);
+				
+				//getting long_method values from Excel data table
+				String getExcelLM="";
+				
+				//checking which parameter we are comparing
+				if(parameter.toLowerCase().equals("fe")) { //feature_envy
+					getExcelLM=table.getModel().getValueAt(numRow, 11).toString().toLowerCase();
+				}else { //long_method
+					getExcelLM=table.getModel().getValueAt(numRow, 8).toString().toLowerCase();
 				}
 				
-				
-				if(finalRule.contains("CYCLO")) {
-//					System.out.println("There is CYCLO parameter.");
-					
-					//replace CYCLO value in rule for threshold value
-					finalRule=finalRule.replace("CYCLO", String.valueOf(table.getModel().getValueAt(numRow,5)));
-				}
-			
-				if(finalRule.contains("ATFD")) {
-//					System.out.println("There is ATFD parameter.");
-					
-					//replace ATFD value in rule for threshold value
-					finalRule=finalRule.replace("ATFD", String.valueOf(table.getModel().getValueAt(numRow,6)));
-				}
-				
-				if(finalRule.contains("LAA")) {
-//					System.out.println("There is LAA parameter.");
-					
-					//replace LOC value in rule for threshold value
-					finalRule=finalRule.replace("LAA", String.valueOf(table.getModel().getValueAt(numRow,7)));
-				}
-				
-				
-				//comparing long_method
-				String getExcelLM=table.getModel().getValueAt(numRow, 8).toString().toLowerCase();
-//				System.out.println(getExcelLM);
-				
+				//comparing long_method rule with replaced values
 				String myResult=se.eval(finalRule).toString();
-//				System.out.println(myResult);
 				
-				
+				//getting methodID from the current line that is being evaluated
 				int methodID=(int)Double.parseDouble(table.getModel().getValueAt(numRow, 0).toString());
-				
 				
 				//DCI error
 				if(myResult.equals("true") && getExcelLM.equals("true")) {
 					numberDCI+=1;
-					
 					errorDCI.add(methodID);
 				}
 				
@@ -227,19 +198,38 @@ public class CreateRules extends JPanel {
             
 
         } catch (ScriptException error) {
-
-            System.out.println("Invalid Expression");
             
-            //lauch a error message on gui 
+            //launch a error message on gui 
             
             new InvalidExpression().setVisible(true);
-            
-            //error.printStackTrace();
 
         }
 	}
 	
-	public void paintAuxOneError(String finalRuleLM, String ruleLM, String finalRuleFE, String ruleFE,JTable table) {
+	public String replaceValues(String finalRule, JTable table, int numRow) {
+		if(finalRule.contains("LOC")) {					
+			//replace LOC value in rule for threshold value
+			finalRule=finalRule.replace("LOC", String.valueOf(table.getModel().getValueAt(numRow,4)));
+		}
+		
+		if(finalRule.contains("CYCLO")) {
+			//replace CYCLO value in rule for threshold value
+			finalRule=finalRule.replace("CYCLO", String.valueOf(table.getModel().getValueAt(numRow,5)));
+		}
+	
+		if(finalRule.contains("ATFD")) {
+			//replace ATFD value in rule for threshold value
+			finalRule=finalRule.replace("ATFD", String.valueOf(table.getModel().getValueAt(numRow,6)));
+		}
+		
+		if(finalRule.contains("LAA")) {
+			//replace LOC value in rule for threshold value
+			finalRule=finalRule.replace("LAA", String.valueOf(table.getModel().getValueAt(numRow,7)));
+		}
+		return finalRule;
+	}
+	
+	private void paintAuxOneError(String finalRuleLM, String ruleLM, String finalRuleFE, String ruleFE,JTable table) {
 		//comparing (code font: https://stackoverflow.com/questions/19383953/is-it-possible-to-evaluate-a-boolean-expression-for-string-comparions)
 		try {
 
@@ -248,141 +238,69 @@ public class CreateRules extends JPanel {
             
 			//looping over rows
 			for(int numRow=0;numRow!=table.getModel().getRowCount();numRow++) {
-				finalRuleLM=ruleLM;
-				if(finalRuleLM.contains("LOC")) {
-//					System.out.println("There is LOC parameter.");
-					
-					//replace LOC value in rule for threshold value
-					finalRuleLM=finalRuleLM.replace("LOC", String.valueOf(table.getModel().getValueAt(numRow,4)));
-				}
-				
-				
-				if(finalRuleLM.contains("CYCLO")) {
-//					System.out.println("There is CYCLO parameter.");
-					
-					//replace CYCLO value in rule for threshold value
-					finalRuleLM=finalRuleLM.replace("CYCLO", String.valueOf(table.getModel().getValueAt(numRow,5)));
-				}
-			
-				if(finalRuleLM.contains("ATFD")) {
-//					System.out.println("There is ATFD parameter.");
-					
-					//replace ATFD value in rule for threshold value
-					finalRuleLM=finalRuleLM.replace("ATFD", String.valueOf(table.getModel().getValueAt(numRow,6)));
-				}
-				
-				if(finalRuleLM.contains("LAA")) {
-//					System.out.println("There is LAA parameter.");
-					
-					//replace LOC value in rule for threshold value
-					finalRuleLM=finalRuleLM.replace("LAA", String.valueOf(table.getModel().getValueAt(numRow,7)));
-				}
-				
-				
-				
+				finalRuleLM=this.replaceValues(ruleLM, table, numRow);
+				finalRuleFE=this.replaceValues(ruleFE, table, numRow);
+
 				//getting long_method from excel file
 				String getExcelLM=table.getModel().getValueAt(numRow, 8).toString().toLowerCase();
 				
 				//getting long_method with defined rule
 				String myResult=se.eval(finalRuleLM).toString();
 				
+				//getting feature_envy from excel file
+				String getExcelFE=table.getModel().getValueAt(numRow, 11).toString().toLowerCase();
+				
+				//getting feature_envy with defined rule
+				String myResultFE=se.eval(finalRuleFE).toString();
 				
 				int methodID=(int)Double.parseDouble(table.getModel().getValueAt(numRow, 0).toString());
 				
 				
-				//DCI error
+				//DCI error (long_method)
 				if(myResult.equals("true") && getExcelLM.equals("true")) {
 					numberDCI+=1;
-					
 					errorDCI.add(methodID);
 				}
 				
-				//DII error
+				//DII error (long_method)
 				if(myResult.equals("true") && getExcelLM.equals("false")) {
 					numberDII+=1;
 					errorDII.add(methodID);
 				}
 				
-				//ADCI error
+				//ADCI error (long_method)
 				if(myResult.equals("false") && getExcelLM.equals("false")) {
 					numberADCI+=1;
 					errorADCI.add(methodID);
 				}
 				
-				//ADII error
+				//ADII error (long_method)
 				if(myResult.equals("false") && getExcelLM.equals("true")) {
 					numberADII+=1;
 					errorADII.add(methodID);
 				}
 				
-			}	       
-			
-			
-			//looping over rows
-			for(int numRow=0;numRow!=table.getModel().getRowCount();numRow++) {
-				finalRuleFE=ruleFE;
-				if(finalRuleFE.contains("LOC")) {
-//					System.out.println("There is LOC parameter.");
-					
-					//replace LOC value in rule for threshold value
-					finalRuleFE=finalRuleFE.replace("LOC", String.valueOf(table.getModel().getValueAt(numRow,4)));
-				}
 				
-				
-				if(finalRuleFE.contains("CYCLO")) {
-//					System.out.println("There is CYCLO parameter.");
-					
-					//replace CYCLO value in rule for threshold value
-					finalRuleFE=finalRuleFE.replace("CYCLO", String.valueOf(table.getModel().getValueAt(numRow,5)));
-				}
-			
-				if(finalRuleFE.contains("ATFD")) {
-//					System.out.println("There is ATFD parameter.");
-					
-					//replace ATFD value in rule for threshold value
-					finalRuleFE=finalRuleFE.replace("ATFD", String.valueOf(table.getModel().getValueAt(numRow,6)));
-				}
-				
-				if(finalRuleFE.contains("LAA")) {
-//					System.out.println("There is LAA parameter.");
-					
-					//replace LOC value in rule for threshold value
-					finalRuleFE=finalRuleFE.replace("LAA", String.valueOf(table.getModel().getValueAt(numRow,7)));
-				}
-				
-				
-				
-				//getting long_method from excel file
-				String getExcelLM=table.getModel().getValueAt(numRow, 8).toString().toLowerCase();
-				
-				//getting long_method with defined rule
-				String myResult=se.eval(finalRuleFE).toString();
-				
-				
-				int methodID=(int)Double.parseDouble(table.getModel().getValueAt(numRow, 0).toString());
-				
-				
-				//DCI error
-				if(myResult.equals("true") && getExcelLM.equals("true")) {
+				//DCI error (feature_envy)
+				if(myResultFE.equals("true") && getExcelFE.equals("true")) {
 					numberDCIFE+=1;
-					
 					errorDCIFE.add(methodID);
 				}
 				
-				//DII error
-				if(myResult.equals("true") && getExcelLM.equals("false")) {
+				//DII error (feature_envy)
+				if(myResultFE.equals("true") && getExcelFE.equals("false")) {
 					numberDIIFE+=1;
 					errorDIIFE.add(methodID);
 				}
 				
-				//ADCI error
-				if(myResult.equals("false") && getExcelLM.equals("false")) {
+				//ADCI error (feature_envy)
+				if(myResultFE.equals("false") && getExcelFE.equals("false")) {
 					numberADCIFE+=1;
 					errorADCIFE.add(methodID);
 				}
 				
-				//ADII error
-				if(myResult.equals("false") && getExcelLM.equals("true")) {
+				//ADII error (feature_envy)
+				if(myResultFE.equals("false") && getExcelFE.equals("true")) {
 					numberADIIFE+=1;
 					errorADIIFE.add(methodID);
 				}
@@ -394,67 +312,37 @@ public class CreateRules extends JPanel {
             
 
         } catch (ScriptException error) {
-
-            System.out.println("Invalid Expression");
-            
+        	
             //lauch a error message on gui 
             
             new InvalidExpression().setVisible(true);
-            
-            //error.printStackTrace();
 
         }
 	}
-
 	
-	public void paintWithErrors(JFrame frame, boolean multiple) {
+	public void paintWithErrors(JFrame frame, boolean multiple) {	
+		
+		LinkedList<ComparisonError> errors=new LinkedList<ComparisonError>();
+		
+		errors.add(new ComparisonError("DCI",numberDCI,errorDCI));
+		errors.add(new ComparisonError("DII",numberDII,errorDII));
+		errors.add(new ComparisonError("ADCI",numberADCI,errorADCI));
+		errors.add(new ComparisonError("ADII",numberADII,errorADII));
 		
 		if(!multiple) { //only one parameter
-			ComparisonError dci=new ComparisonError("DCI",numberDCI,errorDCI);
-			ComparisonError dii=new ComparisonError("DII",numberDII,errorDII);
-			ComparisonError adci=new ComparisonError("ADCI",numberADCI,errorADCI);
-			ComparisonError adii=new ComparisonError("ADII",numberADII,errorADII);
-	
-			LinkedList<ComparisonError> errors=new LinkedList<ComparisonError>();
-			errors.add(dci);
-			errors.add(dii);
-			errors.add(adci);
-			errors.add(adii);
-			
 			frame.setContentPane(new paintError(errors,jframe, gui));
+			
 		}else { //multiple parameters
 			
-			ComparisonError dci=new ComparisonError("DCI",numberDCI,errorDCI);
-			ComparisonError dii=new ComparisonError("DII",numberDII,errorDII);
-			ComparisonError adci=new ComparisonError("ADCI",numberADCI,errorADCI);
-			ComparisonError adii=new ComparisonError("ADII",numberADII,errorADII);
-	
-			LinkedList<ComparisonError> errors=new LinkedList<ComparisonError>();
-			errors.add(dci);
-			errors.add(dii);
-			errors.add(adci);
-			errors.add(adii);
-			
-			
-			
-			ComparisonError dciFE=new ComparisonError("DCI",numberDCIFE,errorDCIFE);
-			ComparisonError diiFE=new ComparisonError("DII",numberDIIFE,errorDIIFE);
-			ComparisonError adciFE=new ComparisonError("ADCI",numberADCIFE,errorADCIFE);
-			ComparisonError adiiFE=new ComparisonError("ADII",numberADIIFE,errorADIIFE);
-	
 			LinkedList<ComparisonError> errorsFE=new LinkedList<ComparisonError>();
-			errorsFE.add(dciFE);
-			errorsFE.add(diiFE);
-			errorsFE.add(adciFE);
-			errorsFE.add(adiiFE);
 			
+			errorsFE.add(new ComparisonError("DCI",numberDCIFE,errorDCIFE));
+			errorsFE.add(new ComparisonError("DII",numberDIIFE,errorDIIFE));
+			errorsFE.add(new ComparisonError("ADCI",numberADCIFE,errorADCIFE));
+			errorsFE.add(new ComparisonError("ADII",numberADIIFE,errorADIIFE));
 			
 			frame.setContentPane(new PaintSeveralErrors(errors,errorsFE,jframe,gui));
 		}
-		
-		
 	}
-	
-	
 	
 }

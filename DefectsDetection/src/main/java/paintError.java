@@ -162,7 +162,6 @@ public class paintError extends JPanel {
 	}
 	
 	
-	
 	private void createHistogram(LinkedList<ComparisonError> errors) {
 		DefaultCategoryDataset dcd=new DefaultCategoryDataset();
 

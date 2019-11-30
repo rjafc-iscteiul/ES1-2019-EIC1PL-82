@@ -23,17 +23,14 @@ public class ExcelReader {
 		try {
 			f = new FileInputStream(file);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-
 		//creates the object for the XLSX excel file
 		XSSFWorkbook wbk = null;
 		try {
 			wbk = new XSSFWorkbook(f);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -56,7 +53,6 @@ public class ExcelReader {
 			while(cIterator.hasNext()) {
 				Cell c = cIterator.next();
 				if(iteratorOfColumns==0	) {
-//					System.out.print("COLCOLCOLCOLCOLCOL------>"+ c.toString());
 					data.addColumn(c.toString());
 				}else {
 					v.add(c.toString());
@@ -64,7 +60,6 @@ public class ExcelReader {
 			}
 			if(iteratorOfColumns!=0) {
 				data.addRow(v);
-//				System.out.println("rowrowrowroworoworow--------->"+v.toString());
 				v = new Vector<Object>();
 			}
 			
@@ -76,7 +71,6 @@ public class ExcelReader {
 			wbk.close();
 			f.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return data;

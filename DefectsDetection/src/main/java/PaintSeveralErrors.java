@@ -78,65 +78,65 @@ public class PaintSeveralErrors extends JPanel {
 		lblNewLabel.setBounds(29, 53, 61, 16);
 		add(lblNewLabel);
 		
-		JScrollPane scrollPane = new JScrollPane(this.tableDCILM);
-		scrollPane.setBounds(68, 53, 81, 60);
-		add(scrollPane);
+		JScrollPane scrollPaneDCI_LM= new JScrollPane(this.tableDCILM);
+		scrollPaneDCI_LM.setBounds(68, 53, 81, 60);
+		add(scrollPaneDCI_LM);
 		
 		JLabel lblAdci = new JLabel("ADCI");
 		lblAdci.setBounds(295, 53, 61, 16);
 		add(lblAdci);
 		
-		JScrollPane scrollPane_1 = new JScrollPane(this.tableADCILM);
-		scrollPane_1.setBounds(344, 53, 81, 60);
-		add(scrollPane_1);
+		JScrollPane scrollPaneADCI_LM = new JScrollPane(this.tableADCILM);
+		scrollPaneADCI_LM.setBounds(344, 53, 81, 60);
+		add(scrollPaneADCI_LM);
 		
 		JLabel lblDii = new JLabel("DII");
 		lblDii.setBounds(29, 125, 61, 16);
 		add(lblDii);
 		
-		JScrollPane scrollPane_2 = new JScrollPane(this.tableDIILM);
-		scrollPane_2.setBounds(68, 125, 81, 60);
-		add(scrollPane_2);
+		JScrollPane scrollPaneDII_LM = new JScrollPane(this.tableDIILM);
+		scrollPaneDII_LM.setBounds(68, 125, 81, 60);
+		add(scrollPaneDII_LM);
 		
 		JLabel lblAdii = new JLabel("ADII");
 		lblAdii.setBounds(295, 125, 61, 16);
 		add(lblAdii);
 		
-		JScrollPane scrollPane_3 = new JScrollPane(this.tableADIILM);
-		scrollPane_3.setBounds(344, 125, 81, 60);
-		add(scrollPane_3);
+		JScrollPane scrollPaneADII_LM = new JScrollPane(this.tableADIILM);
+		scrollPaneADII_LM.setBounds(344, 125, 81, 60);
+		add(scrollPaneADII_LM);
 		
 		JLabel label = new JLabel("DCI");
 		label.setBounds(29, 238, 61, 16);
 		add(label);
 		
-		JScrollPane scrollPane_4 = new JScrollPane(this.tableDCIFE);
-		scrollPane_4.setBounds(68, 238, 81, 60);
-		add(scrollPane_4);
+		JScrollPane scrollPaneDCI_FE = new JScrollPane(this.tableDCIFE);
+		scrollPaneDCI_FE.setBounds(68, 238, 81, 60);
+		add(scrollPaneDCI_FE);
 		
 		JLabel label_1 = new JLabel("ADCI");
 		label_1.setBounds(295, 238, 61, 16);
 		add(label_1);
 		
-		JScrollPane scrollPane_5 = new JScrollPane(this.tableADCIFE);
-		scrollPane_5.setBounds(344, 238, 81, 60);
-		add(scrollPane_5);
+		JScrollPane scrollPaneADCI_FE = new JScrollPane(this.tableADCIFE);
+		scrollPaneADCI_FE.setBounds(344, 238, 81, 60);
+		add(scrollPaneADCI_FE);
 		
 		JLabel label_2 = new JLabel("DII");
 		label_2.setBounds(29, 311, 61, 16);
 		add(label_2);
 		
-		JScrollPane scrollPane_6 = new JScrollPane(this.tableDIIFE);
-		scrollPane_6.setBounds(68, 310, 81, 60);
-		add(scrollPane_6);
+		JScrollPane scrollPaneDII_FE = new JScrollPane(this.tableDIIFE);
+		scrollPaneDII_FE.setBounds(68, 310, 81, 60);
+		add(scrollPaneDII_FE);
 		
 		JLabel label_3 = new JLabel("ADII");
 		label_3.setBounds(295, 310, 61, 16);
 		add(label_3);
 		
-		JScrollPane scrollPane_7 = new JScrollPane(this.tableADIIFE);
-		scrollPane_7.setBounds(344, 310, 81, 60);
-		add(scrollPane_7);
+		JScrollPane scrollPaneADII_FE = new JScrollPane(this.tableADIIFE);
+		scrollPaneADII_FE.setBounds(344, 310, 81, 60);
+		add(scrollPaneADII_FE);
 		
 		addLMErrors(errorsLM);
 		addFEErrors(errorsFE);

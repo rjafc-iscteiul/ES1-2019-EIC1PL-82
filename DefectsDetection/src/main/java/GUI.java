@@ -36,7 +36,6 @@ public class GUI {
 	private double current_LAA;
 
 	
-	//abc
 	/**
 	 * Launch the application.
 	 */
@@ -98,14 +97,12 @@ public class GUI {
 
 				int returnValue = jfc.showOpenDialog(null);
 
-				if (returnValue == JFileChooser.APPROVE_OPTION) {   //file choosen correctly
+				if (returnValue == JFileChooser.APPROVE_OPTION) {   //file chosen correctly
 					
 					File selectedFile = jfc.getSelectedFile();
-					//System.out.println(selectedFile.getAbsolutePath()); //prints file path
 					ExcelReader reader = new ExcelReader();
 					DefaultTableModel tableData = reader.readFile(selectedFile.getAbsolutePath());
 					table.setModel(tableData);
-					//table.add((Component) table.getModel());
 				}
 				
 			}
@@ -239,7 +236,6 @@ public class GUI {
 			for(int numRow=0;numRow!=table.getModel().getRowCount();numRow++) {
 				finalRuleLM=ruleLM;
 				if(finalRuleLM.contains("LOC")) {
-//					System.out.println("There is LOC parameter.");
 					
 					//replace LOC value in rule for threshold value
 					finalRuleLM=finalRuleLM.replace("LOC", String.valueOf(table.getModel().getValueAt(numRow,4)));
@@ -247,21 +243,18 @@ public class GUI {
 				
 				
 				if(finalRuleLM.contains("CYCLO")) {
-//					System.out.println("There is CYCLO parameter.");
 					
 					//replace CYCLO value in rule for threshold value
 					finalRuleLM=finalRuleLM.replace("CYCLO", String.valueOf(table.getModel().getValueAt(numRow,5)));
 				}
 			
 				if(finalRuleLM.contains("ATFD")) {
-//					System.out.println("There is ATFD parameter.");
 					
 					//replace ATFD value in rule for threshold value
 					finalRuleLM=finalRuleLM.replace("ATFD", String.valueOf(table.getModel().getValueAt(numRow,6)));
 				}
 				
 				if(finalRuleLM.contains("LAA")) {
-//					System.out.println("There is LAA parameter.");
 					
 					//replace LOC value in rule for threshold value
 					finalRuleLM=finalRuleLM.replace("LAA", String.valueOf(table.getModel().getValueAt(numRow,7)));
@@ -311,7 +304,6 @@ public class GUI {
 			for(int numRow=0;numRow!=table.getModel().getRowCount();numRow++) {
 				finalRuleFE=ruleFE;
 				if(finalRuleFE.contains("LOC")) {
-//					System.out.println("There is LOC parameter.");
 					
 					//replace LOC value in rule for threshold value
 					finalRuleFE=finalRuleFE.replace("LOC", String.valueOf(table.getModel().getValueAt(numRow,4)));
@@ -319,21 +311,17 @@ public class GUI {
 				
 				
 				if(finalRuleFE.contains("CYCLO")) {
-//					System.out.println("There is CYCLO parameter.");
 					
 					//replace CYCLO value in rule for threshold value
 					finalRuleFE=finalRuleFE.replace("CYCLO", String.valueOf(table.getModel().getValueAt(numRow,5)));
 				}
 			
 				if(finalRuleFE.contains("ATFD")) {
-//					System.out.println("There is ATFD parameter.");
-					
 					//replace ATFD value in rule for threshold value
 					finalRuleFE=finalRuleFE.replace("ATFD", String.valueOf(table.getModel().getValueAt(numRow,6)));
 				}
 				
 				if(finalRuleFE.contains("LAA")) {
-//					System.out.println("There is LAA parameter.");
 					
 					//replace LOC value in rule for threshold value
 					finalRuleFE=finalRuleFE.replace("LAA", String.valueOf(table.getModel().getValueAt(numRow,7)));
@@ -422,6 +410,5 @@ public class GUI {
 		
 		
 	}
-	
 	
 }
