@@ -30,7 +30,6 @@ public class GUI {
 	private final static int ATFD=4;
 	private final static double LAA=0.42;
 
-	
 	private int current_LOC;
 	private int current_CYCLO;
 	private int current_ATFD;
