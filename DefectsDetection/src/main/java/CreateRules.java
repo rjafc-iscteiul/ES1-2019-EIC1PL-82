@@ -321,7 +321,6 @@ public class CreateRules extends JPanel {
 	}
 	
 	public void paintWithErrors(JFrame frame, boolean multiple) {	
-		
 		LinkedList<ComparisonError> errors=new LinkedList<ComparisonError>();
 		
 		errors.add(new ComparisonError("DCI",numberDCI,errorDCI));
@@ -343,6 +342,7 @@ public class CreateRules extends JPanel {
 			
 			frame.setContentPane(new PaintSeveralErrors(errors,errorsFE,jframe,gui));
 		}
+		
 	}
 	
 }
