@@ -393,7 +393,7 @@ public class GUI {
 			
 			
 			
-			frame.setContentPane(new PaintSeveralErrors(errors,errorsFE,frame,this));
+			frame.setContentPane(new PaintSeveralErrors(errors,errorsFE,frame,this,true));
             
 
         } catch (ScriptException error) {

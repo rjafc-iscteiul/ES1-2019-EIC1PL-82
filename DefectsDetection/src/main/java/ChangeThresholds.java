@@ -176,13 +176,13 @@ public class ChangeThresholds extends JPanel {
 		errorsFE.add(new ComparisonError("ADII",errorADIIFE.size(),errorADIIFE));
 
 		if(LM && !FE){
-			frame.setContentPane(new paintError(errors,frame, gui));
+			frame.setContentPane(new paintError(errors,frame, gui,false));
 		}
 		if(FE && !LM){
-			frame.setContentPane(new paintError(errorsFE,frame, gui));
+			frame.setContentPane(new paintError(errorsFE,frame, gui,false));
 		}
 		if(LM && FE)
-			frame.setContentPane(new PaintSeveralErrors(errors,errorsFE,frame,gui));
+			frame.setContentPane(new PaintSeveralErrors(errors,errorsFE,frame,gui,false));
 	}
 	private int checkLM(String loc, String cic){
 		if(loc.equals("") && !cic.equals("")){

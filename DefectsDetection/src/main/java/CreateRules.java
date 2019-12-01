@@ -329,7 +329,7 @@ public class CreateRules extends JPanel {
 		errors.add(new ComparisonError("ADII",numberADII,errorADII));
 		
 		if(!multiple) { //only one parameter
-			frame.setContentPane(new paintError(errors,jframe, gui));
+			frame.setContentPane(new paintError(errors,jframe, gui,true));
 			
 		}else { //multiple parameters
 			
@@ -340,7 +340,7 @@ public class CreateRules extends JPanel {
 			errorsFE.add(new ComparisonError("ADCI",numberADCIFE,errorADCIFE));
 			errorsFE.add(new ComparisonError("ADII",numberADIIFE,errorADIIFE));
 			
-			frame.setContentPane(new PaintSeveralErrors(errors,errorsFE,jframe,gui));
+			frame.setContentPane(new PaintSeveralErrors(errors,errorsFE,jframe,gui,true));
 		}
 		
 	}
