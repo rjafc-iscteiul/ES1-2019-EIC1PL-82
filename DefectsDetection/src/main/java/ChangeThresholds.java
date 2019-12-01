@@ -32,7 +32,6 @@ public class ChangeThresholds extends JPanel {
 	private double LAA;
 
 
-
 	//	Lists of the methodID for every respective error
 	private LinkedList<Integer> errorDCI=new LinkedList<Integer>();
 	private LinkedList<Integer> errorDII=new LinkedList<Integer>();

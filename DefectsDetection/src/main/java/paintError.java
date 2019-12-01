@@ -147,6 +147,7 @@ public class paintError extends JPanel {
 		JButton btnCloseResults = new JButton("Close Results");
 		btnCloseResults.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				if(close){
 					new CreateRules(jframe,gui).setBounds(8,18, 630, 400);
 				}

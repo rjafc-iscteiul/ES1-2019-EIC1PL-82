@@ -35,7 +35,6 @@ public class GUI {
 	private int current_ATFD;
 	private double current_LAA;
 
-	
 	/**
 	 * Launch the application.
 	 */
@@ -259,7 +258,6 @@ public class GUI {
 					//replace LOC value in rule for threshold value
 					finalRuleLM=finalRuleLM.replace("LAA", String.valueOf(table.getModel().getValueAt(numRow,7)));
 				}
-				
 				
 				
 				//getting long_method from excel file

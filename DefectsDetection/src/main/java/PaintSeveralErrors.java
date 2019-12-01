@@ -22,7 +22,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class PaintSeveralErrors extends JPanel {
-
 	//tables for long_method
 	private JTable tableDCILM= new JTable();
 	private DefaultTableModel modelDCILM = new DefaultTableModel();

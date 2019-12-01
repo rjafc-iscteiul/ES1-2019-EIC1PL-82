@@ -16,7 +16,6 @@ import javax.swing.JTextField;
 
 
 
-
 public class CreateRules extends JPanel {
 
 	private static final long serialVersionUID = 1L;
