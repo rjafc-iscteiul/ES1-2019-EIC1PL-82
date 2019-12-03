@@ -109,6 +109,16 @@ public class GUI {
 		});
 		mnExcel.add(mntmOpen);
 		
+		JMenu mnTools = new JMenu("Tools");
+		menuBar.add(mnTools);
+		
+		JMenuItem mntmCompareTools = new JMenuItem("Compare tools");
+		mntmCompareTools.addActionListener(event -> {
+			frame.setContentPane(new CompareTools(frame,this));
+			frame.revalidate();
+		});
+		mnTools.add(mntmCompareTools);
+		
 		JMenu mnRules = new JMenu("Rules");
 		menuBar.add(mnRules);
 		
@@ -126,7 +136,6 @@ public class GUI {
 				current_CYCLO=CYCLO;
 				current_ATFD=ATFD;
 				current_LAA=LAA;
-				
 				
 				ResetValuesRules rvr = new ResetValuesRules();
 				rvr.setVisible(true);
