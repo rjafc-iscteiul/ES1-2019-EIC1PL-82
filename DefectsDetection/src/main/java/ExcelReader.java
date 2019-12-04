@@ -14,10 +14,13 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ExcelReader {
+	
+	private File file;
+	private XSSFWorkbook wbk;
 
 	public DefaultTableModel readFile(String filename) {
 
-		File file = new File(filename);
+		file = new File(filename);
 
 		DefaultTableModel data = new DefaultTableModel();
 
@@ -31,7 +34,7 @@ public class ExcelReader {
 		}
 
 		// creates the object for the XLSX excel file
-		XSSFWorkbook wbk = null;
+		wbk = null;
 		try {
 			wbk = new XSSFWorkbook(f);
 		} catch (IOException e) {
@@ -81,5 +84,9 @@ public class ExcelReader {
 			e.printStackTrace();
 		}
 		return data;
+	}
+	
+	public XSSFWorkbook setXSSFWorkbook(XSSFWorkbook xssfworkbook){
+		return this.wbk=xssfworkbook;
 	}
 }
