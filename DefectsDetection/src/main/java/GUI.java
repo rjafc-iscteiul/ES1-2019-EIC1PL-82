@@ -114,7 +114,7 @@ public class GUI {
 		
 		JMenuItem mntmCompareTools = new JMenuItem("Compare tools");
 		mntmCompareTools.addActionListener(event -> {
-			frame.setContentPane(new CompareTools(frame,this));
+			frame.setContentPane(new CompareTools(this));
 			frame.revalidate();
 		});
 		mnTools.add(mntmCompareTools);
@@ -262,8 +262,7 @@ public class GUI {
 					finalRuleLM=finalRuleLM.replace("ATFD", String.valueOf(table.getModel().getValueAt(numRow,6)));
 				}
 				
-				if(finalRuleLM.contains("LAA")) {
-					
+				if(finalRuleLM.contains("LAA")) {					
 					//replace LOC value in rule for threshold value
 					finalRuleLM=finalRuleLM.replace("LAA", String.valueOf(table.getModel().getValueAt(numRow,7)));
 				}
