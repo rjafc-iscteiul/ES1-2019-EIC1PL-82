@@ -191,20 +191,15 @@ public class GUI {
 	}
 	
 	public void assignThreshholds(int LOC, int CYCLO, int ATFD, double LAA) {
-<<<<<<< HEAD
 		setLOC(LOC);
 		setCYCLO(CYCLO);
 		setATFD(ATFD);
 		setLAA(LAA);
-=======
 		this.current_LOC = LOC;
 		this.current_CYCLO = CYCLO;
 		this.current_ATFD = ATFD;
 		this.current_LAA = LAA;
->>>>>>> refs/heads/master
 	}
-<<<<<<< HEAD
-
 	public int getLOC() { return LOC; }
 	public void setLOC(int LOC) { this.LOC = LOC; }
 	public int getCYCLO() {	return CYCLO; }
@@ -213,8 +208,6 @@ public class GUI {
 	public void setATFD(int ATFD) { this.ATFD = ATFD; }
 	public double getLAA() { return LAA; }
 	public void setLAA(double LAA) { this.LAA = LAA; }
-=======
-	
 	public JTable getCurrentExcelFileData() {
 		return this.table;
 	}
@@ -431,9 +424,13 @@ public class GUI {
             //error.printStackTrace();
 
         }
-		
-		
+	
 	}
 	
->>>>>>> refs/heads/master
+	public JFrame getframe() {
+		return frame;
+	}
+	
+	
+	
 }

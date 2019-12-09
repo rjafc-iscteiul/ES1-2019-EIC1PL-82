@@ -46,8 +46,8 @@ public class ChangeThresholds extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public ChangeThresholds(JFrame jframe, GUI gui) {
-		this.gui=gui;
+	public ChangeThresholds(JFrame jframe, GUI guii) {
+		this.gui=guii;
 		setLayout(null);
 		this.setBounds(0, 0, 622, 412);
 
@@ -116,15 +116,12 @@ public class ChangeThresholds extends JPanel {
 		add(btnApplyChanges);
 		btnApplyChanges.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
-				guii.setLOC(LOC);
-				guii.setCYCLO(CYCLO);
-				guii.setATFD(ATFD);
-				guii.setLAA(LAA);
+				gui.setLOC(LOC);
+				gui.setCYCLO(CYCLO);
+				gui.setATFD(ATFD);
+				gui.setLAA(LAA);
 				ThreshholdsPopup TP = new ThreshholdsPopup(LOC,CYCLO,ATFD,LAA,true);
 				TP.setVisible(true);
-=======
-
 				if(checkValues(locTextField.getText(),cycloTextField.getText(),atfdTextField.getText(),laaTextField.getText())){
 					LOC=Integer.parseInt(locTextField.getText());
 					CYCLO=Integer.parseInt(cycloTextField.getText());
@@ -132,7 +129,6 @@ public class ChangeThresholds extends JPanel {
 					LAA=Integer.parseInt(laaTextField.getText());
 					gui.assignThreshholds(LOC, CYCLO, ATFD, LAA);
 				}
->>>>>>> refs/heads/master
 			}
 		});
 
@@ -140,15 +136,13 @@ public class ChangeThresholds extends JPanel {
 		JButton btnNewButton = new JButton("Compare");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
 				checkTextBoxes();
-				guii.setLOC(LOC);
-				guii.setCYCLO(CYCLO);
-				guii.setATFD(ATFD);
-				guii.setLAA(LAA);
+				gui.setLOC(LOC);
+				gui.setCYCLO(CYCLO);
+				gui.setATFD(ATFD);
+				gui.setLAA(LAA);
 				ThreshholdsPopup TP = new ThreshholdsPopup(LOC,CYCLO,ATFD,LAA,false);
 				TP.setVisible(true);
-=======
 				String loctext=locTextField.getText();
 				String cictext=cycloTextField.getText();
 				String atfdtext=atfdTextField.getText();
@@ -168,9 +162,9 @@ public class ChangeThresholds extends JPanel {
 					}
 					paintWithErrors(jframe,gui);
 				}
->>>>>>> refs/heads/master
 			}
 		});
+		
 		btnNewButton.setBounds(499, 360, 117, 29);
 		add(btnNewButton);
 
