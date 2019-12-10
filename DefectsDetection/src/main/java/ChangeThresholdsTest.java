@@ -1,0 +1,88 @@
+
+
+import static org.junit.Assert.*;
+
+import java.awt.EventQueue;
+
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+import org.junit.Test;
+
+public class ChangeThresholdsTest {
+private GUI gui=new GUI();
+private ChangeThresholds c=new ChangeThresholds(gui.getFrame(), gui);
+
+	@Test
+	public void testCheckLM() {
+		assertEquals(c.checkLM("", ""),0);
+		assertEquals(c.checkLM("2", ""),1);
+		assertEquals(c.checkLM("", "3"),1);
+		assertEquals(c.checkLM("2", "3"),2);	
+	}
+
+	@Test
+	public void testCheckFE() {
+		assertEquals(c.checkFE("", ""),0);
+		assertEquals(c.checkFE("2", ""),1);
+		assertEquals(c.checkFE("", "3"),1);
+		assertEquals(c.checkFE("2", "3"),2);
+	}
+
+	@Test
+	public void testCheckValues() {
+		assertEquals(c.checkValues("2", "3", "", ""),true);
+		assertEquals(c.checkValues("", "", "2", "3"),true);
+		assertEquals(c.checkValues("2", "3", "2", "0.4"),true);
+//		assertEquals(c.checkValues("2", "", "", "3"),false);
+	}
+
+//	@Test
+//	public void testCheckTextBoxes() {
+//		fail("Not yet implemented");
+//	}
+
+	@Test
+	public void testCompareLM() {
+		c.setLOC(9);
+		c.setCYCLO(15);
+		c.checkValues("9", "15", "", "");
+		
+		JTable table=new JTable();;
+		ExcelReader reader = new ExcelReader();
+		String path=System.getProperty("user.dir")+"/target/classes/ExcelTest/Long-Method.xlsx";
+
+		DefaultTableModel tableData = reader.readFile(path);
+		table.setModel(tableData);
+
+		c.compareLM(table);
+		c.paintWithErrors(gui.getFrame(), gui);
+		
+		assertEquals(c.getDCI(),127);
+		assertEquals(c.getDII(),2);
+		assertEquals(c.getADCI(),278);
+		assertEquals(c.getADII(),13);
+	}
+
+	@Test
+	public void testCompareFE() {
+		c.setATFD(4);
+		c.setLAA(0.4);
+		c.checkValues("", "", "4", "0.4");
+		
+		JTable table=new JTable();;
+		ExcelReader reader = new ExcelReader();
+		String path=System.getProperty("user.dir")+"/target/classes/ExcelTest/Long-Method.xlsx";
+		
+		DefaultTableModel tableData = reader.readFile(path);
+		table.setModel(tableData);
+		
+		c.compareFE(table);
+		c.paintWithErrors(gui.getFrame(), gui);
+		
+		assertEquals(c.getDCI_FE(),112);
+		assertEquals(c.getDII_FE(),19);
+		assertEquals(c.getADCI_FE(),287);
+		assertEquals(c.getADII_FE(),2);
+	}
+}
