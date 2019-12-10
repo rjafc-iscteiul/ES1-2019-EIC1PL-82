@@ -116,6 +116,7 @@ public class ChangeThresholds extends JPanel {
 		add(btnApplyChanges);
 		btnApplyChanges.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				checkTextBoxes();
 				gui.setLOC(LOC);
 				gui.setCYCLO(CYCLO);
 				gui.setATFD(ATFD);
@@ -220,7 +221,7 @@ public class ChangeThresholds extends JPanel {
 		}
 		return AllValuesGood;
 	}
-	private boolean checkValues(String loc, String cic,String atfd, String laa){
+	public boolean checkValues(String loc, String cic,String atfd, String laa){
 		final JPanel panel = new JPanel();
 		boolean LMgood=checkLM(loc, cic)==AllValuesGood;
 		boolean LMempty=checkLM(loc, cic)==empty;
@@ -356,4 +357,34 @@ public class ChangeThresholds extends JPanel {
 		}
 	}
 
+	public void applyTest(int LOC, int CYCLO, int ATFD, double LAA, GUI gui) {
+		locTextField.setText(Integer.toString(LOC));
+		cycloTextField.setText(Integer.toString(CYCLO));
+		atfdTextField.setText(Integer.toString(ATFD));
+		laaTextField.setText(Double.toString(LAA));
+		checkTextBoxes();
+		gui.setLOC(LOC);
+		gui.setCYCLO(CYCLO);
+		gui.setATFD(ATFD);
+		gui.setLAA(LAA);
+		ThreshholdsPopup TP = new ThreshholdsPopup(LOC,CYCLO,ATFD,LAA,true);
+		TP.setVisible(true);
+		if(checkValues(locTextField.getText(),cycloTextField.getText(),atfdTextField.getText(),laaTextField.getText())){
+			LOC=Integer.parseInt(locTextField.getText());
+			CYCLO=Integer.parseInt(cycloTextField.getText());
+			ATFD=Integer.parseInt(atfdTextField.getText());
+			LAA=Double.parseDouble(laaTextField.getText());
+			gui.assignThreshholds(LOC, CYCLO, ATFD, LAA);
+		}
+	}
+	
+	public void compareTest(int LOC, int CYCLO, int ATFD, double LAA, GUI gui) {
+		checkTextBoxes();
+		gui.setLOC(LOC);
+		gui.setCYCLO(CYCLO);
+		gui.setATFD(ATFD);
+		gui.setLAA(LAA);
+		ThreshholdsPopup TP = new ThreshholdsPopup(LOC,CYCLO,ATFD,LAA,false);
+		TP.setVisible(true);
+	}
 }

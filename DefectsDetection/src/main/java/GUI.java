@@ -25,10 +25,10 @@ public class GUI {
 	private JTable table;
 
 	
-	private final static int LOC=80;
-	private final static int CYCLO=80;
-	private final static int ATFD=4;
-	private final static double LAA=0.42;
+	private static int LOC=80;
+	private static int CYCLO=80;
+	private static int ATFD=4;
+	private static double LAA=0.42;
 
 	private int current_LOC;
 	private int current_CYCLO;
