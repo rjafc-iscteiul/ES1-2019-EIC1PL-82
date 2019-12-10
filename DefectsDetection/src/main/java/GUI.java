@@ -211,7 +211,9 @@ public class GUI {
 	public JTable getCurrentExcelFileData() {
 		return this.table;
 	}
-	
+	public JFrame getFrame(){
+		return frame;
+	}
 	
 	public void compareWithDefault(){
 		
