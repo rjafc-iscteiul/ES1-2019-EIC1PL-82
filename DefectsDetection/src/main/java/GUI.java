@@ -26,7 +26,7 @@ public class GUI {
 
 	
 	private final static int LOC=80;
-	private final static int CYCLO=80;
+	private final static int CYCLO=10;
 	private final static int ATFD=4;
 	private final static double LAA=0.42;
 
@@ -92,17 +92,7 @@ public class GUI {
 			
 			public void actionPerformed(ActionEvent e) {
 				
-				JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-
-				int returnValue = jfc.showOpenDialog(null);
-
-				if (returnValue == JFileChooser.APPROVE_OPTION) {   //file chosen correctly
-					
-					File selectedFile = jfc.getSelectedFile();
-					ExcelReader reader = new ExcelReader();
-					DefaultTableModel tableData = reader.readFile(selectedFile.getAbsolutePath());
-					table.setModel(tableData);
-				}
+				addTable();
 				
 			}
 			
@@ -132,13 +122,8 @@ public class GUI {
 			public void actionPerformed(ActionEvent e) {
 				
 				//make all values default
-				current_LOC=LOC;
-				current_CYCLO=CYCLO;
-				current_ATFD=ATFD;
-				current_LAA=LAA;
-				
-				ResetValuesRules rvr = new ResetValuesRules();
-				rvr.setVisible(true);
+				makeValuesDefault();
+
 			}
 		});
 		mnDefaultRules.add(mntmResetValues);
@@ -190,6 +175,19 @@ public class GUI {
 		frame.getContentPane().setLayout(null);
 	}
 	
+	public JFrame getFrame() {
+		return this.frame;
+	}
+	
+	public void makeValuesDefault() {
+		current_LOC=LOC;
+		current_CYCLO=CYCLO;
+		current_ATFD=ATFD;
+		current_LAA=LAA;
+		ResetValuesRules rvr = new ResetValuesRules();
+		rvr.setVisible(true);
+	}
+	
 	public void assignThreshholds(int LOC, int CYCLO, int ATFD, double LAA) {
 		this.current_LOC = LOC;
 		this.current_CYCLO = CYCLO;
@@ -197,10 +195,57 @@ public class GUI {
 		this.current_LAA = LAA;
 	}
 	
+	public int getLOC() {
+		return this.current_LOC;
+	}
+	
+	public int getDefaultLOC() {
+		return this.LOC;
+	}
+	
+	public double getLAA() {
+		return this.current_LAA;
+	}
+	
+	public double getDefaultLAA() {
+		return this.LAA;
+	}
+	
+	public int getATFD() {
+		return this.current_ATFD;
+	}
+	
+	public int getDefaultATFD() {
+		return this.ATFD;
+	}
+	
+	public int getCYCLO() {
+		return this.current_CYCLO;
+	}
+	
+	public int getDefaultCYCLO() {
+		return this.CYCLO;
+	}
+	
 	public JTable getCurrentExcelFileData() {
 		return this.table;
 	}
 	
+	
+	public void addTable() {
+		JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+
+		int returnValue = jfc.showOpenDialog(null);
+
+		if (returnValue == JFileChooser.APPROVE_OPTION) {   //file chosen correctly
+			
+			File selectedFile = jfc.getSelectedFile();
+			ExcelReader reader = new ExcelReader();
+			DefaultTableModel tableData = reader.readFile(selectedFile.getAbsolutePath());
+			table.setModel(tableData);
+		}
+		
+	}
 	
 	public void compareWithDefault(){
 		
@@ -397,8 +442,6 @@ public class GUI {
 			errorsFE.add(adciFE);
 			errorsFE.add(adiiFE);
 			
-			
-			
 			frame.setContentPane(new PaintSeveralErrors(errors,errorsFE,frame,this,true));
             
 
@@ -413,8 +456,7 @@ public class GUI {
             //error.printStackTrace();
 
         }
-		
-		
+	
 	}
 	
 }
