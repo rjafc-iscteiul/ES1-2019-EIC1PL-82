@@ -213,12 +213,6 @@ public class CompareTools extends JPanel {
 		errors_iPlasma.add(new ComparisonError("DII",numberDII,methodIDErrors_DII));
 		errors_iPlasma.add(new ComparisonError("ADCI",numberADCI,methodIDErrors_ADCI));
 		errors_iPlasma.add(new ComparisonError("ADII",numberADII,methodIDErrors_ADII));
-				
-		for(ComparisonError ce:errors_iPlasma) {
-			System.out.println(ce.getErrorType());
-			System.out.println(ce.getNumberErrors());
-			System.out.println(ce.getMethodIDErrors().size());
-		}
 		
 		add_iPlasmaErrors();
 
@@ -230,27 +224,21 @@ public class CompareTools extends JPanel {
 			if(ce.getErrorType().equals("ADII")) {
 				for(Integer i:ce.getMethodIDErrors()) {
 					modelADII_iPlasma.addRow(new Object[] { i.toString() });
-					System.out.println(i.toString());
 				}
 			}else {
 				if(ce.getErrorType().equals("DCI")) {
 					for(Integer i:ce.getMethodIDErrors()) {
 						modelDCI_iPlasma.addRow(new Object[] { i.toString() });
-						System.out.println(i.toString());
-
 					}
 				}else {
 					if(ce.getErrorType().equals("DII")) {
 						for(Integer i:ce.getMethodIDErrors()) {
 							modelDII_iPlasma.addRow(new Object[] { i.toString() });
-							System.out.println(i.toString());
-
 						}
 					}else {
 						if(ce.getErrorType().equals("ADCI")) {
 							for(Integer i:ce.getMethodIDErrors()) {
 								modelADCI_iPlasma.addRow(new Object[] { i.toString() });
-								System.out.println(i.toString());
 							}
 						}
 					}
@@ -316,15 +304,7 @@ public class CompareTools extends JPanel {
 		errors_PMD.add(new ComparisonError("DII",numberDII,methodIDErrors_DII));
 		errors_PMD.add(new ComparisonError("ADCI",numberADCI,methodIDErrors_ADCI));
 		errors_PMD.add(new ComparisonError("ADII",numberADII,methodIDErrors_ADII));
-				
-		System.out.println("PMD: "+errors_PMD.size());
-		for(ComparisonError ce:errors_PMD) {
-			System.out.println(ce.getErrorType());
-			System.out.println(ce.getNumberErrors());
-			System.out.println(ce.getMethodIDErrors().size());
-		}
-		System.out.println("Aftewards 2");
-		
+						
 		add_PMDErrors();
 
 		return numberDCI+numberADCI;
@@ -336,27 +316,21 @@ public class CompareTools extends JPanel {
 			if(ce.getErrorType().equals("ADII")) {
 				for(Integer i:ce.getMethodIDErrors()) {
 					modelADII_PMD.addRow(new Object[] { i.toString() });
-					System.out.println(i.toString());
 				}
 			}else {
 				if(ce.getErrorType().equals("DCI")) {
 					for(Integer i:ce.getMethodIDErrors()) {
 						modelDCI_PMD.addRow(new Object[] { i.toString() });
-						System.out.println(i.toString());
-
 					}
 				}else {
 					if(ce.getErrorType().equals("DII")) {
 						for(Integer i:ce.getMethodIDErrors()) {
 							modelDII_PMD.addRow(new Object[] { i.toString() });
-							System.out.println(i.toString());
-
 						}
 					}else {
 						if(ce.getErrorType().equals("ADCI")) {
 							for(Integer i:ce.getMethodIDErrors()) {
 								modelADCI_PMD.addRow(new Object[] { i.toString() });
-								System.out.println(i.toString());
 							}
 						}
 					}

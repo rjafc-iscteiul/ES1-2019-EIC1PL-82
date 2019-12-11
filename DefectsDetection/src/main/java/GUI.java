@@ -450,15 +450,11 @@ public class GUI {
             
 
         } catch (ScriptException error) {
-
-            System.out.println("Invalid Expression");
             
             //lauch a error message on gui 
             
             new InvalidExpression().setVisible(true);
             
-            //error.printStackTrace();
-
         }
 	
 	}
