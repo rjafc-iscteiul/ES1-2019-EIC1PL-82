@@ -14,6 +14,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ExcelReader {
 
+	private File file;
+	private XSSFWorkbook wbk;
+	
 	public DefaultTableModel readFile(String filename){
 
 		File file = new File(filename);
@@ -75,4 +78,10 @@ public class ExcelReader {
 		}
 		return data;
 	}
+	
+	
+	public XSSFWorkbook setXSSFWorkbook(XSSFWorkbook xssfworkbook){
+		return this.wbk=xssfworkbook;
+	}
+	
 }
