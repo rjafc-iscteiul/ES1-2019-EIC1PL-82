@@ -65,14 +65,9 @@ private ChangeThresholds c=new ChangeThresholds(gui.getFrame(), gui);
 		c.setLAA(0.4);
 		c.checkValues("", "", "4", "0.4");
 		
-		JTable table=new JTable();;
-		ExcelReader reader = new ExcelReader();
-		String path=System.getProperty("user.dir")+"/target/classes/ExcelTest/Long-Method.xlsx";
+		gui.addTable();
 		
-		DefaultTableModel tableData = reader.readFile(path);
-		table.setModel(tableData);
-		
-		c.compareFE(table);
+		c.compareFE(gui.getCurrentExcelFileData());
 		c.paintWithErrors(gui.getFrame(), gui);
 		
 		assertEquals(c.getDCI_FE(),112);
