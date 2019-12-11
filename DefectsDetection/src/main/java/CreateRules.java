@@ -78,35 +78,13 @@ public class CreateRules extends JPanel {
 		btnApplyChanges.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				//gets excel info table
-				JTable table=gui.getCurrentExcelFileData();
-				
 				//gets jtextfield rules (for long_method)
 				String rule=longMethod_field.getText();
-				String finalRule=rule;
 				
 				//get jtextfield rules (for feature_envy)
 				String ruleFE=featureEnvy_field.getText();
-				String finalRuleFE=ruleFE;
 				
-				//check if any is empty
-				if(ruleFE.trim().isEmpty() && rule.trim().isEmpty()) {
-		            new InvalidExpression().setVisible(true);
-				}else {
-					if(ruleFE.trim().isEmpty()) {
-						//feature_envy rule is empty
-						paintAuxOneError(finalRule,rule,table,"lm");
-					}else {
-						if(rule.trim().isEmpty()) {
-							//long_method rule is empty
-							paintAuxOneError(finalRuleFE,ruleFE,table,"fe");
-						}else {
-							//both fields are filled
-							paintAuxOneError(finalRule,rule,finalRuleFE,ruleFE,table);
-						}
-					}
-				
-				}
+				paintingErrors(rule,ruleFE);
 				
 			}
 		});
@@ -137,6 +115,31 @@ public class CreateRules extends JPanel {
 		featureEnvyRuleExample.setFont(new Font("Lucida Grande", Font.PLAIN, 9));
 		featureEnvyRuleExample.setBounds(44, 281, 288, 16);
 		add(featureEnvyRuleExample);
+	}
+	
+	public void paintingErrors(String rule, String ruleFE) {
+		//gets excel info table
+		JTable table=gui.getCurrentExcelFileData();
+		
+		//check if any is empty
+		if(ruleFE.trim().isEmpty() && rule.trim().isEmpty()) {
+            new InvalidExpression().setVisible(true);
+            throw new IllegalArgumentException("No rules were inserted.");
+		}else {
+			if(ruleFE.trim().isEmpty()) {
+				//feature_envy rule is empty
+				paintAuxOneError(rule,rule,table,"lm");
+			}else {
+				if(rule.trim().isEmpty()) {
+					//long_method rule is empty
+					paintAuxOneError(ruleFE,ruleFE,table,"fe");
+				}else {
+					//both fields are filled
+					paintAuxOneError(rule,rule,ruleFE,ruleFE,table);
+				}
+			}
+		
+		}
 	}
 	
 	
@@ -319,7 +322,7 @@ public class CreateRules extends JPanel {
         }
 	}
 	
-	public void paintWithErrors(JFrame frame, boolean multiple) {	
+	private void paintWithErrors(JFrame frame, boolean multiple) {	
 		LinkedList<ComparisonError> errors=new LinkedList<ComparisonError>();
 		
 		errors.add(new ComparisonError("DCI",numberDCI,errorDCI));

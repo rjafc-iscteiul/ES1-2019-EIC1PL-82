@@ -7,9 +7,13 @@ public class ComparisonError {
 	private LinkedList<Integer> methodIDErrors=new LinkedList<Integer>();
 	
 	public ComparisonError(String errorType, int numberErrors, LinkedList<Integer> methodIDErrors) {
-		this.errorType=errorType;
-		this.numberErrors=numberErrors;
-		this.methodIDErrors=methodIDErrors;
+		if(errorType.length()==0 || numberErrors<0 || methodIDErrors==null) {
+			throw new IllegalArgumentException("Error type not defined or no list given.");
+		}else {
+			this.errorType=errorType;
+			this.numberErrors=numberErrors;
+			this.methodIDErrors=methodIDErrors;
+		}
 	}
 
 	public String getErrorType() {

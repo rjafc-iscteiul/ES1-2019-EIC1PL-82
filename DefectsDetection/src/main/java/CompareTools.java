@@ -50,115 +50,118 @@ public class CompareTools extends JPanel {
 	
 	
 	public CompareTools(GUI gui) {
-		this.gui=gui;
-		setLayout(null);
-		this.setBounds(0, 0, 622, 412);
-		
-		JLabel lblToolsComparison = new JLabel("Tools comparison");
-		lblToolsComparison.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
-		lblToolsComparison.setBounds(216, 16, 150, 16);
-		add(lblToolsComparison);
-		
-		JLabel lblIplasma = new JLabel("iPlasma");
-		lblIplasma.setBounds(32, 54, 61, 16);
-		add(lblIplasma);
-		
-		JLabel lblDci = new JLabel("DCI");
-		lblDci.setBounds(42, 82, 31, 16);
-		add(lblDci);
-		
-		JScrollPane scrollPaneDCI_iPlasma = new JScrollPane(dci_iPlasma);
-		scrollPaneDCI_iPlasma.setBounds(70, 84, 84, 79);
-		add(scrollPaneDCI_iPlasma);
-		
-		JLabel lblDii = new JLabel("DII");
-		lblDii.setBounds(166, 82, 31, 16);
-		add(lblDii);
-		
-		JScrollPane scrollPaneDII_iPlasma = new JScrollPane(dii_iPlasma);
-		scrollPaneDII_iPlasma.setBounds(194, 84, 84, 79);
-		add(scrollPaneDII_iPlasma);
-		
-		JScrollPane scrollPaneADII_iPlasma = new JScrollPane(adii_iPlasma);
-		scrollPaneADII_iPlasma.setBounds(194, 177, 84, 79);
-		add(scrollPaneADII_iPlasma);
-		
-		JLabel lblAdii = new JLabel("ADII");
-		lblAdii.setBounds(166, 175, 31, 16);
-		add(lblAdii);
-		
-		JScrollPane scrollPaneADCI_iPlasma = new JScrollPane(adci_iPlasma);
-		scrollPaneADCI_iPlasma.setBounds(70, 177, 84, 79);
-		add(scrollPaneADCI_iPlasma);
-		
-		JLabel lblAdci = new JLabel("ADCI");
-		lblAdci.setBounds(32, 177, 61, 16);
-		add(lblAdci);
-		
-		JLabel labelDCI_PMD = new JLabel("DCI");
-		labelDCI_PMD.setBounds(352, 82, 31, 16);
-		add(labelDCI_PMD);
-		
-		JScrollPane scrollPaneADII_PMD = new JScrollPane(adii_PMD);
-		scrollPaneADII_PMD.setBounds(504, 177, 84, 79);
-		add(scrollPaneADII_PMD);
-		
-		JScrollPane scrollPaneDII_PMD = new JScrollPane(dii_PMD);
-		scrollPaneDII_PMD.setBounds(504, 84, 84, 79);
-		add(scrollPaneDII_PMD);
-		
-		JLabel labelDII_PMD = new JLabel("DII");
-		labelDII_PMD.setBounds(476, 82, 31, 16);
-		add(labelDII_PMD);
-		
-		JScrollPane scrollPaneDCI_PMD = new JScrollPane(dci_PMD);
-		scrollPaneDCI_PMD.setBounds(380, 84, 84, 79);
-		add(scrollPaneDCI_PMD);
-		
-		JScrollPane scrollPaneADCI_PMD = new JScrollPane(adci_PMD);
-		scrollPaneADCI_PMD.setBounds(380, 177, 84, 79);
-		add(scrollPaneADCI_PMD);
-		
-		JLabel labelADCI_PMD = new JLabel("ADCI");
-		labelADCI_PMD.setBounds(342, 177, 61, 16);
-		add(labelADCI_PMD);
-		
-		JLabel lblPmd = new JLabel("PMD");
-		lblPmd.setBounds(342, 54, 61, 16);
-		add(lblPmd);
-		
-		JLabel labelADII_PMD = new JLabel("ADII");
-		labelADII_PMD.setBounds(476, 177, 31, 16);
-		add(labelADII_PMD);
-		
-		JLabel lblTheBestTool = new JLabel("The best tool is: ");
-		lblTheBestTool.setToolTipText("The criteria to choose the best tool was the sum of DCI and ADCI errors. The greater the sum the better the tool.");
-		lblTheBestTool.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
-		lblTheBestTool.setBounds(70, 337, 113, 16);
-		add(lblTheBestTool);
-		
-		JLabel resultLabel = new JLabel("");
-		resultLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
-		resultLabel.setBounds(194, 338, 113, 16);
-		add(resultLabel);
-		
-		int iPlasma=fill_iPlasma();
-		int pmd=fill_PMD();
-		
-		if(iPlasma>pmd) { //iPlasma the best
-			resultLabel.setText("iPlasma");
-		}else { //PMD the best
-			resultLabel.setText("PMD");
+		if(gui==null) {
+			throw new IllegalArgumentException("Invalid argument. Given null GUI.");
+		}else {
+			this.gui=gui;
+			setLayout(null);
+			this.setBounds(0, 0, 622, 412);
+			
+			JLabel lblToolsComparison = new JLabel("Tools comparison");
+			lblToolsComparison.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+			lblToolsComparison.setBounds(216, 16, 150, 16);
+			
+			add(lblToolsComparison);
+			
+			JLabel lblIplasma = new JLabel("iPlasma");
+			lblIplasma.setBounds(32, 54, 61, 16);
+			add(lblIplasma);
+			
+			JLabel lblDci = new JLabel("DCI");
+			lblDci.setBounds(42, 82, 31, 16);
+			add(lblDci);
+			
+			JScrollPane scrollPaneDCI_iPlasma = new JScrollPane(dci_iPlasma);
+			scrollPaneDCI_iPlasma.setBounds(70, 84, 84, 79);
+			add(scrollPaneDCI_iPlasma);
+			
+			JLabel lblDii = new JLabel("DII");
+			lblDii.setBounds(166, 82, 31, 16);
+			add(lblDii);
+			
+			JScrollPane scrollPaneDII_iPlasma = new JScrollPane(dii_iPlasma);
+			scrollPaneDII_iPlasma.setBounds(194, 84, 84, 79);
+			add(scrollPaneDII_iPlasma);
+			
+			JScrollPane scrollPaneADII_iPlasma = new JScrollPane(adii_iPlasma);
+			scrollPaneADII_iPlasma.setBounds(194, 177, 84, 79);
+			add(scrollPaneADII_iPlasma);
+			
+			JLabel lblAdii = new JLabel("ADII");
+			lblAdii.setBounds(166, 175, 31, 16);
+			add(lblAdii);
+			
+			JScrollPane scrollPaneADCI_iPlasma = new JScrollPane(adci_iPlasma);
+			scrollPaneADCI_iPlasma.setBounds(70, 177, 84, 79);
+			add(scrollPaneADCI_iPlasma);
+			
+			JLabel lblAdci = new JLabel("ADCI");
+			lblAdci.setBounds(32, 177, 61, 16);
+			add(lblAdci);
+			
+			JLabel labelDCI_PMD = new JLabel("DCI");
+			labelDCI_PMD.setBounds(352, 82, 31, 16);
+			add(labelDCI_PMD);
+			
+			JScrollPane scrollPaneADII_PMD = new JScrollPane(adii_PMD);
+			scrollPaneADII_PMD.setBounds(504, 177, 84, 79);
+			add(scrollPaneADII_PMD);
+			
+			JScrollPane scrollPaneDII_PMD = new JScrollPane(dii_PMD);
+			scrollPaneDII_PMD.setBounds(504, 84, 84, 79);
+			add(scrollPaneDII_PMD);
+			
+			JLabel labelDII_PMD = new JLabel("DII");
+			labelDII_PMD.setBounds(476, 82, 31, 16);
+			add(labelDII_PMD);
+			
+			JScrollPane scrollPaneDCI_PMD = new JScrollPane(dci_PMD);
+			scrollPaneDCI_PMD.setBounds(380, 84, 84, 79);
+			add(scrollPaneDCI_PMD);
+			
+			JScrollPane scrollPaneADCI_PMD = new JScrollPane(adci_PMD);
+			scrollPaneADCI_PMD.setBounds(380, 177, 84, 79);
+			add(scrollPaneADCI_PMD);
+			
+			JLabel labelADCI_PMD = new JLabel("ADCI");
+			labelADCI_PMD.setBounds(342, 177, 61, 16);
+			add(labelADCI_PMD);
+			
+			JLabel lblPmd = new JLabel("PMD");
+			lblPmd.setBounds(342, 54, 61, 16);
+			add(lblPmd);
+			
+			JLabel labelADII_PMD = new JLabel("ADII");
+			labelADII_PMD.setBounds(476, 177, 31, 16);
+			add(labelADII_PMD);
+			
+			JLabel lblTheBestTool = new JLabel("The best tool is: ");
+			lblTheBestTool.setToolTipText("The criteria to choose the best tool was the sum of DCI and ADCI errors. The greater the sum the better the tool.");
+			lblTheBestTool.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
+			lblTheBestTool.setBounds(70, 337, 113, 16);
+			add(lblTheBestTool);
+			
+			JLabel resultLabel = new JLabel("");
+			resultLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
+			resultLabel.setBounds(194, 338, 113, 16);
+			add(resultLabel);
+			
+			int iPlasma=fill_iPlasma();
+			int pmd=fill_PMD();
+			
+			if(iPlasma>pmd) { //iPlasma the best
+				resultLabel.setText("iPlasma");
+			}else { //PMD the best
+				resultLabel.setText("PMD");
+			}
+			
+			//create histogram
+			createHistogram(this.errors_iPlasma,"long_method iPlasma");
+			createHistogram(this.errors_PMD,"long_method PMD");
 		}
-		
-		//create histogram
-		createHistogram(this.errors_iPlasma,"long_method iPlasma");
-		createHistogram(this.errors_PMD,"long_method PMD");
-
 	}
-
 	
-	private int fill_iPlasma() {
+	public int fill_iPlasma() {
 		JTable table=gui.getCurrentExcelFileData();
 		int numberDCI=0;
 		int numberDII=0;
@@ -211,20 +214,18 @@ public class CompareTools extends JPanel {
 		errors_iPlasma.add(new ComparisonError("ADCI",numberADCI,methodIDErrors_ADCI));
 		errors_iPlasma.add(new ComparisonError("ADII",numberADII,methodIDErrors_ADII));
 				
-		System.out.println(errors_iPlasma.size());
 		for(ComparisonError ce:errors_iPlasma) {
 			System.out.println(ce.getErrorType());
 			System.out.println(ce.getNumberErrors());
 			System.out.println(ce.getMethodIDErrors().size());
 		}
-		System.out.println("Aftewards");
 		
 		add_iPlasmaErrors();
 
 		return numberDCI+numberADCI;
 	}
 	
-	private void add_iPlasmaErrors() {
+	public void add_iPlasmaErrors() {
 		for(ComparisonError ce:errors_iPlasma) {
 			if(ce.getErrorType().equals("ADII")) {
 				for(Integer i:ce.getMethodIDErrors()) {
@@ -263,7 +264,7 @@ public class CompareTools extends JPanel {
 		this.adii_iPlasma.setModel(this.modelADII_iPlasma);
 	}
 	
-	private int fill_PMD() {
+	public int fill_PMD() {
 		JTable table=gui.getCurrentExcelFileData();
 		int numberDCI=0;
 		int numberDII=0;
@@ -330,7 +331,7 @@ public class CompareTools extends JPanel {
 
 	}
 	
-	private void add_PMDErrors() {
+	public void add_PMDErrors() {
 		for(ComparisonError ce:errors_PMD) {
 			if(ce.getErrorType().equals("ADII")) {
 				for(Integer i:ce.getMethodIDErrors()) {
@@ -370,22 +371,27 @@ public class CompareTools extends JPanel {
 	}
 	
 	
-	private void createHistogram(LinkedList<ComparisonError> errors, String errorType) {
-		DefaultCategoryDataset dcd=new DefaultCategoryDataset();
+	public void createHistogram(LinkedList<ComparisonError> errors, String errorType) {
+		if(errors==null || errorType.length()==0) {
+			throw new IllegalArgumentException("Invalid list or error type.");
+		}else {
+			DefaultCategoryDataset dcd=new DefaultCategoryDataset();
 
-		//add error information
-		for(ComparisonError ce:errors) {
-			dcd.setValue(ce.getNumberErrors(), "Error", ce.getErrorType());
+			//add error information
+			for(ComparisonError ce:errors) {
+				dcd.setValue(ce.getNumberErrors(), "Error", ce.getErrorType());
+			}
+
+			JFreeChart jchart=ChartFactory.createBarChart("Errors Occurred", "Error Type", "Error Frequency", dcd, PlotOrientation.VERTICAL, true, true,false);
+
+			CategoryPlot plot= jchart.getCategoryPlot();
+			plot.setRangeGridlinePaint(Color.BLACK);
+
+			ChartFrame chartFrm=new ChartFrame("Errors Occured "+errorType,jchart,true);
+			chartFrm.setVisible(true);
+			chartFrm.setSize(700,500);
 		}
-
-		JFreeChart jchart=ChartFactory.createBarChart("Errors Occurred", "Error Type", "Error Frequency", dcd, PlotOrientation.VERTICAL, true, true,false);
-
-		CategoryPlot plot= jchart.getCategoryPlot();
-		plot.setRangeGridlinePaint(Color.BLACK);
-
-		ChartFrame chartFrm=new ChartFrame("Errors Occured "+errorType,jchart,true);
-		chartFrm.setVisible(true);
-		chartFrm.setSize(700,500);
+		
 	}
 	
 }

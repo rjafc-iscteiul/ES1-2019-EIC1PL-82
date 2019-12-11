@@ -18,7 +18,6 @@ public class About extends JFrame {
 	 * Launch the application.
 	 */
 	
-
 	/**
 	 * Create the frame.
 	 */
