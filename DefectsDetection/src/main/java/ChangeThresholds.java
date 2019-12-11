@@ -46,8 +46,8 @@ public class ChangeThresholds extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public ChangeThresholds(JFrame jframe, GUI gui) {
-		this.gui=gui;
+	public ChangeThresholds(JFrame jframe, GUI guii) {
+		this.gui=guii;
 		setLayout(null);
 		this.setBounds(0, 0, 622, 412);
 
@@ -116,7 +116,13 @@ public class ChangeThresholds extends JPanel {
 		add(btnApplyChanges);
 		btnApplyChanges.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				checkTextBoxes();
+				gui.setLOC(LOC);
+				gui.setCYCLO(CYCLO);
+				gui.setATFD(ATFD);
+				gui.setLAA(LAA);
+				ThreshholdsPopup TP = new ThreshholdsPopup(LOC,CYCLO,ATFD,LAA,true);
+				TP.setVisible(true);
 				if(checkValues(locTextField.getText(),cycloTextField.getText(),atfdTextField.getText(),laaTextField.getText())){
 					LOC=Integer.parseInt(locTextField.getText());
 					CYCLO=Integer.parseInt(cycloTextField.getText());
@@ -131,6 +137,13 @@ public class ChangeThresholds extends JPanel {
 		JButton btnNewButton = new JButton("Compare");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				checkTextBoxes();
+				gui.setLOC(LOC);
+				gui.setCYCLO(CYCLO);
+				gui.setATFD(ATFD);
+				gui.setLAA(LAA);
+				ThreshholdsPopup TP = new ThreshholdsPopup(LOC,CYCLO,ATFD,LAA,false);
+				TP.setVisible(true);
 				String loctext=locTextField.getText();
 				String cictext=cycloTextField.getText();
 				String atfdtext=atfdTextField.getText();
@@ -139,12 +152,23 @@ public class ChangeThresholds extends JPanel {
 					//				get Table
 					JTable table=gui.getCurrentExcelFileData();
 					if(LM && !FE){
+						LOC=Integer.parseInt(locTextField.getText());
+						CYCLO=Integer.parseInt(cycloTextField.getText());
 						compareLM(table);
 					}
 					if(!LM && FE){
+						//		get variables ATFD and LAA
+						ATFD=Integer.parseInt(atfdTextField.getText());
+						LAA=Double.parseDouble(laaTextField.getText());
 						compareFE(table);
 					}
 					if(LM && FE){
+						LOC=Integer.parseInt(locTextField.getText());
+						CYCLO=Integer.parseInt(cycloTextField.getText());
+						//		get variables ATFD and LAA
+						ATFD=Integer.parseInt(atfdTextField.getText());
+						LAA=Double.parseDouble(laaTextField.getText());
+						
 						compareLM(table);
 						compareFE(table);
 					}
@@ -152,6 +176,7 @@ public class ChangeThresholds extends JPanel {
 				}
 			}
 		});
+		
 		btnNewButton.setBounds(499, 360, 117, 29);
 		add(btnNewButton);
 
@@ -159,7 +184,48 @@ public class ChangeThresholds extends JPanel {
 		this.setVisible(true);
 
 	}
+	public int getDCI(){
+		return errorDCI.size();
+	}
+	public int getDII(){
+		return errorDII.size();
+	}
+	public int getADCI(){
+		return errorADCI.size();
+	}
+	public int getADII(){
+		return errorADII.size();
+		
+		
+	}
+	public int getDCI_FE(){
+		return errorDCIFE.size();
+	}
+	public int getDII_FE(){
+		return errorDIIFE.size();
+	}
+	public int getADCI_FE(){
+		return errorADCIFE.size();
+	}
+	public int getADII_FE(){
+		return errorADIIFE.size();
+	}
 
+	public void setLOC(int lOC) {
+		LOC = lOC;
+	}
+
+	public void setCYCLO(int cYCLO) {
+		CYCLO = cYCLO;
+	}
+
+	public void setATFD(int aTFD) {
+		ATFD = aTFD;
+	}
+	public void setLAA(double lAA) {
+		LAA = lAA;
+	}
+	
 	public void paintWithErrors(JFrame frame,GUI gui) {	
 		LinkedList<ComparisonError> errors=new LinkedList<ComparisonError>();
 		LinkedList<ComparisonError> errorsFE=new LinkedList<ComparisonError>();
@@ -183,7 +249,7 @@ public class ChangeThresholds extends JPanel {
 		if(LM && FE)
 			frame.setContentPane(new PaintSeveralErrors(errors,errorsFE,frame,gui,false));
 	}
-	private int checkLM(String loc, String cic){
+	public int checkLM(String loc, String cic){
 		if(loc.equals("") && !cic.equals("")){
 			return error;
 		}
@@ -195,7 +261,7 @@ public class ChangeThresholds extends JPanel {
 		}
 		return AllValuesGood;
 	}
-	private int checkFE(String atfd, String laa){
+	public int checkFE(String atfd, String laa){
 		if(atfd.equals("") && !laa.equals("")){
 			return error;
 		}
@@ -207,7 +273,7 @@ public class ChangeThresholds extends JPanel {
 		}
 		return AllValuesGood;
 	}
-	private boolean checkValues(String loc, String cic,String atfd, String laa){
+	public boolean checkValues(String loc, String cic,String atfd, String laa){
 		final JPanel panel = new JPanel();
 		boolean LMgood=checkLM(loc, cic)==AllValuesGood;
 		boolean LMempty=checkLM(loc, cic)==empty;
@@ -236,18 +302,14 @@ public class ChangeThresholds extends JPanel {
 		return false;
 	}
 
-	private void checkTextBoxes() {
+	public void checkTextBoxes() {
 		try { LOC = Integer.parseInt(locTextField.getText()); }	catch (NumberFormatException e) { LOC = 0; }
 		try { CYCLO = Integer.parseInt(cycloTextField.getText()); }	catch (NumberFormatException e) { CYCLO = 0; }
 		try { ATFD = Integer.parseInt(atfdTextField.getText()); }	catch (NumberFormatException e) { ATFD = 0; }
 		try { LAA = Double.parseDouble(laaTextField.getText()); }	catch (NumberFormatException e) { LAA = 0; }
 	}
 
-	private void compareLM(JTable table){
-		//		get variables LOC and CIC
-		LOC=Integer.parseInt(locTextField.getText());
-		CYCLO=Integer.parseInt(cycloTextField.getText());
-
+	public void compareLM(JTable table){
 		//For to get the variables for each row and compare to determine if there's some error
 
 		for(int numRow=0;numRow!=table.getModel().getRowCount();numRow++) {
@@ -291,14 +353,9 @@ public class ChangeThresholds extends JPanel {
 				errorADII.add(methodID);
 			}
 		}
-
 	}
 
-	private void compareFE(JTable table){
-		//		get variables ATFD and LAA
-		ATFD=Integer.parseInt(atfdTextField.getText());
-		LAA=Double.parseDouble(laaTextField.getText());
-
+	public void compareFE(JTable table){
 		//For to get the variables for each row and compare to determine if there's some error
 		for(int numRow=0;numRow!=table.getModel().getRowCount();numRow++) {
 			boolean is_feature_envy;
@@ -343,4 +400,34 @@ public class ChangeThresholds extends JPanel {
 		}
 	}
 
+	public void applyTest(int LOC, int CYCLO, int ATFD, double LAA, GUI gui) {
+		locTextField.setText(Integer.toString(LOC));
+		cycloTextField.setText(Integer.toString(CYCLO));
+		atfdTextField.setText(Integer.toString(ATFD));
+		laaTextField.setText(Double.toString(LAA));
+		checkTextBoxes();
+		gui.setLOC(LOC);
+		gui.setCYCLO(CYCLO);
+		gui.setATFD(ATFD);
+		gui.setLAA(LAA);
+		ThreshholdsPopup TP = new ThreshholdsPopup(LOC,CYCLO,ATFD,LAA,true);
+		TP.setVisible(true);
+		if(checkValues(locTextField.getText(),cycloTextField.getText(),atfdTextField.getText(),laaTextField.getText())){
+			LOC=Integer.parseInt(locTextField.getText());
+			CYCLO=Integer.parseInt(cycloTextField.getText());
+			ATFD=Integer.parseInt(atfdTextField.getText());
+			LAA=Double.parseDouble(laaTextField.getText());
+			gui.assignThreshholds(LOC, CYCLO, ATFD, LAA);
+		}
+	}
+	
+	public void compareTest(int LOC, int CYCLO, int ATFD, double LAA, GUI gui) {
+		checkTextBoxes();
+		gui.setLOC(LOC);
+		gui.setCYCLO(CYCLO);
+		gui.setATFD(ATFD);
+		gui.setLAA(LAA);
+		ThreshholdsPopup TP = new ThreshholdsPopup(LOC,CYCLO,ATFD,LAA,false);
+		TP.setVisible(true);
+	}
 }

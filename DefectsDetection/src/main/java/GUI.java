@@ -24,7 +24,6 @@ public class GUI {
 	private JFrame frame;
 	private JTable table;
 
-	
 	private final static int LOC=80;
 	private final static int CYCLO=10;
 	private final static int ATFD=4;
@@ -175,10 +174,7 @@ public class GUI {
 		frame.getContentPane().setLayout(null);
 	}
 	
-	public JFrame getFrame() {
-		return this.frame;
-	}
-	
+
 	public void makeValuesDefault() {
 		current_LOC=LOC;
 		current_CYCLO=CYCLO;
@@ -227,10 +223,18 @@ public class GUI {
 		return this.CYCLO;
 	}
 	
+	public void setLOC(int LOC) { this.current_LOC = LOC; }
+	public void setCYCLO(int CYCLO) { this.current_CYCLO = CYCLO; }
+	public void setATFD(int ATFD) { this.current_ATFD = ATFD; }
+	public void setLAA(double LAA) { this.current_LAA = LAA; }
+	
+	
 	public JTable getCurrentExcelFileData() {
 		return this.table;
 	}
-	
+	public JFrame getFrame(){
+		return frame;
+	}
 	
 	public void addTable() {
 		JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
@@ -458,5 +462,11 @@ public class GUI {
         }
 	
 	}
+	
+	public JFrame getframe() {
+		return frame;
+	}
+	
+	
 	
 }
