@@ -47,15 +47,10 @@ private ChangeThresholds c=new ChangeThresholds(gui.getFrame(), gui);
 		c.setLOC(9);
 		c.setCYCLO(15);
 		c.checkValues("9", "15", "", "");
+
+		gui.addTable();
 		
-		JTable table=new JTable();;
-		ExcelReader reader = new ExcelReader();
-		String path=System.getProperty("user.dir")+"/target/classes/ExcelTest/Long-Method.xlsx";
-
-		DefaultTableModel tableData = reader.readFile(path);
-		table.setModel(tableData);
-
-		c.compareLM(table);
+		c.compareLM(gui.getCurrentExcelFileData());
 		c.paintWithErrors(gui.getFrame(), gui);
 		
 		assertEquals(c.getDCI(),127);
