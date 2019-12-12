@@ -157,8 +157,6 @@ public class ChangeThresholds extends JPanel {
 				gui.setCYCLO(CYCLO);
 				gui.setATFD(ATFD);
 				gui.setLAA(LAA);
-//				ThreshholdsPopup TP = new ThreshholdsPopup(LOC,CYCLO,ATFD,LAA,false);
-//				TP.setVisible(true);
 				String loctext=locTextField.getText();
 				String cictext=cycloTextField.getText();
 				String atfdtext=atfdTextField.getText();
