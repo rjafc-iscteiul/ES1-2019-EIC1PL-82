@@ -470,7 +470,14 @@ public class ChangeThresholds extends JPanel {
 			}
 		}
 	}
-
+	/**
+	Used for testing the Apply button in this frame.
+	* @param LOC LOC value
+	* @param CYCLO CYCLO value
+	* @param ATFD ATFD value
+	* @param LAA LAA value
+	* @param gui The gui used in testing
+	*/
 	public void applyTest(int LOC, int CYCLO, int ATFD, double LAA, GUI gui) {
 		locTextField.setText(Integer.toString(LOC));
 		cycloTextField.setText(Integer.toString(CYCLO));
@@ -492,6 +499,14 @@ public class ChangeThresholds extends JPanel {
 		}
 	}
 	
+	/**
+	Used for testing the Compare button in this frame.
+	* @param LOC LOC value
+	* @param CYCLO CYCLO value
+	* @param ATFD ATFD value
+	* @param LAA LAA value
+	* @param gui The gui used in testing
+	*/
 	public void compareTest(int LOC, int CYCLO, int ATFD, double LAA, GUI gui) {
 		checkTextBoxes();
 		gui.setLOC(LOC);

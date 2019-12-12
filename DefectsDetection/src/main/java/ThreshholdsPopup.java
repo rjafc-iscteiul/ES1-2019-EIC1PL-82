@@ -12,10 +12,13 @@ import javax.swing.border.EmptyBorder;
 public class ThreshholdsPopup extends JDialog {
 
 	private static final long serialVersionUID = 1L;
+	/**
+	 * Panel used for the dialog.
+	 */
 	private final JPanel contentPanel = new JPanel();
 	
 	/**
-	 * Create the dialog.
+	 * Constructor used for creating the Popup.
 	 */
 	public ThreshholdsPopup(int LOC, int CYCLO, int ATFD, Double LA, boolean mode) {
 		setBounds(100, 100, 550, 175);
