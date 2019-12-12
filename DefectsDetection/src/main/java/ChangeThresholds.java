@@ -12,6 +12,11 @@ import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.awt.event.ActionEvent;
 
+/**
+ * @version 1.0
+ * @author Miguel
+ * @author Joao
+ */
 public class ChangeThresholds extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private GUI gui;
@@ -154,8 +159,8 @@ public class ChangeThresholds extends JPanel {
 				gui.setCYCLO(CYCLO);
 				gui.setATFD(ATFD);
 				gui.setLAA(LAA);
-				ThreshholdsPopup TP = new ThreshholdsPopup(LOC,CYCLO,ATFD,LAA,false);
-				TP.setVisible(true);
+//				ThreshholdsPopup TP = new ThreshholdsPopup(LOC,CYCLO,ATFD,LAA,false);
+//				TP.setVisible(true);
 				String loctext=locTextField.getText();
 				String cictext=cycloTextField.getText();
 				String atfdtext=atfdTextField.getText();
