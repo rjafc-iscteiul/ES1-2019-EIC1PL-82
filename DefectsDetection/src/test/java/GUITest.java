@@ -1,23 +1,26 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class GUITest {
 
-	//Dont do more tests here
+//Dont do more tests here
 	
 	GUI gui;
 	
+	
 	@BeforeEach
-	void setUp() throws Exception {
+	public void setUp() {
 		gui=new GUI();
 		gui.addTable();
 		gui.compareWithDefault();
 		gui.assignThreshholds(10, 10, 10, 0.5);
 	}
-
+	
 	@Test
 	void test() {
 		assertNotNull(gui);

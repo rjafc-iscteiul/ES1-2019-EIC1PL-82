@@ -1,9 +1,10 @@
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import javax.swing.JFrame;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,6 +22,7 @@ class CreateRulesTest {
 		gui.addTable();
 		frame=gui.getFrame();
 		cr1=new CreateRules(frame,gui);
+		cr1.setVisible(false);
 	}
 
 
@@ -32,6 +34,7 @@ class CreateRulesTest {
 		assertEquals("0.0>0.5",cr1.replaceValues("LAA>0.5", gui.getCurrentExcelFileData(),3));
 		
 		cr1.paintingErrors("LOC>60", "");
+		 
 		cr1.paintingErrors("", "ATFD>2");
 		cr1.paintingErrors("LOC>60", "ATFD>2");
 		

@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.LinkedList;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -32,7 +33,7 @@ class ComparisonErrorTest {
 		ce4=new ComparisonError("ADII",55,errors1);
 
 	}
-
+	
 	@Test
 	void test() {
 		assertEquals(20,ce1.getNumberErrors());

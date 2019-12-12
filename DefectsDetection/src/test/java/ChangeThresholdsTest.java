@@ -46,7 +46,6 @@ JTable table=gui.getCurrentExcelFileData();
 		assertEquals(c.checkValues("2", "3", "", ""),true);
 		assertEquals(c.checkValues("", "", "2", "3"),true);
 		assertEquals(c.checkValues("2", "3", "2", "0.4"),true);
-
 		assertEquals(c.checkValues("2", "", "", "3"),false);
 	}
 

@@ -10,16 +10,29 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * 
+ * Date: 13 december 2019
+ * This is an "About Me" frame to display information about who developed this software.
+ * @author rjafc-iscteiul
+ * @version 1.0
+ * 
+ */
+
+
 public class About extends JFrame {
 
-	private JPanel contentPane;
-
 	/**
-	 * Launch the application.
+	 * 
+	 *Main JPanel for current frame 
+	 *
 	 */
+	private JPanel contentPane;
+	
+	
 	
 	/**
-	 * Create the frame.
+	 * About constructor
 	 */
 	public About() {
 		setTitle("About");
