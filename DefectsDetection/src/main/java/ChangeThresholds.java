@@ -138,8 +138,6 @@ public class ChangeThresholds extends JPanel {
 				gui.setCYCLO(CYCLO);
 				gui.setATFD(ATFD);
 				gui.setLAA(LAA);
-				ThreshholdsPopup TP = new ThreshholdsPopup(LOC,CYCLO,ATFD,LAA,true);
-				TP.setVisible(true);
 				if(checkValues(locTextField.getText(),cycloTextField.getText(),atfdTextField.getText(),laaTextField.getText())){
 					LOC=Integer.parseInt(locTextField.getText());
 					CYCLO=Integer.parseInt(cycloTextField.getText());
@@ -488,8 +486,6 @@ public class ChangeThresholds extends JPanel {
 		gui.setCYCLO(CYCLO);
 		gui.setATFD(ATFD);
 		gui.setLAA(LAA);
-		ThreshholdsPopup TP = new ThreshholdsPopup(LOC,CYCLO,ATFD,LAA,true);
-		TP.setVisible(true);
 		if(checkValues(locTextField.getText(),cycloTextField.getText(),atfdTextField.getText(),laaTextField.getText())){
 			LOC=Integer.parseInt(locTextField.getText());
 			CYCLO=Integer.parseInt(cycloTextField.getText());
@@ -513,7 +509,5 @@ public class ChangeThresholds extends JPanel {
 		gui.setCYCLO(CYCLO);
 		gui.setATFD(ATFD);
 		gui.setLAA(LAA);
-		ThreshholdsPopup TP = new ThreshholdsPopup(LOC,CYCLO,ATFD,LAA,false);
-		TP.setVisible(true);
 	}
 }
