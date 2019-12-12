@@ -1,17 +1,29 @@
 
 
-import static org.junit.Assert.*;
-
-import java.awt.EventQueue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
 import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 
 public class ChangeThresholdsTest {
-private GUI gui=new GUI();
-private ChangeThresholds c=new ChangeThresholds(gui.getFrame(), gui);
+
+	private GUI gui;
+	private ChangeThresholds c;
+
+JTable table=gui.getCurrentExcelFileData();
+
+	@BeforeEach
+	public void getTable() {
+		gui=new GUI();
+		gui.addTable();
+		c=new ChangeThresholds(gui.getFrame(), gui);
+		c.setVisible(false);
+	}
 
 	@Test
 	public void testCheckLM() {
@@ -34,23 +46,18 @@ private ChangeThresholds c=new ChangeThresholds(gui.getFrame(), gui);
 		assertEquals(c.checkValues("2", "3", "", ""),true);
 		assertEquals(c.checkValues("", "", "2", "3"),true);
 		assertEquals(c.checkValues("2", "3", "2", "0.4"),true);
-//		assertEquals(c.checkValues("2", "", "", "3"),false);
+
+		assertEquals(c.checkValues("2", "", "", "3"),false);
 	}
 
-//	@Test
-//	public void testCheckTextBoxes() {
-//		fail("Not yet implemented");
-//	}
-
+	
 	@Test
 	public void testCompareLM() {
-		c.setLOC(9);
-		c.setCYCLO(15);
 		c.checkValues("9", "15", "", "");
 
 		gui.addTable();
 		
-		c.compareLM(gui.getCurrentExcelFileData());
+		c.compareLM(gui.getCurrentExcelFileData(),9,15);
 		c.paintWithErrors(gui.getFrame(), gui);
 		
 		assertEquals(c.getDCI(),127);
@@ -61,13 +68,11 @@ private ChangeThresholds c=new ChangeThresholds(gui.getFrame(), gui);
 
 	@Test
 	public void testCompareFE() {
-		c.setATFD(4);
-		c.setLAA(0.4);
 		c.checkValues("", "", "4", "0.4");
 		
 		gui.addTable();
 		
-		c.compareFE(gui.getCurrentExcelFileData());
+		c.compareFE(gui.getCurrentExcelFileData(),4,0.4);
 		c.paintWithErrors(gui.getFrame(), gui);
 		
 		assertEquals(c.getDCI_FE(),112);
@@ -80,6 +85,7 @@ private ChangeThresholds c=new ChangeThresholds(gui.getFrame(), gui);
 	public void test1() {
 		GUI gui = new GUI();
 		ChangeThresholds c = new ChangeThresholds(gui.getframe(),gui);
+		c.setVisible(false);
 		c.applyTest(1, 10, 3, 0.33, gui);
 		assertTrue(gui.getLOC() == 1 && gui.getCYCLO() == 10 && gui.getATFD() == 3 && gui.getLAA() == 0.33);
 		assertTrue(c.checkValues("1","2","3","0.66"));
@@ -89,6 +95,7 @@ private ChangeThresholds c=new ChangeThresholds(gui.getFrame(), gui);
 	public void test2() {
 		GUI gui = new GUI();
 		ChangeThresholds c = new ChangeThresholds(gui.getframe(),gui);
+		c.setVisible(false);
 		c.compareTest(65,10,5,0.33,gui);
 		assertTrue(gui.getLOC() == 65 && gui.getCYCLO() == 10 && gui.getATFD() == 5 && gui.getLAA() == 0.33);
 		c.compareTest(1, 10, 3, 0.33, gui);
