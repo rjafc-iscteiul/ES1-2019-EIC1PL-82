@@ -26,9 +26,21 @@ public class ChangeThresholds extends JPanel {
 	private JTextField cycloTextField;
 	private JTextField atfdTextField;
 	private JTextField laaTextField;
+	/**
+	 * Value for the lines of code
+	 */
 	private int LOC;
+	/**
+	 * Value for the cycles
+	 */
 	private int CYCLO;
+	/**
+	 * value for the ATFD
+	 */
 	private int ATFD;
+	/**
+	 * value for the LAA
+	 */
 	private double LAA;
 
 
@@ -154,13 +166,13 @@ public class ChangeThresholds extends JPanel {
 					if(LM && !FE){
 						LOC=Integer.parseInt(locTextField.getText());
 						CYCLO=Integer.parseInt(cycloTextField.getText());
-						compareLM(table);
+						compareLM(table,LOC,CYCLO);
 					}
 					if(!LM && FE){
 						//		get variables ATFD and LAA
 						ATFD=Integer.parseInt(atfdTextField.getText());
 						LAA=Double.parseDouble(laaTextField.getText());
-						compareFE(table);
+						compareFE(table,ATFD,LAA);
 					}
 					if(LM && FE){
 						LOC=Integer.parseInt(locTextField.getText());
@@ -169,8 +181,8 @@ public class ChangeThresholds extends JPanel {
 						ATFD=Integer.parseInt(atfdTextField.getText());
 						LAA=Double.parseDouble(laaTextField.getText());
 						
-						compareLM(table);
-						compareFE(table);
+						compareLM(table,LOC,CYCLO);
+						compareFE(table,ATFD,LAA);
 					}
 					paintWithErrors(jframe,gui);
 				}
@@ -184,48 +196,69 @@ public class ChangeThresholds extends JPanel {
 		this.setVisible(true);
 
 	}
+	/**
+	 * Returns all DCI errors detected for the Long_method
+	 * @return Returns all DCI errors detected for the Long_method
+	 */
 	public int getDCI(){
 		return errorDCI.size();
 	}
+	/**
+	 * Returns all DII errors detected for the Long_method
+	 * @return Returns all DII errors detected for the Long_method
+	 */
 	public int getDII(){
 		return errorDII.size();
 	}
+	/**
+	 * Returns all ADCI errors detected for the Long_method
+	 * @return Returns all ADCI errors detected for the Long_method
+	 */
 	public int getADCI(){
 		return errorADCI.size();
 	}
+	/**
+	 * Returns all ADII errors detected for the Long_method
+	 * @return Returns all ADII errors detected for the Long_method
+	 */
 	public int getADII(){
 		return errorADII.size();
-		
-		
 	}
+	/**
+	 * Returns all DCI errors detected for the Feature_Envy
+	 * @return Returns all DCI errors detected for the Feature_Envy
+	 */
 	public int getDCI_FE(){
 		return errorDCIFE.size();
 	}
+	/**
+	 * Returns all DII errors detected for the Feature_Envy
+	 * @return Returns all DII errors detected for the Feature_Envy
+	 */
 	public int getDII_FE(){
 		return errorDIIFE.size();
 	}
+	/**
+	 * Returns all ADCI errors detected for the Feature_Envy
+	 * @return Returns all ADCI errors detected for the Feature_Envy
+	 */
 	public int getADCI_FE(){
 		return errorADCIFE.size();
 	}
+	/**
+	 * Returns all ADII errors detected for the Feature_Envy
+	 * @return Returns all ADII errors detected for the Feature_Envy
+	 */
 	public int getADII_FE(){
 		return errorADIIFE.size();
 	}
 
-	public void setLOC(int lOC) {
-		LOC = lOC;
-	}
-
-	public void setCYCLO(int cYCLO) {
-		CYCLO = cYCLO;
-	}
-
-	public void setATFD(int aTFD) {
-		ATFD = aTFD;
-	}
-	public void setLAA(double lAA) {
-		LAA = lAA;
-	}
 	
+	/**
+	 * Shows all the errors in a histogram
+	 * @param frame The frame to show the histogram 
+	 * @param gui The GUI thats being used
+	 */
 	public void paintWithErrors(JFrame frame,GUI gui) {	
 		LinkedList<ComparisonError> errors=new LinkedList<ComparisonError>();
 		LinkedList<ComparisonError> errorsFE=new LinkedList<ComparisonError>();
@@ -249,6 +282,13 @@ public class ChangeThresholds extends JPanel {
 		if(LM && FE)
 			frame.setContentPane(new PaintSeveralErrors(errors,errorsFE,frame,gui,false));
 	}
+	
+	/**
+	 * Checks if the text fields for the long method are filled , partially filled or empty
+	 * @param loc LOC text field
+	 * @param cic cic text field
+	 * @return returns 0 if empty, 1 if it is partially filled and 2 if fully filled
+	 */
 	public int checkLM(String loc, String cic){
 		if(loc.equals("") && !cic.equals("")){
 			return error;
@@ -261,6 +301,12 @@ public class ChangeThresholds extends JPanel {
 		}
 		return AllValuesGood;
 	}
+	/**
+	 * Checks if the text fields for the Feature Envy are filled , partially filled or empty
+	 * @param atfd ATFD text field
+	 * @param laa LAA text field
+	 * @return returns 0 if empty, 1 if it is partially filled and 2 if fully filled
+	 */
 	public int checkFE(String atfd, String laa){
 		if(atfd.equals("") && !laa.equals("")){
 			return error;
@@ -273,6 +319,14 @@ public class ChangeThresholds extends JPanel {
 		}
 		return AllValuesGood;
 	}
+	/**
+	 * Checks if all the parameters of the Long method , Feature Envy or both are filled
+	 * @param loc LOC text field
+	 * @param cic CICLO text field
+	 * @param atfd ATFD text field
+	 * @param laa LAA text field
+	 * @return Returns true If all the parameters of the Long method , Feature Envy o both are filled else returns false
+	 */
 	public boolean checkValues(String loc, String cic,String atfd, String laa){
 		final JPanel panel = new JPanel();
 		boolean LMgood=checkLM(loc, cic)==AllValuesGood;
@@ -309,7 +363,13 @@ public class ChangeThresholds extends JPanel {
 		try { LAA = Double.parseDouble(laaTextField.getText()); }	catch (NumberFormatException e) { LAA = 0; }
 	}
 
-	public void compareLM(JTable table){
+	/**
+	 * Compares values with the table and adds all the errors into lists for the long method
+	 * @param table Table to compare values
+	 * @param LOC Maximum value of lines of code
+	 * @param CYCLO Maximum value of cycles
+	 */
+	public void compareLM(JTable table,int LOC,int CYCLO){
 		//For to get the variables for each row and compare to determine if there's some error
 
 		for(int numRow=0;numRow!=table.getModel().getRowCount();numRow++) {
@@ -355,7 +415,13 @@ public class ChangeThresholds extends JPanel {
 		}
 	}
 
-	public void compareFE(JTable table){
+	/**
+	 * Compares values with the table and adds all the errors into lists for the Feature Envy
+	 * @param table Table to compare Values
+	 * @param ATFD Value of the ATFD
+	 * @param LAA Value of the LAA
+	 */
+	public void compareFE(JTable table,int ATFD,Double LAA){
 		//For to get the variables for each row and compare to determine if there's some error
 		for(int numRow=0;numRow!=table.getModel().getRowCount();numRow++) {
 			boolean is_feature_envy;

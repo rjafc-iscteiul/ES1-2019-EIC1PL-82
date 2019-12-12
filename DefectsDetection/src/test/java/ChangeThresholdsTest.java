@@ -34,7 +34,7 @@ private ChangeThresholds c=new ChangeThresholds(gui.getFrame(), gui);
 		assertEquals(c.checkValues("2", "3", "", ""),true);
 		assertEquals(c.checkValues("", "", "2", "3"),true);
 		assertEquals(c.checkValues("2", "3", "2", "0.4"),true);
-//		assertEquals(c.checkValues("2", "", "", "3"),false);
+		assertEquals(c.checkValues("2", "", "", "3"),false);
 	}
 
 //	@Test
@@ -44,13 +44,11 @@ private ChangeThresholds c=new ChangeThresholds(gui.getFrame(), gui);
 
 	@Test
 	public void testCompareLM() {
-		c.setLOC(9);
-		c.setCYCLO(15);
 		c.checkValues("9", "15", "", "");
 
 		gui.addTable();
 		
-		c.compareLM(gui.getCurrentExcelFileData());
+		c.compareLM(gui.getCurrentExcelFileData(),9,15);
 		c.paintWithErrors(gui.getFrame(), gui);
 		
 		assertEquals(c.getDCI(),127);
@@ -61,13 +59,11 @@ private ChangeThresholds c=new ChangeThresholds(gui.getFrame(), gui);
 
 	@Test
 	public void testCompareFE() {
-		c.setATFD(4);
-		c.setLAA(0.4);
 		c.checkValues("", "", "4", "0.4");
 		
 		gui.addTable();
 		
-		c.compareFE(gui.getCurrentExcelFileData());
+		c.compareFE(gui.getCurrentExcelFileData(),4,0.4);
 		c.paintWithErrors(gui.getFrame(), gui);
 		
 		assertEquals(c.getDCI_FE(),112);
