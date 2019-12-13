@@ -83,7 +83,7 @@ JTable table=gui.getCurrentExcelFileData();
 	@Test
 	public void test1() {
 		GUI gui = new GUI();
-		ChangeThresholds c = new ChangeThresholds(gui.getframe(),gui);
+		ChangeThresholds c = new ChangeThresholds(gui.getFrame(),gui);
 		c.setVisible(false);
 		c.applyTest(1, 10, 3, 0.33, gui);
 		assertTrue(gui.getLOC() == 1 && gui.getCYCLO() == 10 && gui.getATFD() == 3 && gui.getLAA() == 0.33);
@@ -93,7 +93,7 @@ JTable table=gui.getCurrentExcelFileData();
 	@Test
 	public void test2() {
 		GUI gui = new GUI();
-		ChangeThresholds c = new ChangeThresholds(gui.getframe(),gui);
+		ChangeThresholds c = new ChangeThresholds(gui.getFrame(),gui);
 		c.setVisible(false);
 		c.compareTest(65,10,5,0.33,gui);
 		assertTrue(gui.getLOC() == 65 && gui.getCYCLO() == 10 && gui.getATFD() == 5 && gui.getLAA() == 0.33);

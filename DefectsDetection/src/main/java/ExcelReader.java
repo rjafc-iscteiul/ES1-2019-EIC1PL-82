@@ -83,7 +83,6 @@ public class ExcelReader {
 			while (cIterator.hasNext()) {
 				Cell c = cIterator.next();
 				if (iteratorOfColumns == 0) {
-					System.out.print("COLCOLCOLCOLCOLCOL------>" + c.toString());
 					data.addColumn(c.toString());
 				} else {
 					v.add(c.toString());
@@ -91,7 +90,6 @@ public class ExcelReader {
 			}
 			if (iteratorOfColumns != 0) {
 				data.addRow(v);
-				System.out.println("rowrowrowroworoworow--------->" + v.toString());
 				v = new Vector<Object>();
 			}
 

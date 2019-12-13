@@ -9,8 +9,17 @@ import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * @author rjafc-iscteiul
+ * @version 1.0
+ * Date: 13 december 2019
+ * Creates a confirmation window indicating everything is now according to the default.
+ */
 public class ResetValuesRules extends JFrame {
 
+	/**
+	 * Represents the main panel in the current frame. 
+	 */
 	private JPanel contentPane;
 
 	/**
@@ -48,7 +57,6 @@ public class ResetValuesRules extends JFrame {
 		JButton btnOk = new JButton("OK");
 		btnOk.addActionListener(new ActionListener() {
 			
-			//close default value pop-up
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}

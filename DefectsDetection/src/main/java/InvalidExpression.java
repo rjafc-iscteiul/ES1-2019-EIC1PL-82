@@ -9,10 +9,22 @@ import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * @author rjafc-iscteiul
+ * @version 1.0
+ * Date: 13 december 2019
+ * Creates an error related frame 
+ * (in this case when a user gives incorrect information regarding the rules inserted)
+ */
 public class InvalidExpression extends JFrame {
 
+	
+	/**
+	 * Represents the main panel used in this frame.
+	 */
 	private JPanel contentPane;
 
+	
 	/**
 	 * Launch the application.
 	 */

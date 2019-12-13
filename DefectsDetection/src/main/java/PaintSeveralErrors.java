@@ -21,8 +21,22 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+
+
+/**
+ * @author rjafc-iscteiul
+ * @version 1.0
+ * Date: 13 December 2019
+ * Main purpose here is to compute the full information regarding each error and represent that information as a histogram.
+ * (using the user defined rules: long_method and is_feature_envy
+ */
 public class PaintSeveralErrors extends JPanel {
-	//tables for long_method
+
+	
+	
+	/**
+	 * Tables and table models for long_method errors
+	 */
 	private JTable tableDCILM= new JTable();
 	private DefaultTableModel modelDCILM = new DefaultTableModel();
 	private JTable tableDIILM= new JTable();
@@ -33,7 +47,10 @@ public class PaintSeveralErrors extends JPanel {
 	DefaultTableModel modelADIILM = new DefaultTableModel();
 
 
-	//tables for feature_envy
+
+	/**
+	 * Tables and table models for feature_envy errors
+	 */
 	private JTable tableDCIFE= new JTable();
 	DefaultTableModel modelDCIFE = new DefaultTableModel();
 	private JTable tableDIIFE= new JTable();
@@ -151,7 +168,12 @@ public class PaintSeveralErrors extends JPanel {
 		this.setVisible(true);
 
 	}
+	
 
+	/**
+	 * @param method - column name 
+	 * Adds the column passed as argument to all the tables
+	 */
 	public void addTableColumn(String method) {
 		this.modelDCIFE.addColumn(method);
 		this.modelDCILM.addColumn(method);
@@ -162,7 +184,13 @@ public class PaintSeveralErrors extends JPanel {
 		this.modelADIIFE.addColumn(method);
 		this.modelADIILM.addColumn(method);
 	}
+	
+	
 
+	/**
+	 * @param errorsLM - List regarding all the long_method errors
+	 * Adds,to the list given as argument, the methoID's from the methods that have a specific error type related to the long_method metric.
+	 */
 	public void addLMErrors(LinkedList<ComparisonError> errorsLM){
 
 		for(ComparisonError ce:errorsLM) {
@@ -195,10 +223,14 @@ public class PaintSeveralErrors extends JPanel {
 		this.tableDIILM.setModel(this.modelDIILM);
 		this.tableADCILM.setModel(this.modelADCILM);
 		this.tableADIILM.setModel(this.modelADIILM);
-
 	}
 
 
+	
+	/**
+	 * @param errorsFE - List regarding all the feature_envy errors
+	 * Adds,to the list given as argument, the methoID's from the methods that have a specific error type related to the feature_envy metric.
+	 */
 	public void addFEErrors(LinkedList<ComparisonError> errorsFE){
 		for(ComparisonError ce:errorsFE) {
 			if(ce.getErrorType().equals("ADII")) {
@@ -233,6 +265,11 @@ public class PaintSeveralErrors extends JPanel {
 	}
 
 
+	/**
+	 * @param errors - List 
+	 * @param errorType - Refers to one of the metrics considered (either long_method or feature_envy)
+	 * Creates a histogram for a specific metric considering every error that happened to the metric, showcasing the amount of errors of each type that occurred.
+	 */
 	private void createHistogram(LinkedList<ComparisonError> errors, String errorType) {
 		DefaultCategoryDataset dcd=new DefaultCategoryDataset();
 

@@ -19,16 +19,37 @@ import javax.swing.JTable;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
 
+
+/**
+ * @author rjafc-iscteiul
+ * @version 1.0
+ * Date: 13 December 2019
+ * Main GUI
+ */
 public class GUI {
 
+	
+	/**
+	 * Main frame used in the GUI
+	 */
 	private JFrame frame;
+	
+	/**
+	 * Table to support the Excel data to be read
+	 */
 	private JTable table;
 
+	/**
+	 * Default values for the metrics considered
+	 */
 	private final static int LOC=80;
 	private final static int CYCLO=10;
 	private final static int ATFD=4;
 	private final static double LAA=0.42;
 
+	/**
+	 * Current values for the the metrics considered
+	 */
 	private int current_LOC;
 	private int current_CYCLO;
 	private int current_ATFD;
@@ -175,6 +196,10 @@ public class GUI {
 	}
 	
 
+	
+	/**
+	 * Makes all the current values have the default values
+	 */
 	public void makeValuesDefault() {
 		current_LOC=LOC;
 		current_CYCLO=CYCLO;
@@ -184,6 +209,13 @@ public class GUI {
 		rvr.setVisible(true);
 	}
 	
+	/**
+	 * @param LOC - Represents the LOC metric
+	 * @param CYCLO - Represents the CYCLO metric
+	 * @param ATFD - Represents the ATFD metric
+	 * @param LAA - Represents the LAA metric
+	 * Gives the values passed as arguments to the current values of the metrics.
+	 */
 	public void assignThreshholds(int LOC, int CYCLO, int ATFD, double LAA) {
 		this.current_LOC = LOC;
 		this.current_CYCLO = CYCLO;
@@ -191,6 +223,11 @@ public class GUI {
 		this.current_LAA = LAA;
 	}
 	
+	
+	
+	/**
+	 * Below there are some getters to return the values of both the default values as well as the current values of the metrics.
+	 */
 	public int getLOC() {
 		return this.current_LOC;
 	}
@@ -223,19 +260,39 @@ public class GUI {
 		return this.CYCLO;
 	}
 	
+	
+	
+	/**
+	 * Below there are some setters to give to each individual metric a specific values passed as the argument.
+	 */
 	public void setLOC(int LOC) { this.current_LOC = LOC; }
 	public void setCYCLO(int CYCLO) { this.current_CYCLO = CYCLO; }
 	public void setATFD(int ATFD) { this.current_ATFD = ATFD; }
 	public void setLAA(double LAA) { this.current_LAA = LAA; }
 	
 	
+	
+	/**
+	 * @return - Table that has the Excel data
+	 * Getter to return the Excel data table.
+	 */
 	public JTable getCurrentExcelFileData() {
 		return this.table;
 	}
+	
+	
+	/**
+	 * @return  - The main frame used.
+	 * Getter to return the main frame used on GUI.
+	 */
 	public JFrame getFrame(){
 		return frame;
 	}
 	
+	
+	/**
+	 * Adds all the data in the Excel file to a table.
+	 */
 	public void addTable() {
 		JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 
@@ -251,6 +308,10 @@ public class GUI {
 		
 	}
 	
+	
+	/**
+	 * Coomputes and shows in a graphical way the comparison between the default rules given and the reference columns (for the long_methd and feature_envy)
+	 */
 	public void compareWithDefault(){
 		
 		//long_method errors
@@ -264,7 +325,6 @@ public class GUI {
 		LinkedList<Integer> errorADCI=new LinkedList<Integer>();
 		LinkedList<Integer> errorADII=new LinkedList<Integer>();
 
-		
 		//long_method errors
 		int numberDCIFE=0;
 		int numberDIIFE=0;
@@ -330,7 +390,6 @@ public class GUI {
 				//DCI error
 				if(myResult.equals("true") && getExcelLM.equals("true")) {
 					numberDCI+=1;
-					
 					errorDCI.add(methodID);
 				}
 				
@@ -458,11 +517,6 @@ public class GUI {
         }
 	
 	}
-	
-	public JFrame getframe() {
-		return frame;
-	}
-	
 	
 	
 }

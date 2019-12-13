@@ -15,15 +15,23 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
+/**
+ * @author rjafc-iscteiul
+ * @version 1.0
+ * Compares the iPlasma and PMD tools regarding the long_method.
+ * Date: 13 december 2019
+ */
 public class CompareTools extends JPanel {
 
-	/**
-	 * Create the panel.
-	 */
 	
+	/**
+	 * Refers to the main GUI.
+	 */
 	private GUI gui;
 	
-	//error tables
+	/**
+	 * The bellow attributes (from dci_iPlasma to adii_PMD) refer to the tables that contain the errors considered for each tool
+	 */
 	private JTable dci_iPlasma=new JTable();
 	private JTable dii_iPlasma=new JTable();
 	private JTable adci_iPlasma=new JTable();
@@ -32,8 +40,10 @@ public class CompareTools extends JPanel {
 	private JTable dii_PMD=new JTable();
 	private JTable adci_PMD=new JTable();
 	private JTable adii_PMD=new JTable();
-
-	//error table model
+	
+	/**
+	 * The bellow attributes (from modelDCI_iPlasma to modelADII_PMD) refer to the models used on the previous table 
+	 */
 	private DefaultTableModel modelDCI_iPlasma = new DefaultTableModel();
 	private DefaultTableModel modelDII_iPlasma = new DefaultTableModel();
 	private DefaultTableModel modelADCI_iPlasma = new DefaultTableModel();
@@ -43,12 +53,19 @@ public class CompareTools extends JPanel {
 	private DefaultTableModel modelADCI_PMD = new DefaultTableModel();
 	private DefaultTableModel modelADII_PMD = new DefaultTableModel();
 
-	//comparison error
+	
+	/**
+	 * Lists containing full information on the errors occurred for each tool
+	 */
 	LinkedList<ComparisonError> errors_iPlasma=new LinkedList<ComparisonError>();
 	LinkedList<ComparisonError> errors_PMD=new LinkedList<ComparisonError>();
 
 	
 	
+	/**
+	 * Constructs a full comparison between the two tools considered.
+	 * @param gui - GUI used (main GUI)
+	 */
 	public CompareTools(GUI gui) {
 		if(gui==null) {
 			throw new IllegalArgumentException("Invalid argument. Given null GUI.");
@@ -161,6 +178,10 @@ public class CompareTools extends JPanel {
 		}
 	}
 	
+	/**
+	 * Count the amount of errors for each error and add those to the error list as an ComparisonError object, for the iPlasma tool.
+	 * @return - The sum of DCI and ADCI errors, considered as the best way to characterize a tool (using long_ method as a metric).
+	 */
 	public int fill_iPlasma() {
 		JTable table=gui.getCurrentExcelFileData();
 		int numberDCI=0;
@@ -172,33 +193,29 @@ public class CompareTools extends JPanel {
 		LinkedList<Integer> methodIDErrors_ADCI=new LinkedList<Integer>();
 		LinkedList<Integer> methodIDErrors_ADII=new LinkedList<Integer>();
 
-		//loop over table
 		for(int row=0;row!=table.getModel().getRowCount();row++) {
-			//get default values
 			String defaultValue=table.getModel().getValueAt(row,8).toString().toLowerCase();
 			
-			//get tool value
 			String toolValue=table.getModel().getValueAt(row,9).toString().toLowerCase();
 			
-			//getting id from current line
 			int methodID=(int)Double.parseDouble(table.getModel().getValueAt(row, 0).toString());
 			
-			if(defaultValue.equals("true") && toolValue.equals("true")) { //dci
+			if(defaultValue.equals("true") && toolValue.equals("true")) { 
 				numberDCI+=1;
 				methodIDErrors_DCI.add(methodID);
 			}
 			
-			if(defaultValue.equals("false") && toolValue.equals("true")) { //dii
+			if(defaultValue.equals("false") && toolValue.equals("true")) { 
 				numberDII+=1;
 				methodIDErrors_DII.add(methodID);
 			}
 			
-			if(defaultValue.equals("false") && toolValue.equals("false")) { //adci
+			if(defaultValue.equals("false") && toolValue.equals("false")) { 
 				numberADCI+=1;
 				methodIDErrors_ADCI.add(methodID);
 			}
 			
-			if(defaultValue.equals("true") && toolValue.equals("false")) { //adii
+			if(defaultValue.equals("true") && toolValue.equals("false")) { 
 				numberADII+=1;
 				methodIDErrors_ADII.add(methodID);
 			}
@@ -219,6 +236,10 @@ public class CompareTools extends JPanel {
 		return numberDCI+numberADCI;
 	}
 	
+	
+	/**
+	 * Adds,to each table model and for a given error, the methodID's from the methods that had the considered error for the tool iPlasma.
+	 */
 	public void add_iPlasmaErrors() {
 		for(ComparisonError ce:errors_iPlasma) {
 			if(ce.getErrorType().equals("ADII")) {
@@ -252,6 +273,12 @@ public class CompareTools extends JPanel {
 		this.adii_iPlasma.setModel(this.modelADII_iPlasma);
 	}
 	
+	
+	
+	/**
+	 * Count the amount of errors for each error and add those to the error list as an ComparisonError object, for the iPlasma tool.
+	 * @return - The sum of DCI and ADCI errors, considered as the best way to characterize a tool (using long_ method as a metric).
+	 */
 	public int fill_PMD() {
 		JTable table=gui.getCurrentExcelFileData();
 		int numberDCI=0;
@@ -263,33 +290,29 @@ public class CompareTools extends JPanel {
 		LinkedList<Integer> methodIDErrors_ADCI=new LinkedList<Integer>();
 		LinkedList<Integer> methodIDErrors_ADII=new LinkedList<Integer>();
 
-		//loop over table
 		for(int row=0;row!=table.getModel().getRowCount();row++) {
-			//get default values
 			String defaultValue=table.getModel().getValueAt(row,8).toString().toLowerCase();
 			
-			//get tool value
 			String toolValue=table.getModel().getValueAt(row,10).toString().toLowerCase();
 			
-			//getting id from current line
 			int methodID=(int)Double.parseDouble(table.getModel().getValueAt(row, 0).toString());
 			
-			if(defaultValue.equals("true") && toolValue.equals("true")) { //dci
+			if(defaultValue.equals("true") && toolValue.equals("true")) { 
 				numberDCI+=1;
 				methodIDErrors_DCI.add(methodID);
 			}
 			
-			if(defaultValue.equals("false") && toolValue.equals("true")) { //dii
+			if(defaultValue.equals("false") && toolValue.equals("true")) { 
 				numberDII+=1;
 				methodIDErrors_DII.add(methodID);
 			}
 			
-			if(defaultValue.equals("false") && toolValue.equals("false")) { //adci
+			if(defaultValue.equals("false") && toolValue.equals("false")) { 
 				numberADCI+=1;
 				methodIDErrors_ADCI.add(methodID);
 			}
 			
-			if(defaultValue.equals("true") && toolValue.equals("false")) { //adii
+			if(defaultValue.equals("true") && toolValue.equals("false")) { 
 				numberADII+=1;
 				methodIDErrors_ADII.add(methodID);
 			}
@@ -311,6 +334,10 @@ public class CompareTools extends JPanel {
 
 	}
 	
+	
+	/**
+	 * Adds,to each table model and for a given error, the methodID's from the methods that had the considered error for the tool PMD.
+	 */
 	public void add_PMDErrors() {
 		for(ComparisonError ce:errors_PMD) {
 			if(ce.getErrorType().equals("ADII")) {
@@ -345,6 +372,11 @@ public class CompareTools extends JPanel {
 	}
 	
 	
+	/**
+	 * Creates a histogram to display the amount of occurrences for each error.
+	 * @param errors
+	 * @param errorType
+	 */
 	public void createHistogram(LinkedList<ComparisonError> errors, String errorType) {
 		if(errors==null || errorType.length()==0) {
 			throw new IllegalArgumentException("Invalid list or error type.");

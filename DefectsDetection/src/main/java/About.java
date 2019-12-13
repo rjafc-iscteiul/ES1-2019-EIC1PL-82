@@ -32,7 +32,7 @@ public class About extends JFrame {
 	
 	
 	/**
-	 * About constructor
+	 * Creates a new About frame
 	 */
 	public About() {
 		setTitle("About");
@@ -57,7 +57,6 @@ public class About extends JFrame {
 		JButton btnOk = new JButton("OK");
 		btnOk.addActionListener(new ActionListener() {
 			
-			//closing about window
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
@@ -65,7 +64,7 @@ public class About extends JFrame {
 		btnOk.setBounds(327, 243, 117, 29);
 		contentPane.add(btnOk);
 		
-		JLabel lblSomeRandomPeople = new JLabel("Some random people");
+		JLabel lblSomeRandomPeople = new JLabel("Some random people (a.k.a Group 82)");
 		lblSomeRandomPeople.setBounds(100, 41, 139, 16);
 		contentPane.add(lblSomeRandomPeople);
 		

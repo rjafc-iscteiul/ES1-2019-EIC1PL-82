@@ -16,16 +16,40 @@ import javax.swing.JTextField;
 
 
 
+/**
+ * @author rjafc-iscteiul
+ * @version 1.0
+ * Date: 13 December 2019
+ */
 public class CreateRules extends JPanel {
 
-	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * Text field that can contain the long_method rule 
+	 */
 	private JTextField longMethod_field;
+	
+	/**
+	 * Text field that can contain the feature_envy rule
+	 */
 	private JTextField featureEnvy_field;
+	
+	
+	/**
+	 * Main GUI 
+	 */
 	private GUI gui;
+	
+	
+	/**
+	 * Current frame
+	 */
 	private JFrame jframe;
 	
 	
-	//long_method attributes
+	/**
+	 * Long_method attributes
+	 */
 	private int numberDCI=0;
 	private int numberDII=0;
 	private int numberADCI=0;
@@ -35,10 +59,11 @@ public class CreateRules extends JPanel {
 	private LinkedList<Integer> errorDII=new LinkedList<Integer>();
 	private LinkedList<Integer> errorADCI=new LinkedList<Integer>();
 	private LinkedList<Integer> errorADII=new LinkedList<Integer>();
-
-
 	
-	//featura_envy attributes
+	
+	/**
+	 * Feature_Envy attributes 
+	 */
 	private int numberDCIFE=0;
 	private int numberDIIFE=0;
 	private int numberADCIFE=0;
@@ -117,6 +142,11 @@ public class CreateRules extends JPanel {
 		add(featureEnvyRuleExample);
 	}
 	
+	/**
+	 * @param rule - Long_Method rule inserted by the user
+	 * @param ruleFE - Feature_Envy rule inserted by the user
+	 * Checks if any of the rules is empty and then proceeds to compute and represent the errors related to each rule
+	 */
 	public void paintingErrors(String rule, String ruleFE) {
 		//gets excel info table
 		JTable table=gui.getCurrentExcelFileData();
@@ -143,6 +173,13 @@ public class CreateRules extends JPanel {
 	}
 	
 	
+	/**
+	 * @param finalRule - Single rule inserted by the user
+	 * @param rule 
+	 * @param table - Table containing the Excel data
+	 * @param parameter - Refers to the error metric (long_method or feature_envy)
+	 * Computes and showcases the number of errors occurred related to a specific error metric 
+	 */
 	private void paintAuxOneError(String finalRule, String rule, JTable table, String parameter) {
 		//comparing (code font: https://stackoverflow.com/questions/19383953/is-it-possible-to-evaluate-a-boolean-expression-for-string-comparions)
 		try {
@@ -208,6 +245,13 @@ public class CreateRules extends JPanel {
         }
 	}
 	
+	/**
+	 * @param finalRule - the rule to consider to replaced the metric value
+	 * @param table - Excel data table
+	 * @param numRow - number of the row,in the Excel data table, to be considered
+	 * @return - the rule with the metric replaced
+	 * Replaces the metric value in the rule with the respective value contained in the Excel data table
+	 */
 	public String replaceValues(String finalRule, JTable table, int numRow) {
 		if(finalRule.contains("LOC")) {					
 			//replace LOC value in rule for threshold value
@@ -231,6 +275,15 @@ public class CreateRules extends JPanel {
 		return finalRule;
 	}
 	
+	
+	/**
+	 * @param finalRuleLM - Rule inserted by the user in the long_method field
+	 * @param ruleLM
+	 * @param finalRuleFE - Rule inserted by the user in the feature_envy field
+	 * @param ruleFE
+	 * @param table - Excel data table
+	 * Computes and showcases the number of errors occurred related to both error metrics
+	 */
 	private void paintAuxOneError(String finalRuleLM, String ruleLM, String finalRuleFE, String ruleFE,JTable table) {
 		//comparing (code font: https://stackoverflow.com/questions/19383953/is-it-possible-to-evaluate-a-boolean-expression-for-string-comparions)
 		try {
@@ -322,6 +375,11 @@ public class CreateRules extends JPanel {
         }
 	}
 	
+	/**
+	 * @param frame - Current frame 
+	 * @param multiple - Checks if we are computing more than 1 error (in this case the maximum errors to be computed are 2)
+	 * Computes and shows in a graphical way the errors related to the error metric (long_method or feature_envy or both)
+	 */
 	private void paintWithErrors(JFrame frame, boolean multiple) {	
 		LinkedList<ComparisonError> errors=new LinkedList<ComparisonError>();
 		

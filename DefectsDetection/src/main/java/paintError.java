@@ -20,7 +20,17 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 
+
+/**
+ * @author rjafc-iscteiul
+ * @version 1.0
+ * Compute and create a histogram to showcase the errors related to one specific metric (long_method or feature_envy)
+ */
 public class paintError extends JPanel {
+	
+	/**
+	 * Tables for each error that can occur related to the metric chosen.
+	 */
 	private JTable tableDCI= new JTable();
 	private JTable tableDII= new JTable();
 	private JTable tableADCI= new JTable();
@@ -168,6 +178,10 @@ public class paintError extends JPanel {
 	}
 
 
+	/**
+	 * @param errors - List regarding all the errors information occurred in the metric chosen.
+	 * Creates an histogram to display the amount the errors occurred related to the metric.
+	 */
 	private void createHistogram(LinkedList<ComparisonError> errors) {
 		DefaultCategoryDataset dcd=new DefaultCategoryDataset();
 
